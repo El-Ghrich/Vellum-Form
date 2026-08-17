@@ -208,7 +208,7 @@ export function LegalTemplate({
           <div className="flex flex-col gap-3.5 font-sans text-[10px] uppercase tracking-[0.16em] text-[#666666]">
             <span className="mb-2 font-medium text-[#8A7051]">Elsewhere</span>
             <a
-              href="https://pinterest.com"
+              href="https://www.pinterest.com/vellumform/"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-colors hover:text-[#111111]"
@@ -216,7 +216,7 @@ export function LegalTemplate({
               Pinterest
             </a>
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/thevellumform/"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-colors hover:text-[#111111]"
@@ -230,7 +230,7 @@ export function LegalTemplate({
         </div>
 
         <div className="mx-auto flex max-w-[1440px] flex-col gap-4 border-t border-[#E8E4DC] px-6 py-8 font-sans text-[10px] leading-5 tracking-[0.04em] text-[#666666] md:flex-row md:items-center md:justify-between md:px-12">
-          <span>© 2026 Vellum Form. All rights reserved.</span>
+          <span>2026 Vellum Form</span>
           <span>
             Affiliate disclosure: We may earn a commission from select links, at no additional cost to you.
           </span>

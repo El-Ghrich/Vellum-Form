@@ -74,7 +74,7 @@ export function CategoryTemplate({
             <a href="/#objects" className="transition-colors hover:text-foreground">Objects</a>
             <a href="/category/living-spaces" className="text-foreground">Living Spaces</a>
             <a href="/#the-edit" className="transition-colors hover:text-foreground">The Edit</a>
-            <a href="/#about" className="transition-colors hover:text-foreground">About</a>
+            <a href="/about" className="transition-colors hover:text-foreground">About</a>
           </nav>
         </div>
       </header>
@@ -229,8 +229,13 @@ export function CategoryTemplate({
       </section>
 
       <footer className="border-t border-border">
-        <div className="mx-auto flex max-w-[1440px] flex-col items-center gap-3 px-5 py-8 text-center font-sans text-[9px] uppercase tracking-[0.14em] text-muted-foreground md:px-10">
+        <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-between gap-3 px-5 py-8 text-center font-sans text-[9px] uppercase tracking-[0.14em] text-muted-foreground md:flex-row md:px-10">
           <span>© 2026 Vellum Form. All rights reserved.</span>
+          <div className="flex items-center gap-4">
+            <a href="/about" className="hover:text-foreground">About</a>
+            <span>/</span>
+            <a href="/legal" className="hover:text-foreground">Privacy &amp; Terms</a>
+          </div>
         </div>
       </footer>
     </main>

@@ -72,9 +72,9 @@ export function AboutTemplate({
   manifestoStatement = 'We believe that a space is not merely filled—it is composed. Every silhouette, texture, and light source shapes how we feel and live.',
   philosophyParagraphs = defaultPhilosophy,
   processSteps = defaultSteps,
-  editorialEmail = 'editorial@vellumform.com',
-  pinterestUrl = 'https://pinterest.com',
-  instagramUrl = 'https://instagram.com',
+  editorialEmail = 'vellumform@gmail.com',
+  pinterestUrl = 'https://www.pinterest.com/vellumform/',
+  instagramUrl = 'https://www.instagram.com/thevellumform/',
 }: AboutTemplateProps) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [copiedEmail, setCopiedEmail] = useState(false)

@@ -14,10 +14,9 @@ export default function AboutPage() {
       heroTag="Curation House // Manifesto"
       headline="About Vellum Form"
       subheadline="Curating the Art of Intentional Living."
-      manifestoStatement="We believe that a space is not merely filled—it is composed. Every silhouette, texture, and light source shapes our everyday rituals."
-      editorialEmail="editorial@vellumform.com"
-      pinterestUrl="https://pinterest.com"
-      instagramUrl="https://instagram.com"
+      editorialEmail="vellumform@gmail.com"
+      pinterestUrl="https://www.pinterest.com/vellumform/"
+      instagramUrl="https://www.instagram.com/thevellumform/"
     />
   )
 }

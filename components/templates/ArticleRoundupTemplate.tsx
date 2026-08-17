@@ -429,6 +429,11 @@ export function ArticleRoundupTemplate({
             Affiliate disclosure: This post contains affiliate links. We may earn a commission from qualifying
             purchases, at no additional cost to you.
           </span>
+          <div className="flex items-center gap-3">
+            <a href="/about" className="hover:underline">About</a>
+            <span>/</span>
+            <a href="/legal" className="hover:underline text-foreground">Privacy &amp; Terms</a>
+          </div>
         </Reveal>
       </section>
     </main>

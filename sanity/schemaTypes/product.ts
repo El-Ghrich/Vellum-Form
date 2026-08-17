@@ -58,5 +58,6 @@ export const product = defineType({
       type: 'array',
       of: [{ type: 'string' }],
     }),
+    defineField({ name: 'desc', title: 'Editorial Description', type: 'text', rows: 4 }),
   ],
 });
