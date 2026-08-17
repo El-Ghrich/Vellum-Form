@@ -7,7 +7,6 @@ const fallbackArticles: Article[] = [
   {
     category: 'Living Spaces',
     title: 'The case for rooms that ask nothing of you',
-    author: 'Eleanor Hart',
     date: '14.08.26',
     image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85',
     slug: 'sculptural-espresso-machines',
@@ -15,7 +14,6 @@ const fallbackArticles: Article[] = [
   {
     category: 'Objects',
     title: 'A quieter kind of brilliance: the new bronze age',
-    author: 'Milo Chen',
     date: '07.08.26',
     image: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1200&q=85',
     slug: 'sculptural-espresso-machines',
@@ -23,7 +21,6 @@ const fallbackArticles: Article[] = [
   {
     category: 'Daily Rituals',
     title: 'On the pleasure of making one perfect cup',
-    author: 'Clara Meunier',
     date: '31.07.26',
     image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=85',
     slug: 'sculptural-espresso-machines',
@@ -70,7 +67,6 @@ export default async function Home() {
       articles = sanityArticles.map((item: any) => ({
         category: item.category?.title || 'The Edit',
         title: item.title,
-        author: 'The Editorial Desk',
         date: item.publishedAt
           ? new Date(item.publishedAt).toLocaleDateString('en-GB', {
               day: '2-digit',

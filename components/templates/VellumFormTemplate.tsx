@@ -9,7 +9,6 @@ import { LogoLoop } from '@/components/logo-loop'
 export interface Article {
   category: string;
   title: string;
-  author: string;
   date: string;
   image: string;
   slug?: string;
@@ -170,7 +169,7 @@ export function VellumFormTemplate({
                   </div>
                   <p className="mt-5 font-sans text-[10px] uppercase tracking-[0.18em] text-accent">{article.category}</p>
                   <h3 className="mt-3 max-w-sm font-serif text-2xl leading-tight tracking-[-0.02em] group-hover:underline">{article.title}</h3>
-                  <p className="mt-4 font-sans text-[10px] uppercase tracking-[0.12em] text-muted-foreground">{article.author} <span className="px-2 text-border">/</span> {article.date}</p>
+                  <p className="mt-4 font-sans text-[10px] uppercase tracking-[0.14em] text-muted-foreground">{article.date}</p>
                 </a>
               </Reveal>
             )

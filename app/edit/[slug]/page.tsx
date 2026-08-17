@@ -11,49 +11,45 @@ interface PageProps {
 const fallbackProducts: Product[] = [
   {
     rank: 1,
-    badge: "Best Overall — Editor's Choice",
-    title: 'The Monolith',
-    brand: 'Atelier Nord',
-    image: 'https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?auto=format&fit=crop&w=1200&q=85',
-    price: '$3,200',
-    keyFeature: 'Matte ceramic-coated steel body',
-    why: [
-      'The Monolith earned its place at the top of this list not through excess but through restraint. Every surface is unbroken matte black, every control is recessed flush into the body.',
-      'What separates it from imitators is the dual-boiler thermal system, borrowed from commercial platforms and re-engineered into a residential counter footprint.',
+    badge: "Editor's Choice",
+    name: 'ScreenBar Halo 2',
+    brand: 'BenQ',
+    image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=85',
+    priceRange: 'Under $200',
+    rating: 4.7,
+    affiliateUrl: 'https://www.amazon.com/dp/B0DK59YKRS',
+    pros: [
+      'Aluminum housing and puck give a substantial, premium feel',
+      'Puck rotates smoothly for intuitive, tactile brightness control',
+      'Front beam lights the desktop with minimal screen glare',
     ],
-    specs: [
-      { label: 'Material', value: 'Ceramic-coated stainless steel' },
-      { label: 'Dimensions', value: '14.2" W x 16.8" D x 15.4" H' },
-      { label: 'Origin', value: 'Assembled in Northern Italy' },
-      { label: 'Warranty', value: '5-year limited manufacturer warranty' },
+    cons: [
+      'Power cord is fixed at roughly five feet, not removable',
+      'Wireless controller battery is non-replaceable, limiting long-term repair',
+      'Counterweight clip can loosen on thick or slick monitor bezels',
     ],
-    pros: ['Commercial-grade dual boiler in a compact form', 'PID temperature stability within 0.5°F', 'Unbroken, gallery-worthy matte finish'],
-    cons: ['Premium price point', 'Requires a dedicated water line for full function'],
-    affiliateUrl: 'https://ateliernord.com',
-    ctaLabel: 'Check Availability on Official Site',
+    desc: 'Traditional desk lamps consume workspace and cast glare across monitor displays. The Halo 2 mounts above the screen instead, pairing an aluminum housing with dual-zone LEDs—an asymmetric front beam and a diffused ambient backlight—to separate desktop illumination from screen reflection. Wireless dial control and a CRI above 95 support accurate color work without adding desk clutter.',
   },
   {
     rank: 2,
-    badge: 'Best Design',
-    title: 'Ceramic Form No. 3',
-    brand: 'Studio Archive',
-    image: 'https://images.unsplash.com/photo-1521314358897-40742d4a23a1?auto=format&fit=crop&w=1200&q=85',
-    price: '$1,890',
-    keyFeature: 'Hand-glazed stoneware housing',
-    why: [
-      'Studio Archive built its reputation on tableware, and Ceramic Form No. 3 is what happens when that sensibility is applied to an espresso machine.',
-      'Internals are entirely conventional and well-proven — a single boiler with a rotary pump tuned for lighter-roast pours.',
+    badge: 'Best Value Pick',
+    name: 'Felt Desk Mat',
+    brand: 'DAWNTREES',
+    image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=85',
+    priceRange: 'Under $30',
+    rating: 4.4,
+    affiliateUrl: 'https://www.amazon.com/dp/B09Q58Z9T9',
+    pros: [
+      'Rubber backing holds the mat and keyboard in one place',
+      'Felt top wipes clean and shakes off loose dust',
+      'Full-size mat fits a laptop, keyboard, and mouse together',
     ],
-    specs: [
-      { label: 'Material', value: 'Glazed stoneware over steel frame' },
-      { label: 'Dimensions', value: '11.8" W x 15.0" D x 14.2" H' },
-      { label: 'Origin', value: 'Hand-finished in Kyoto, Japan' },
-      { label: 'Warranty', value: '3-year limited manufacturer warranty' },
+    cons: [
+      'Felt can feel rough on bare skin during heavy use',
+      'Mat ships rolled and takes time to lie flat',
+      'Felt soaks up liquid, so spills need quick attention',
     ],
-    pros: ['Genuinely one-of-a-kind hand-glazed finish', 'Quiet rotary pump operation'],
-    cons: ['Longer heat-up time than steel competitors', 'Ceramic housing requires careful handling'],
-    affiliateUrl: 'https://studioarchive.com',
-    ctaLabel: 'Check Availability on Amazon',
+    desc: 'Hard desks make noise, scratch easily, and let keyboards slide out of place. This mat uses a dense felt top over a rubber base to hold gear still, covering 39.4 by 19.69 inches for a laptop, keyboard, and mouse. The felt also softens typing sound and gives the wrist a comfortable rest.',
   },
 ]
 
@@ -79,37 +75,31 @@ export default async function ArticlePage({ params }: PageProps) {
     notFound()
   }
 
-  const title = articleData?.title || 'The 7 Best Sculptural Espresso Machines for Elevated Living'
-  const excerpt = articleData?.excerpt || 'An intentional review of architectural kitchen objects that elevate your morning pour.'
+  const title = articleData?.title || 'Curated Workspace Essentials for Elevated Living'
+  const excerpt =
+    articleData?.excerpt ||
+    'An intentional review of architectural objects and ergonomic desk pieces that elevate your daily workflow.'
   const categoryTitle = articleData?.category?.title || 'Living Spaces'
   const categorySlug = articleData?.category?.slug || 'living-spaces'
 
-  // Map Sanity products
+  // Map Sanity products with full schema fidelity
   let products: Product[] = fallbackProducts
   if (articleData?.featuredProducts && articleData.featuredProducts.length > 0) {
     products = articleData.featuredProducts.map((p: any, idx: number) => ({
+      _id: p._id,
       rank: idx + 1,
-      badge: p.badge || (idx === 0 ? "Best Overall — Editor's Choice" : `Curator's Selection #${idx + 1}`),
-      title: p.name,
+      name: p.name,
       brand: p.brand,
+      priceRange: p.priceRange || 'Inquire',
+      rating: typeof p.rating === 'number' ? p.rating : undefined,
+      badge: p.badge || undefined,
       image: p.image
-        ? urlFor(p.image).width(1000).quality(85).url()
-        : 'https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?auto=format&fit=crop&w=1200&q=85',
-      price: p.priceRange || '$--',
-      keyFeature: p.brand ? `Crafted by ${p.brand}` : 'Curated Specification',
-      why: [
-        `${p.name} was selected for its sculptural silhouette, material honesty, and refined tactile feedback during daily rituals.`,
-        'Every detail from the finish to the mechanical action has been vetted for longevity and aesthetic balance.',
-      ],
-      specs: [
-        { label: 'Maker', value: p.brand || 'Artisan Workshop' },
-        { label: 'Rating', value: `${p.rating || 5} / 5 Editorial Stars` },
-      ],
-      pros: p.pros && p.pros.length > 0 ? p.pros : ['Sculptural gallery-worthy presence', 'Tactile material craftsmanship'],
-      cons: p.cons && p.cons.length > 0 ? p.cons : ['Limited edition craft production'],
+        ? urlFor(p.image).width(1200).quality(85).url()
+        : 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85',
       affiliateUrl: p.affiliateUrl || '#',
-      ctaLabel: 'Check Availability on Official Site',
-      rating: p.rating || 5,
+      pros: Array.isArray(p.pros) ? p.pros : [],
+      cons: Array.isArray(p.cons) ? p.cons : [],
+      desc: p.desc || undefined,
     }))
   }
 
@@ -118,13 +108,15 @@ export default async function ArticlePage({ params }: PageProps) {
     {
       category: 'Daily Rituals',
       title: 'The case for grinding your own beans, even on a Tuesday',
-      image: 'https://images.unsplash.com/photo-1521314358897-40742d4a23a1?auto=format&fit=crop&w=1200&q=85',
+      image:
+        'https://images.unsplash.com/photo-1521314358897-40742d4a23a1?auto=format&fit=crop&w=1200&q=85',
       slug: 'grinding-your-own-beans',
     },
     {
       category: 'Objects',
       title: 'Brass, patina, and the beauty of things that age in public',
-      image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=1200&q=85',
+      image:
+        'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=1200&q=85',
       slug: 'brass-patina-objects',
     },
   ]
@@ -147,10 +139,9 @@ export default async function ArticlePage({ params }: PageProps) {
         { label: categoryTitle, href: `/category/${categorySlug}` },
         { label: title },
       ]}
-      issueLabel="Curated List // The Edit"
+      issueLabel="Curated Edit // Vol. 01"
       title={title}
       subtitle="2026 Edition"
-      curator="The Editorial Desk"
       updatedAt={
         articleData?.publishedAt
           ? new Date(articleData.publishedAt).toLocaleDateString('en-US', {
@@ -158,16 +149,13 @@ export default async function ArticlePage({ params }: PageProps) {
               day: 'numeric',
               year: 'numeric',
             })
-          : 'Aug 16, 2026'
+          : 'Aug 17, 2026'
       }
-      readTime="10 min read"
+      readTime="8 min read"
       excerpt={excerpt}
       products={products}
       content={articleData?.content}
       relatedArticles={relatedArticles}
-      authorImage="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=85"
-      authorName="The Editorial Desk"
-      authorBio="Curators of the considered life, since 2019"
     />
   )
 }
