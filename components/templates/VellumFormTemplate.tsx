@@ -65,7 +65,7 @@ export function VellumFormTemplate({
             <a href="#objects" className="transition-colors hover:text-foreground">Objects</a>
             <a href="/category/living-spaces" className="transition-colors hover:text-foreground">Living Spaces</a>
             <a href="#the-edit" className="transition-colors hover:text-foreground">The Edit</a>
-            <a href="#about" className="transition-colors hover:text-foreground">About</a>
+            <a href="/about" className="transition-colors hover:text-foreground">About</a>
           </nav>
           <div className="flex items-center gap-4">
             <button aria-label="Search" className="text-muted-foreground transition-colors hover:text-foreground"><Search size={17} strokeWidth={1.5} /></button>
@@ -78,7 +78,7 @@ export function VellumFormTemplate({
               <a href="#objects" onClick={() => setMenuOpen(false)}>Objects</a>
               <a href="/category/living-spaces" onClick={() => setMenuOpen(false)}>Living Spaces</a>
               <a href="#the-edit" onClick={() => setMenuOpen(false)}>The Edit</a>
-              <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
+              <a href="/about" onClick={() => setMenuOpen(false)}>About</a>
             </div>
           </nav>
         )}
@@ -225,7 +225,7 @@ export function VellumFormTemplate({
         </Reveal>
       </section>
 
-      <footer id="footer" className="border-t border-border"><div className="mx-auto grid max-w-[1440px] gap-12 px-5 py-12 md:grid-cols-[1.5fr_1fr_1fr] md:px-10 md:py-16"><div><a href="#top" className="font-sans text-[11px] font-semibold tracking-[0.28em]">VELLUM FORM</a><p className="mt-5 max-w-xs font-serif text-xl leading-snug">A digital curation house for the considered life.</p></div><div className="flex flex-col gap-3 font-sans text-[10px] uppercase tracking-[0.14em] text-muted-foreground"><span className="mb-2 text-accent">Explore</span><a href="#objects">Objects</a><a href="/category/living-spaces">Living Spaces</a><a href="#the-edit">The Edit</a></div><div className="flex flex-col gap-3 font-sans text-[10px] uppercase tracking-[0.14em] text-muted-foreground"><span className="mb-2 text-accent">Elsewhere</span><a href="#instagram">Instagram</a><a href="#pinterest">Pinterest</a><a href="#about">About us</a></div></div><div className="mx-auto flex max-w-[1440px] flex-col gap-3 border-t border-border px-5 py-6 font-sans text-[9px] leading-5 tracking-[0.04em] text-muted-foreground md:flex-row md:items-center md:justify-between md:px-10"><span>© 2026 Vellum Form. All rights reserved.</span><span>Affiliate disclosure: We may earn a commission from select links, at no additional cost to you.</span><span>Privacy / Terms</span></div></footer>
+      <footer id="footer" className="border-t border-border"><div className="mx-auto grid max-w-[1440px] gap-12 px-5 py-12 md:grid-cols-[1.5fr_1fr_1fr] md:px-10 md:py-16"><div><a href="#top" className="font-sans text-[11px] font-semibold tracking-[0.28em]">VELLUM FORM</a><p className="mt-5 max-w-xs font-serif text-xl leading-snug">A digital curation house for the considered life.</p></div><div className="flex flex-col gap-3 font-sans text-[10px] uppercase tracking-[0.14em] text-muted-foreground"><span className="mb-2 text-accent">Explore</span><a href="#objects">Objects</a><a href="/category/living-spaces">Living Spaces</a><a href="#the-edit">The Edit</a></div><div className="flex flex-col gap-3 font-sans text-[10px] uppercase tracking-[0.14em] text-muted-foreground"><span className="mb-2 text-accent">Elsewhere</span><a href="#instagram">Instagram</a><a href="#pinterest">Pinterest</a><a href="/about">About us</a></div></div><div className="mx-auto flex max-w-[1440px] flex-col gap-3 border-t border-border px-5 py-6 font-sans text-[9px] leading-5 tracking-[0.04em] text-muted-foreground md:flex-row md:items-center md:justify-between md:px-10"><span>© 2026 Vellum Form. All rights reserved.</span><span>Affiliate disclosure: We may earn a commission from select links, at no additional cost to you.</span><div className="flex items-center gap-3"><a href="/about" className="hover:underline">About</a><span>/</span><a href="/legal" className="hover:underline text-foreground">Privacy &amp; Terms</a></div></div></footer>
     </main>
   )
 }
