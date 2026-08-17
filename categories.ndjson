@@ -1,0 +1,4 @@
+{"_type": "category", "_id": "category-living-spaces", "title": "Living Spaces", "slug": {"_type": "slug", "current": "living-spaces"}, "description": "Minimalist home decor, sculptural lighting, artisan ceramics, and neutral-toned furniture."}
+{"_type": "category", "_id": "category-daily-rituals", "title": "Daily Rituals", "slug": {"_type": "slug", "current": "daily-rituals"}, "description": "Premium kitchenware, luxury desk aesthetics, espresso gear, and elevated everyday accessories."}
+{"_type": "category", "_id": "category-skin-wellness", "title": "Skin & Wellness", "slug": {"_type": "slug", "current": "skin-wellness"}, "description": "High-end skincare devices, luxury grooming essentials, and spa-grade bathroom curation."}
+{"_type": "category", "_id": "category-the-edit", "title": "The Edit", "slug": {"_type": "slug", "current": "the-edit"}, "description": "In-depth editorial roundups, seasonal curation guides, and deep-dive design reviews."}
