@@ -1,5 +1,5 @@
 import { CategoryTemplate, CollectionItem } from '@/components/templates/CategoryTemplate'
-import { getArticlesByCategory, getCategoryBySlug, urlFor } from '@/lib/sanity'
+import { getArticlesByCategory, getCategoryBySlug, getAllCategories, urlFor } from '@/lib/sanity'
 
 export const revalidate = 60
 
@@ -13,16 +13,25 @@ export default async function CategoryDynamicPage({ params }: PageProps) {
   let categoryTitle = slug ? slug.replace(/-/g, ' ').toUpperCase() : 'COLLECTION ARCHIVE'
   let categoryDesc = 'An intentional collection of sculptural objects, tactile textiles, and refined interior decor.'
   let items: CollectionItem[] = []
+  let categories: { title: string; slug: string }[] = []
 
   try {
-    const [catData, articlesData] = await Promise.all([
+    const [catData, articlesData, allCats] = await Promise.all([
       getCategoryBySlug(slug),
       getArticlesByCategory(slug),
+      getAllCategories(),
     ])
 
     if (catData) {
       categoryTitle = catData.title?.toUpperCase() || categoryTitle
       if (catData.description) categoryDesc = catData.description
+    }
+
+    if (allCats && allCats.length > 0) {
+      categories = allCats.map((c: any) => ({
+        title: c.title,
+        slug: c.slug,
+      }))
     }
 
     if (articlesData && articlesData.length > 0) {
@@ -99,6 +108,7 @@ export default async function CategoryDynamicPage({ params }: PageProps) {
       entriesCountText={`Showing ${items.length} Curated Entries`}
       tabs={tabs}
       items={items}
+      categories={categories}
       curatorsNote={{
         badge: "Curator's Note",
         quote: "We believe objects in the home should age with grace, celebrating form as much as function.",

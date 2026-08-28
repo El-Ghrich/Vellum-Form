@@ -109,3 +109,46 @@ export async function getRecentArticles(currentSlug?: string) {
   }`
   return client.fetch(query, { currentSlug: currentSlug || '' }, { next: { revalidate: 60 } })
 }
+
+export async function getAllCategories() {
+  const query = `*[_type == "category"] | order(title asc) {
+    _id,
+    title,
+    "slug": slug.current,
+    description
+  }`
+  return client.fetch(query, {}, { next: { revalidate: 60 } })
+}
+
+export async function searchArticles(searchTerm: string, categorySlug?: string) {
+  const cleanedTerm = (searchTerm || '').trim()
+  const groqTerm = cleanedTerm ? `*${cleanedTerm}*` : '*'
+  
+  let query = `*[_type == "article"`
+  const params: Record<string, any> = { term: groqTerm }
+
+  if (categorySlug && categorySlug !== 'all') {
+    query += ` && category->slug.current == $categorySlug`
+    params.categorySlug = categorySlug
+  }
+
+  if (cleanedTerm) {
+    query += ` && (title match $term || excerpt match $term || category->title match $term)`
+  }
+
+  query += `] | order(publishedAt desc) {
+    _id,
+    title,
+    "slug": slug.current,
+    excerpt,
+    heroImage,
+    publishedAt,
+    category->{
+      title,
+      "slug": slug.current
+    }
+  }`
+
+  return client.fetch(query, params, { next: { revalidate: 30 } })
+}
+

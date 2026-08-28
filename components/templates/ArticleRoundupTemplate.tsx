@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
@@ -10,11 +10,13 @@ import {
   Link2,
   Mail,
   Minus,
+  Search,
   Share2,
   Star,
 } from 'lucide-react'
 import { Reveal } from '@/components/reveal'
 import { PortableText } from '@portabletext/react'
+import { SearchModal } from '@/components/SearchModal'
 
 export interface Product {
   _id?: string
@@ -82,6 +84,19 @@ export function ArticleRoundupTemplate({
   relatedArticles = [],
 }: ArticleRoundupTemplateProps) {
   const [copied, setCopied] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
+
+  // Keyboard shortcut Cmd+K or Ctrl+K
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        setSearchOpen((prev) => !prev)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
 
   function handleCopyLink() {
     if (typeof window !== 'undefined' && navigator.clipboard) {
@@ -109,6 +124,9 @@ export function ArticleRoundupTemplate({
             <Link href="/category/living-spaces" className="transition-colors hover:text-[#111111]">
               Living Spaces
             </Link>
+            <Link href="/category/daily-rituals" className="transition-colors hover:text-[#111111]">
+              Daily Rituals
+            </Link>
             <Link href="/#the-edit" className="transition-colors hover:text-[#111111]">
               The Edit
             </Link>
@@ -116,13 +134,30 @@ export function ArticleRoundupTemplate({
               About
             </Link>
           </nav>
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-4">
+            <button
+              type="button"
+              aria-label="Search articles"
+              onClick={() => setSearchOpen(true)}
+              className="flex items-center gap-2 rounded-full border border-[#E8E4DC] px-3 py-1.5 font-sans text-[10px] uppercase tracking-wider text-[#666666] transition-all duration-300 hover:border-[#111111] hover:text-[#111111]"
+            >
+              <Search size={13} strokeWidth={1.5} />
+              <span className="hidden sm:inline">Search</span>
+              <kbd className="hidden font-mono text-[9px] text-[#888888] sm:inline">⌘K</kbd>
+            </button>
             <Link href="/about" className="font-sans text-[10px] uppercase tracking-[0.18em] text-[#8A7051] hover:underline">
               Curation House
             </Link>
           </div>
         </div>
       </header>
+
+      {/* Global Search Modal */}
+      <SearchModal
+        isOpen={searchOpen}
+        onClose={() => setSearchOpen(false)}
+      />
+
 
       {/* Breadcrumbs */}
       <div className="border-b border-[#E8E4DC]">

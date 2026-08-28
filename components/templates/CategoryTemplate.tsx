@@ -1,9 +1,11 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import Image from 'next/image'
-import { ArrowUpRight, ChevronLeft, ChevronRight, Eye, Grid3x3, LayoutGrid } from 'lucide-react'
+import Link from 'next/link'
+import { ArrowUpRight, ChevronLeft, ChevronRight, Eye, Grid3x3, LayoutGrid, Search, Menu, X } from 'lucide-react'
 import { Reveal } from '@/components/reveal'
+import { SearchModal, CategoryOption } from '@/components/SearchModal'
 
 export interface CollectionItem {
   id: string
@@ -25,17 +27,25 @@ export interface CategoryTemplateProps {
   entriesCountText?: string
   tabs?: string[]
   items: CollectionItem[]
+  categories?: CategoryOption[]
   curatorsNote?: {
     badge?: string
     quote: string
   }
 }
 
+const defaultCategories: CategoryOption[] = [
+  { title: 'Living Spaces', slug: 'living-spaces' },
+  { title: 'Daily Rituals', slug: 'daily-rituals' },
+  { title: 'Skin & Wellness', slug: 'skin-wellness' },
+  { title: 'The Edit', slug: 'the-edit' },
+]
+
 const sortOptions = ["Curator's Pick", 'Newest Editions', 'Price: Ascending', 'Price: Descending'] as const
 type SortOption = (typeof sortOptions)[number]
 
 function priceValue(price: string) {
-  return Number(price.replace(/[^0-9.]/g, ''))
+  return Number(price.replace(/[^0-9.]/g, '')) || 0
 }
 
 export function CategoryTemplate({
@@ -45,12 +55,27 @@ export function CategoryTemplate({
   entriesCountText,
   tabs = ['All'],
   items,
+  categories = defaultCategories,
   curatorsNote,
 }: CategoryTemplateProps) {
   const [activeTab, setActiveTab] = useState<string>('All')
   const [sort, setSort] = useState<SortOption>("Curator's Pick")
   const [sortOpen, setSortOpen] = useState(false)
   const [view, setView] = useState<'grid' | 'editorial'>('grid')
+  const [searchOpen, setSearchOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  // Keyboard shortcut Cmd+K or Ctrl+K
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        setSearchOpen((prev) => !prev)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
 
   const filtered = useMemo(() => {
     const base = activeTab === 'All' ? items : items.filter((item) => item.category === activeTab)
@@ -61,26 +86,98 @@ export function CategoryTemplate({
     return sorted
   }, [items, activeTab, sort])
 
-  const beforeNote = filtered.slice(0, Math.ceil(filtered.length / 2))
-  const afterNote = filtered.slice(Math.ceil(filtered.length / 2))
+  const beforeNote = filtered.slice(0, Math.max(1, Math.ceil(filtered.length / 2)))
+  const afterNote = filtered.slice(Math.max(1, Math.ceil(filtered.length / 2)))
+
+  const navCategories = categories.length > 0 ? categories : defaultCategories
 
   return (
     <main className="min-h-screen bg-background text-foreground">
       {/* Header / Navigation */}
-      <header className="border-b border-border">
+      <header className="border-b border-border sticky top-0 z-40 bg-background/95 backdrop-blur-md">
         <div className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-5 md:px-10">
-          <a href="/" className="font-sans text-[11px] font-semibold tracking-[0.28em]">VELLUM FORM</a>
+          <Link href="/" className="font-sans text-[11px] font-semibold tracking-[0.28em]">
+            VELLUM FORM
+          </Link>
           <nav className="hidden items-center gap-8 font-sans text-[11px] uppercase tracking-[0.14em] text-muted-foreground lg:flex">
-            <a href="/#objects" className="transition-colors hover:text-foreground">Objects</a>
-            <a href="/category/living-spaces" className="text-foreground">Living Spaces</a>
-            <a href="/#the-edit" className="transition-colors hover:text-foreground">The Edit</a>
-            <a href="/about" className="transition-colors hover:text-foreground">About</a>
+            <Link href="/#objects" className="transition-colors hover:text-foreground">
+              Objects
+            </Link>
+            {navCategories.map((cat) => (
+              <Link
+                key={cat.slug}
+                href={`/category/${cat.slug}`}
+                className={`transition-colors ${
+                  title.toLowerCase() === cat.title.toLowerCase()
+                    ? 'text-foreground font-semibold'
+                    : 'hover:text-foreground'
+                }`}
+              >
+                {cat.title}
+              </Link>
+            ))}
+            <Link href="/#the-edit" className="transition-colors hover:text-foreground">
+              The Edit
+            </Link>
+            <Link href="/about" className="transition-colors hover:text-foreground">
+              About
+            </Link>
           </nav>
+          <div className="flex items-center gap-4">
+            <button
+              type="button"
+              aria-label="Search articles"
+              onClick={() => setSearchOpen(true)}
+              className="flex items-center gap-2 rounded-full border border-border px-3 py-1.5 font-sans text-[10px] uppercase tracking-wider text-muted-foreground transition-all duration-300 hover:border-foreground hover:text-foreground"
+            >
+              <Search size={14} strokeWidth={1.5} />
+              <span className="hidden sm:inline">Search</span>
+              <kbd className="hidden font-mono text-[9px] text-muted-foreground/70 sm:inline">⌘K</kbd>
+            </button>
+            <button
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              className="lg:hidden"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              {menuOpen ? <X size={19} strokeWidth={1.5} /> : <Menu size={19} strokeWidth={1.5} />}
+            </button>
+          </div>
         </div>
+        {menuOpen && (
+          <nav className="border-t border-border px-5 py-6 lg:hidden">
+            <div className="flex flex-col gap-5 font-sans text-xs uppercase tracking-[0.16em]">
+              <Link href="/#objects" onClick={() => setMenuOpen(false)}>
+                Objects
+              </Link>
+              {navCategories.map((cat) => (
+                <Link
+                  key={cat.slug}
+                  href={`/category/${cat.slug}`}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {cat.title}
+                </Link>
+              ))}
+              <Link href="/#the-edit" onClick={() => setMenuOpen(false)}>
+                The Edit
+              </Link>
+              <Link href="/about" onClick={() => setMenuOpen(false)}>
+                About
+              </Link>
+            </div>
+          </nav>
+        )}
       </header>
 
+      {/* Global Search Modal */}
+      <SearchModal
+        isOpen={searchOpen}
+        onClose={() => setSearchOpen(false)}
+        categories={navCategories}
+      />
+
       {/* Hero / Header Section */}
-      <section className="border-b border-border">
+      <section className="border-b border-border bg-[#FBF9F5]">
         <div className="mx-auto flex max-w-[1440px] flex-col items-center px-5 py-16 text-center md:px-10 md:py-24">
           {categoryBadge && (
             <Reveal>
@@ -97,20 +194,16 @@ export function CategoryTemplate({
               </p>
             </Reveal>
           )}
-          {entriesCountText ? (
-            <Reveal delay={300}>
-              <p className="mt-8 font-sans text-[10px] uppercase tracking-[0.16em] text-muted-foreground">{entriesCountText}</p>
-            </Reveal>
-          ) : (
-            <Reveal delay={300}>
-              <p className="mt-8 font-sans text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Showing {filtered.length} Curated Entries</p>
-            </Reveal>
-          )}
+          <Reveal delay={300}>
+            <p className="mt-8 font-sans text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+              {entriesCountText || `Showing ${filtered.length} Curated Entries`}
+            </p>
+          </Reveal>
         </div>
       </section>
 
       {/* Toolbar / Filters */}
-      <section className="sticky top-0 z-10 border-b border-border bg-background/95 backdrop-blur">
+      <section className="sticky top-[69px] z-20 border-b border-border bg-background/95 backdrop-blur">
         <div className="mx-auto flex max-w-[1440px] flex-col gap-4 px-5 py-4 md:flex-row md:items-center md:justify-between md:px-10">
           <div className="flex gap-2 overflow-x-auto">
             {tabs.map((tab) => (
@@ -137,7 +230,7 @@ export function CategoryTemplate({
                 {sort}
               </button>
               {sortOpen && (
-                <div className="absolute right-0 top-full z-20 mt-2 w-56 border border-border bg-background shadow-sm">
+                <div className="absolute right-0 top-full z-30 mt-2 w-56 border border-border bg-background shadow-lg">
                   {sortOptions.map((option) => (
                     <button
                       key={option}
@@ -146,7 +239,7 @@ export function CategoryTemplate({
                         setSortOpen(false)
                       }}
                       className={`block w-full px-4 py-3 text-left font-sans text-[10px] uppercase tracking-[0.12em] transition-colors duration-200 hover:bg-muted ${
-                        option === sort ? 'text-accent' : 'text-muted-foreground'
+                        option === sort ? 'text-accent font-semibold' : 'text-muted-foreground'
                       }`}
                     >
                       {option}
@@ -180,61 +273,59 @@ export function CategoryTemplate({
 
       {/* Grid Content */}
       <section className="mx-auto max-w-[1440px] px-5 py-16 md:px-10 md:py-24">
-        <div className={view === 'grid' ? 'grid grid-cols-2 gap-x-4 gap-y-12 md:grid-cols-3 md:gap-x-6 md:gap-y-16' : 'grid gap-x-6 gap-y-16 md:grid-cols-2'}>
-          {beforeNote.map((item, index) => (
-            <CollectionCard key={item.id} item={item} index={index} large={view === 'editorial'} />
-          ))}
-        </div>
+        {filtered.length > 0 ? (
+          <>
+            <div className={view === 'grid' ? 'grid grid-cols-2 gap-x-4 gap-y-12 md:grid-cols-3 md:gap-x-6 md:gap-y-16' : 'grid gap-x-6 gap-y-16 md:grid-cols-2'}>
+              {beforeNote.map((item, index) => (
+                <CollectionCard key={item.id} item={item} index={index} large={view === 'editorial'} />
+              ))}
+            </div>
 
-        {curatorsNote && (
-          <Reveal className="mx-auto my-16 max-w-2xl border-y border-border py-12 text-center md:my-24">
-            {curatorsNote.badge && (
-              <p className="mb-4 font-sans text-[10px] uppercase tracking-[0.22em] text-accent">{curatorsNote.badge}</p>
+            {curatorsNote && (
+              <Reveal className="mx-auto my-16 max-w-2xl border-y border-border py-12 text-center md:my-24">
+                {curatorsNote.badge && (
+                  <p className="mb-4 font-sans text-[10px] uppercase tracking-[0.22em] text-accent">{curatorsNote.badge}</p>
+                )}
+                <blockquote className="font-serif text-2xl leading-snug tracking-[-0.02em] text-balance md:text-3xl">
+                  &quot;{curatorsNote.quote}&quot;
+                </blockquote>
+              </Reveal>
             )}
-            <blockquote className="font-serif text-2xl leading-snug tracking-[-0.02em] text-balance md:text-3xl">
-              &quot;{curatorsNote.quote}&quot;
-            </blockquote>
-          </Reveal>
-        )}
 
-        {afterNote.length > 0 && (
-          <div className={view === 'grid' ? 'grid grid-cols-2 gap-x-4 gap-y-12 md:grid-cols-3 md:gap-x-6 md:gap-y-16' : 'grid gap-x-6 gap-y-16 md:grid-cols-2'}>
-            {afterNote.map((item, index) => (
-              <CollectionCard key={item.id} item={item} index={index + beforeNote.length} large={view === 'editorial'} />
-            ))}
+            {afterNote.length > 0 && (
+              <div className={view === 'grid' ? 'grid grid-cols-2 gap-x-4 gap-y-12 md:grid-cols-3 md:gap-x-6 md:gap-y-16' : 'grid gap-x-6 gap-y-16 md:grid-cols-2'}>
+                {afterNote.map((item, index) => (
+                  <CollectionCard key={item.id} item={item} index={index + beforeNote.length} large={view === 'editorial'} />
+                ))}
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="py-20 text-center">
+            <p className="font-serif text-2xl">No stories currently in this category.</p>
+            <p className="mt-3 font-sans text-sm text-muted-foreground">Explore our other collections or search across all articles.</p>
+            <div className="mt-8 flex justify-center gap-3 flex-wrap">
+              {navCategories.map((c) => (
+                <Link
+                  key={c.slug}
+                  href={`/category/${c.slug}`}
+                  className="rounded-full border border-border px-4 py-2 font-sans text-[10px] uppercase tracking-wider hover:border-accent hover:text-accent transition-colors"
+                >
+                  {c.title}
+                </Link>
+              ))}
+            </div>
           </div>
         )}
-
-        <Reveal className="mt-20 flex flex-col items-center gap-6 md:mt-28">
-          <button className="border border-foreground px-8 py-3 font-sans text-[10px] uppercase tracking-[0.16em] transition-colors duration-300 hover:bg-foreground hover:text-background">
-            Load More Entries
-          </button>
-          <nav aria-label="Archive pagination" className="flex items-center gap-2 font-sans text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-            <button aria-label="Previous page" className="flex h-8 w-8 items-center justify-center border border-border transition-colors duration-300 hover:border-accent hover:text-accent">
-              <ChevronLeft size={13} strokeWidth={1.5} />
-            </button>
-            {[1, 2, 3].map((page) => (
-              <button
-                key={page}
-                className={`flex h-8 w-8 items-center justify-center border transition-colors duration-300 ${page === 1 ? 'border-foreground text-foreground' : 'border-border hover:border-accent hover:text-accent'}`}
-              >
-                {page}
-              </button>
-            ))}
-            <button aria-label="Next page" className="flex h-8 w-8 items-center justify-center border border-border transition-colors duration-300 hover:border-accent hover:text-accent">
-              <ChevronRight size={13} strokeWidth={1.5} />
-            </button>
-          </nav>
-        </Reveal>
       </section>
 
       <footer className="border-t border-border">
         <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-between gap-3 px-5 py-8 text-center font-sans text-[9px] uppercase tracking-[0.14em] text-muted-foreground md:flex-row md:px-10">
           <span>© 2026 Vellum Form. All rights reserved.</span>
           <div className="flex items-center gap-4">
-            <a href="/about" className="hover:text-foreground">About</a>
+            <Link href="/about" className="hover:text-foreground">About</Link>
             <span>/</span>
-            <a href="/legal" className="hover:text-foreground">Privacy &amp; Terms</a>
+            <Link href="/legal" className="hover:text-foreground">Privacy &amp; Terms</Link>
           </div>
         </div>
       </footer>
@@ -256,7 +347,7 @@ function CollectionCard({ item, index, large }: { item: CollectionItem; index: n
         rel={isProduct ? 'noopener noreferrer nofollow' : undefined}
         className="block"
       >
-        <div className={`relative overflow-hidden bg-muted ${large ? 'aspect-[4/3]' : 'aspect-[4/5]'}`}>
+        <div className={`relative overflow-hidden rounded-sm bg-muted ${large ? 'aspect-[4/3]' : 'aspect-[4/5]'}`}>
           <Image
             src={item.image}
             alt={item.title}

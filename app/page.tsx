@@ -1,7 +1,14 @@
-import { VellumFormTemplate, Article, ProductObject } from '@/components/templates/VellumFormTemplate'
-import { getFeaturedArticles, urlFor } from '@/lib/sanity'
+import { VellumFormTemplate, Article, ProductObject, CategoryItem } from '@/components/templates/VellumFormTemplate'
+import { getFeaturedArticles, getAllCategories, urlFor } from '@/lib/sanity'
 
 export const revalidate = 60
+
+const fallbackCategories: CategoryItem[] = [
+  { title: 'Living Spaces', slug: 'living-spaces' },
+  { title: 'Daily Rituals', slug: 'daily-rituals' },
+  { title: 'Skin & Wellness', slug: 'skin-wellness' },
+  { title: 'The Edit', slug: 'the-edit' },
+]
 
 const fallbackArticles: Article[] = [
   {
@@ -60,9 +67,22 @@ const curatedObjects: ProductObject[] = [
 
 export default async function Home() {
   let articles: Article[] = fallbackArticles
+  let categories: CategoryItem[] = fallbackCategories
 
   try {
-    const sanityArticles = await getFeaturedArticles()
+    const [sanityArticles, sanityCategories] = await Promise.all([
+      getFeaturedArticles(),
+      getAllCategories(),
+    ])
+
+    if (sanityCategories && sanityCategories.length > 0) {
+      categories = sanityCategories.map((cat: any) => ({
+        title: cat.title,
+        slug: cat.slug,
+        description: cat.description,
+      }))
+    }
+
     if (sanityArticles && sanityArticles.length > 0) {
       articles = sanityArticles.map((item: any) => ({
         category: item.category?.title || 'The Edit',
@@ -81,7 +101,7 @@ export default async function Home() {
       }))
     }
   } catch (error) {
-    console.error('Error fetching articles from Sanity:', error)
+    console.error('Error fetching data from Sanity:', error)
   }
 
   const heroImage = articles[0]?.image || 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85'
@@ -94,6 +114,7 @@ export default async function Home() {
       heroDescription="An exploration of considered spaces, the objects that inhabit them, and the rituals that make them ours."
       articles={articles}
       objects={curatedObjects}
+      categories={categories}
     />
   )
 }

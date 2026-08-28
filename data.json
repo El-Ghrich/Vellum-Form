@@ -1,104 +1,101 @@
 [
   {
     "_type": "product",
-    "name": "ScreenBar Halo 2",
-    "brand": "BenQ",
-    "priceRange": "Under $200",
-    "rating": 4.7,
-    "badge": "Editor's Choice",
-    "affiliateUrl": "https://www.amazon.com/BenQ-ScreenBar-Halo-Monitor-Light/dp/B0DK59YKRS/ref=sr_1_3?crid=N9MRCZTIW6U6&dib=eyJ2IjoiMSJ9.i6fX6CYdYm933a9ezC6fs8boY8sCtdkkQGYFG8UB5_yFP7dGhpKKqjCgHUiHb_6Jr0A93QFeB-i0t7_im4A-15GD_uGS4EiLcA0Xh1IQ_rleGsn9BUROjv6N-vZVauk7khYN2AS_tEogwrK-m88myQddoZs-evFb6sUgSbIQNGFqPnsL9gAqg0IOcM9P-23E4oypbRuYD3HZFNCnQ-DHqxm9v9hyEf2joPJkZEF0n7E._0lerbfAMWtRiq4ygsz0SaOMPDaD374cmHT5zQ8oFeo&dib_tag=se&keywords=BenQ+ScreenBar+Halo&qid=1786956363&sprefix=benq+screenbar+halo%2Caps%2C334&sr=8-3",
+    "name": "Brew Conical Burr Coffee Grinder",
+    "brand": "OXO",
+    "priceRange": "Under $110",
+    "rating": 4.3,
+    "badge": "Best for Consistency",
+    "affiliateUrl": "https://www.amazon.com/OXO-Brew-Conical-Coffee-Grinder/dp/B0CM9Z6HYF/ref=sr_1_4?crid=1W7PSQQ25YGJH&dib=eyJ2IjoiMSJ9.t5MjucdW1SL-hDPWdnDSCk58Rr1g3FcVOPoWN75OJEtnHw0mwEbnp28kvqKD0P39cp4436SBe6hbl0CpNZY2S0UHPR-bD9Ti-Yxfrki_RAUWIn4wNr7BGn0sEal7R3JWyDQOmGC0lJ_KOQrH9tyVW5LwQFQifCw8bBG6O74fVRmWhMgxaSk-nnfyYe2MyHo_oRK5eV2sxZAeCG9Pl4-6GLhI-j5RGNSNoMN35FbLEOljPEWgf7O3TsCoQCvacG_769eTgjSmiRVWWTA_mqhNLDwrzLq2zhHTp6n8-eoQ3Bo.5qMWtoaug-MawML_nDaadEkfK8IjA1J42_Ul4J10Zxc&dib_tag=se&keywords=Fellow%2BOde%2BBrew%2BGrinder%2BMatte%2BBlack&qid=1787751201&sprefix=benq%2Bscreenbar%2Bhalo%2Caps%2C805&sr=8-4&th=1",
     "pros": [
-      "Aluminum housing and puck give a substantial, premium feel",
-      "Puck rotates smoothly for intuitive, tactile brightness control",
-      "Front beam lights the desktop with minimal screen glare"
+      "Conical steel burrs produce even grounds for balanced extraction",
+      "One-touch start recalls the last grind setting used",
+      "12 oz hopper blocks UV light to keep beans fresh longer"
     ],
     "cons": [
-      "Power cord is fixed at roughly five feet, not removable",
-      "Wireless controller battery is non-replaceable, limiting long-term repair",
-      "Counterweight clip can loosen on thick or slick monitor bezels"
+      "Lacks the fine control needed for true espresso",
+      "Motor runs loud enough to notice in a quiet kitchen",
+      "Coarse settings can leave behind fine, sediment-like particles"
     ],
-    "desc": "Traditional desk lamps consume workspace and cast glare across monitor displays. The Halo 2 mounts above the screen instead, pairing an aluminum housing with dual-zone LEDs—an asymmetric front beam and a diffused ambient backlight—to separate desktop illumination from screen reflection. Wireless dial control and a CRI above 95 support accurate color work without adding desk clutter."
+    "desc": "Inconsistent grind size is the most common cause of an unbalanced cup. This grinder uses conical steel burrs across 15 settings, plus micro-adjustments, to produce uniform grounds for methods from espresso to French press. A UV-blocking hopper holds 12 ounces of beans, preserving flavor between grinds."
   },
   {
     "_type": "product",
-    "name": "Felt Desk Mat",
-    "brand": "DAWNTREES",
+    "name": "Walnut Serving Tray",
+    "brand": "muso wood",
+    "priceRange": "Under $25",
+    "rating": 4.9,
+    "badge": "Best Small Object",
+    "affiliateUrl": "https://www.amazon.com/Walnut-Serving-Rectangle-Platter-Bathroom/dp/B09YPTKB33/ref=sr_1_8?dib=eyJ2IjoiMSJ9.uIf1isX_xflExuBkMiOBXfO0YgjRrbtx7xlLBReuoSeHkECGfYTwCe6t1N2EKA_PPJt8iGqbAdTqYZ5zjzjo1gmg6jkAK3tEAj2__aGsbX_V4ukoRAoeaMQk_iItp6ytWH1kQD7XB5inwW9I77KxHrQ_mQvd7hyWoqs7KL-QMJqhb7fwUydvqTI9oEYy9x0aqUiXPZ0UqWtBIQQh_AYfnhG1yCnTZ7cMK5S10kHk7u5pEfexHowD7gGA6sb2CAr4IYWYbpRNvQ3Za6kmzKapVWCBlTprvDE_r1fZgElVJc8.NgX_UIxLuBkl6VtEj16jFigcpm883WCXq7HW0zEpxDM&dib_tag=se&keywords=Walnut+Wood+Coffee+Tray&qid=1787751777&sr=8-8",
+    "pros": [
+      "Solid North American walnut shows a rich, natural grain",
+      "Food-grade wax finish allows direct contact with food",
+      "Anti-slip base pads protect tabletops from sliding and wear"
+    ],
+    "cons": [
+      "Compact size limits use for larger gatherings",
+      "Requires occasional hand-washing and re-oiling to maintain"
+    ],
+    "desc": "A coffee station without a defined surface tends to spread into clutter. This tray uses solid walnut with a hand-polished finish to contain a cup, a scale, or a small pour-over setup in one place. Anti-slip pads keep it fixed on the counter, while a food-grade oil finish lets it double as a serving board."
+  },
+  {
+    "_type": "product",
+    "name": "Classic Series Pour-Over Coffeemaker",
+    "brand": "Chemex",
+    "priceRange": "Under $50",
+    "rating": 4.8,
+    "badge": "Best Design Icon",
+    "affiliateUrl": "https://www.amazon.com/Chemex-Classic-Pour-over-Glass-Coffeemaker/dp/B000I1WP7W/ref=sr_1_6?crid=3H4K0RLVCM073&dib=eyJ2IjoiMSJ9.PZh4CKKcILWzvSVUfJAi_qpviu0DbADhU59XlHJfUvJ32xiQVWgpob5fu6NHD_ZvwbmIWhjHWKg4mds5WbFgUcglYZVtQZ8WzMf1vXWYoJ-6fx4PDFxxYpa07UPtDyK0lH4jisCKbKSfZ6JGVkJ1YEBONcCg-yNdkAPNwsnbqORSYu6ow-SclmYoQ0MpCGI1qfRpQjlJS-NYndBpEqGqMVzKjgmqq_411TGYoPoPiW0saYLrRC-uo2hlwopOgC8qsLL-gTplKFWHDSZ1WtmbYgyLAgU3bUrIfTkKAMDh5T8.AMx1C5yKxl_7KQMnDqXSDoVCy6IQ7jW4Jt1VIKEAVW8&dib_tag=se&keywords=Chemex+Pour-Over+Glass+Coffeemaker&qid=1787751925&sprefix=chemex+pour-over+glass+coffeemaker%2Caps%2C354&sr=8-6",
+    "pros": [
+      "Bonded filters strip oils and sediment for a clean, bright cup",
+      "Non-porous borosilicate glass never absorbs odor or residue",
+      "Hourglass shape brews and serves from a single vessel"
+    ],
+    "cons": [
+      "Thin glass construction is prone to cracking if dropped",
+      "Requires proprietary filters, priced above standard cone filters",
+      "Narrow neck makes the interior difficult to clean by hand"
+    ],
+    "desc": "Standard drip machines trade clarity of flavor for convenience, leaving oils and sediment in the cup. The Chemex uses a thick bonded filter and an hourglass borosilicate form to draw out a cleaner, brighter extraction that pours directly into its own serving vessel. The design has held its form, unchanged, since its introduction."
+  },
+  {
+    "_type": "product",
+    "name": "Coffee Scale with Timer",
+    "brand": "Greater Goods",
     "priceRange": "Under $30",
     "rating": 4.4,
-    "badge": "Best Value Pick",
-    "affiliateUrl": "https://www.amazon.com/DAWNTREES-Extra-Keyboard-Computer-Office/dp/B09Q58Z9T9/ref=sr_1_7?crid=P3QP5GMMGJM2&dib=eyJ2IjoiMSJ9.WQnxb0bNkzIVH47LNLApvkhW89VGnTi8Cf1KenMy4uoKm2kqusH9Sbv4GcpFKShvtq63METdR3PYqB0uFpT9_FayOZXduto9zpQEnFlzD91MQgDa7XNOMl0Wh4C2eG77BtTV1nxOVFzr__QNRtZ62uMxeeGIooJBAx-skSplX6wPJVq4OFQc-DlUkS0tuJkmv8jfX5OlN7pRvFJ0os8Ofr6RtedzUIahyHjAxBXFkLlf18VcsLAZ8PhZJ2kZjNJZYpPTLsGSWNqf9aFGpyk3dAwg-ui66vk7zWoaTHm5HMY.bITLFROH52zDIkOghDaBUStBKiyuPJM2cbqqq7pkjA4&dib_tag=se&keywords=Wool%2BFelt%2BDesk%2BMat&qid=1786961758&sprefix=benq%2Bscreenbar%2Bhalo%2Caps%2C700&sr=8-7&th=1",
+    "badge": "Best Precision Tool",
+    "affiliateUrl": "https://www.amazon.com/Greater-Goods-Digital-Coffee-Scale/dp/B09B4CB7C1/ref=sr_1_24?crid=TFFSNTQ7O2XO&dib=eyJ2IjoiMSJ9.M_Ug5XNh5MqhcOtd6jzO39_XezYlMuollG6dFMQLjxV8X3WamlYMjq0_BZFUmv8xLfbuOdlhBeXNyFxlahAXA4QudKCa5onDLILqQPz4KyfaFTfzbc1HDaDAf5sqEmBLyubcoMKrLsuYV9t1IN62y9uSRVjROCKVgO3q2ZZiUxwVrRiwmfpBVRyOuB_TUz2RFZge_LJIsiL1J72hz5v7nPgil93dMFdSXOjHjbwEJZWsJ6EKhSPYFk89LWNw8aLbZhKe9oQY3zghw9tEOcctd2HAF91qH9ro_1b7iLSgSMw.LdbrliUvw2AHspjjAgIyxI-aMkZmCy42ExIf-RHJQYg&dib_tag=se&keywords=TIMEMORE%2BBlack%2BMirror%2BBasic%2BPro%2BCoffee%2BScale&qid=1787752057&sprefix=timemore%2Bblack%2Bmirror%2Bbasic%2Bpro%2Bcoffee%2Bscale%2Caps%2C256&sr=8-24&th=1",
     "pros": [
-      "Rubber backing holds the mat and keyboard in one place",
-      "Felt top wipes clean and shakes off loose dust",
-      "Full-size mat fits a laptop, keyboard, and mouse together"
+      "Measures to 0.1g for repeatable, dialed-in brewing",
+      "Built-in timer tracks bloom and extraction in one device",
+      "Silicone cover is heat-resistant and dishwasher safe"
     ],
     "cons": [
-      "Felt can feel rough on bare skin during heavy use",
-      "Mat ships rolled and takes time to lie flat",
-      "Felt soaks up liquid, so spills need quick attention"
+      "Auto-shutoff can trigger early during slower brew methods",
+      "Larger footprint may crowd compact drip setups",
+      "Runs on AAA batteries rather than a rechargeable cell"
     ],
-    "desc": "Hard desks make noise, scratch easily, and let keyboards slide out of place. This mat uses a dense felt top over a rubber base to hold gear still, covering 39.4 by 19.69 inches for a laptop, keyboard, and mouse. The felt also softens typing sound and gives the wrist a comfortable rest."
+    "desc": "Consistent coffee depends on measurement, not estimation. This scale reads to 0.1 grams and pairs the reading with a built-in timer, tracking bloom and extraction without a second device. A waterproof silicone cover protects the weighing surface from spills during pour-over."
   },
   {
     "_type": "product",
-    "name": "Under-Desk Cable Trays",
-    "brand": "VIVO",
-    "priceRange": "Under $40",
-    "rating": 4.6,
-    "badge": "Best Cable Management",
-    "affiliateUrl": "https://www.amazon.com/VIVO-Management-Holders-Organizers-DESK-AC06-2C/dp/B089B7QQVK?crid=22K2EJ3MNP5WD&keywords=cable%2Bmanagement%2Btray&qid=1700065572&sprefix=cable%2Bmanagement%2Btray%2Caps%2C278&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1&linkCode=sl1&tag=mattiadilisio-20&linkId=2f37380a19bdcef8822d421a6960d04c&language=en_US&ref_=as_li_ss_tl",
-    "pros": [
-      "Steel build holds up to 11 lbs without bending or sagging",
-      "Open-frame design keeps power adapters ventilated and cool",
-      "Clears cords and power bricks off the floor for easy cleaning"
-    ],
-    "cons": [
-      "Mounts with screws, leaving holes if moved or removed later",
-      "Each 17-inch tray fits one power strip, tight for more",
-      "Overhead screw installation takes a drill and some effort"
-    ],
-    "desc": "Loose cords and power bricks pile up on the floor, catching feet and collecting dust. These steel trays mount under the desk in a pair, each rated to hold 11 pounds, with an open front for routing cables and adapters. The low profile keeps the setup out of sight and clear of the knees, while the wire-frame body lets power blocks stay cool."
-  },
-  {
-    "_type": "product",
-    "name": "MagGo 2-in-1 Wireless Charging Stand",
-    "brand": "Anker",
-    "priceRange": "Under $55",
-    "rating": 4.4,
-    "badge": "Best Nightstand Charger",
-    "affiliateUrl": "https://www.amazon.com/Anker-Compatible-Wireless-Charging-Certified/dp/B0D2XYS4QC/ref=sr_1_21?crid=3BBRSP8O78AJ4&dib=eyJ2IjoiMSJ9.Et5f2hMfLj5ujm_Hbj_KqxV8saoTiP5R_5immKVjTV8B8qk67oP55r9jIXbihb4g_I-5umVLpWv7uawETH1l7jCXeWe6DSjqANLMn7BabMHYDfdtODWQFG3DcWNgihFLUeqhqv6YKg_UBDVIfD9uqJCGyKX8aGrG-V36kJD3M-5FT0If59wDK7MsX_T499WwljmAnMw3X4eLSVfRphC6V_ZnodynSdfwYmXaxJ8fg3A.NKSb7bDFbF9vts9ZN8NIPBYuo7buIs9-IpEr3_wIlNY&dib_tag=se&keywords=Wood%2BMagSafe%2BStand&qid=1786962791&sprefix=vertical%2Borganizer%2Caps%2C400&sr=8-21&th=1",
-    "pros": [
-      "15W Qi2 charging matches official MagSafe speeds for compatible phones",
-      "Charges a phone and earbuds together on one stand",
-      "Tilts 45° and rotates 360° for a custom viewing angle"
-    ],
-    "cons": [
-      "No wall adapter included, only the USB-C cable",
-      "Skips Apple Watch, charging only phones and earbuds",
-      "Earbud pad has no magnet, so buds can slide off"
-    ],
-    "desc": "A phone left flat on a nightstand blocks the screen and misses a charge. This stand holds the phone upright with 15W Qi2 charging, adds a second pad for earbuds, and tilts or rotates to any angle for StandBy mode. A weighted base with a non-slip grip keeps it steady when the phone is lifted off."
-  },
-  {
-    "_type": "product",
-    "name": "F75 75% Wireless Mechanical Keyboard",
-    "brand": "AULA",
+    "name": "Gooseneck Electric Kettle",
+    "brand": "Cosori",
     "priceRange": "Under $80",
-    "rating": 4.7,
-    "badge": "Best for Typists",
-    "affiliateUrl": "https://www.amazon.com/AULA-F75-Mechanical-Swappable-Pre-lubed/dp/B0G3PTHM36/ref=sr_1_1?crid=3VF5LMHADI9TX&dib=eyJ2IjoiMSJ9.BgtvylS2S4l_JzoAys7HojEGj0sTzZNdOhRKF9ByoJLRWi9IC5Uvn_5avoW4NaqReWZ_Cu-Dzd6oz9L8gviPz0r4ODtthQ2TZKCIKN1GdFAhMcGIVq287_nWO6Fmbk1yRYhs9_o6tX5cBt6QPMWkYcnVoaHv3huuOcgIZ_VaI7Eg4oMsrlMMKeoEeKwm5sriMQfWlPrjHbEneXr3_Zznq2hEByI-ESJsyVbC6Nk0JDE.TLAsqFgroS-wpPnF4Wa5XYWLsVApQ9OtlA9svM3KTi8&dib_tag=se&keywords=mode%2Bsonnet%2Bkeyboard&qid=1786963449&sprefix=Sonnet%2Bkey%2Caps%2C321&sr=8-1&th=1",
+    "rating": 4.6,
+    "badge": "Best Value",
+    "affiliateUrl": "https://www.amazon.com/COSORI-Electric-Gooseneck-Variable-Stainless/dp/B07T1CH2HH/ref=sr_1_16?crid=32J2FZN3QVYT1&dib=eyJ2IjoiMSJ9.kgh-95Gmn8iXvGBVrnDCwJBKvmjTmHKWRgXayA7DoHQiJXryFtw1zTg1TtOVmgsB4Yd0jxD9XeXUMGP8e7swZhpInymbnildQkwOdh0ZGP3pH0KZvjejYz8z-eTfIiTpyKNXxNuSfIdBSqu6_Rtjv5tQSJetbYEkoOceTtx4ESZw_OrDivvTwLo_54QHifZavOSrQeDPfYFjkAKjhECGuDQKpgw0uA25hgMJWXVbCeK1PTJGfZhURerdlyds5F_1Jw4XIa6c_Hj4ghgS5KRWhe9VlK9X1cDARs3wiTljXm4.uuZMPqvYS1GiXqwxVRrpo9-eEYMB8Qx8A1B1GqMpAbc&dib_tag=se&keywords=fellow%2Belectric%2Bkettle&qid=1787752247&sprefix=fellow%2Bstagg%2Bekg%2Belectric%2Bkettle%2Caps%2C436&sr=8-16&th=1",
     "pros": [
-      "Gasket mount and foam layers give a soft, quiet typing feel",
-      "Switches to 2.4GHz, Bluetooth, or wired USB-C on demand",
-      "Hot-swap sockets allow switch changes without soldering",
-      "4000mAh battery holds a long charge on wireless use"
+      "Five presets heat water to precise temperatures for coffee or tea",
+      "Gooseneck spout gives full control over pour-over water flow",
+      "Stainless interior keeps water contact free of plastic"
     ],
     "cons": [
-      "ABS plastic case feels light and can flex under pressure",
-      "Companion software is basic and limited to Windows",
-      "Keycap legends block RGB light, hard to read in the dark",
-      "Some users report input lag during fast, competitive play"
+      "Fixed presets limit customization without the app-enabled model",
+      "0.8L capacity suits one or two cups, not larger batches",
+      "Triple-beep alert is audible and not easily silenced"
     ],
-    "desc": "Full-size keyboards take up desk space many setups can't spare. This 75% board keeps the arrow keys while trimming the rest, built on a gasket-mounted plate with layered foam for a soft, quiet keystroke. Hot-swap sockets accept 3-pin or 5-pin switches without soldering, and tri-mode wireless links up to five devices."
+    "desc": "Boiling water lacks the control that pour-over methods require. This kettle offers five temperature presets and a thin gooseneck spout for a steady, deliberate pour, with a stainless steel interior that keeps taste unaffected by plastic. A one-hour keep-warm setting holds the target temperature between pours."
   }
 ]

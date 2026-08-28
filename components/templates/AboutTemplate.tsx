@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import {
   Search,
   CheckCircle2,
@@ -13,96 +13,122 @@ import {
   Mail,
   Compass,
   Sparkles,
-} from 'lucide-react'
-import { Reveal } from '@/components/reveal'
+} from "lucide-react";
+import { Reveal } from "@/components/reveal";
+import { SearchModal } from "@/components/SearchModal";
 
 export interface AboutTemplateProps {
-  heroImage?: string
-  heroTag?: string
-  headline?: string
-  subheadline?: string
-  manifestoStatement?: string
-  philosophyParagraphs?: string[]
+  heroImage?: string;
+  heroTag?: string;
+  headline?: string;
+  subheadline?: string;
+  manifestoStatement?: string;
+  philosophyParagraphs?: string[];
   processSteps?: {
-    number: string
-    title: string
-    description: string
-    icon: 'search' | 'vetting' | 'edit' | 'compass'
-  }[]
-  editorialEmail?: string
-  pinterestUrl?: string
-  instagramUrl?: string
+    number: string;
+    title: string;
+    description: string;
+    icon: "search" | "vetting" | "edit" | "compass";
+  }[];
+  editorialEmail?: string;
+  pinterestUrl?: string;
+  instagramUrl?: string;
 }
 
 const defaultPhilosophy = [
-  'Vellum Form was born from a desire to cut through the noise of modern consumerism. We believe that the objects we interact with every day—from the kettle we pour our morning coffee with to the lamp that lights our workspace—should elevate our daily rituals.',
-  'We serve as a digital curation house, meticulously filtering out fleeting trends and low-quality goods to present only the finest in modern design, functional architecture, and quiet luxury.',
-  'Every piece highlighted in our journal has undergone rigorous examination for material authenticity, architectural proportion, and enduring craftsmanship—ensuring your space remains timeless.',
-]
+  "Vellum Form was born from a desire to cut through the noise of modern consumerism. We believe that the objects we interact with every day—from the kettle we pour our morning coffee with to the lamp that lights our workspace—should elevate our daily rituals.",
+  "We serve as a digital curation house, meticulously filtering out fleeting trends and low-quality goods to present only the finest in modern design, functional architecture, and quiet luxury.",
+  "Every piece highlighted in our journal has undergone rigorous examination for material authenticity, architectural proportion, and enduring craftsmanship—ensuring your space remains timeless.",
+];
 
-const defaultSteps: NonNullable<AboutTemplateProps['processSteps']> = [
+const defaultSteps: NonNullable<AboutTemplateProps["processSteps"]> = [
   {
-    number: '01',
-    title: 'Discovery',
+    number: "01",
+    title: "Discovery",
     description:
-      'We scour global design houses, artisan studios, and verified customer experiences to find exceptional objects.',
-    icon: 'search',
+      "We scour global design houses, artisan studios, and verified customer experiences to find exceptional objects.",
+    icon: "search",
   },
   {
-    number: '02',
-    title: 'Vetting',
+    number: "02",
+    title: "Vetting",
     description:
-      'We analyze materials, longevity, craftsmanship, and aesthetic value to ensure only enduring pieces make the cut.',
-    icon: 'vetting',
+      "We analyze materials, longevity, craftsmanship, and aesthetic value to ensure only enduring pieces make the cut.",
+    icon: "vetting",
   },
   {
-    number: '03',
-    title: 'The Edit',
+    number: "03",
+    title: "The Edit",
     description:
-      'We publish unbiased, highly curated guides to help you build a space that feels intentional, harmonious, and refined.',
-    icon: 'edit',
+      "We publish unbiased, highly curated guides to help you build a space that feels intentional, harmonious, and refined.",
+    icon: "edit",
   },
-]
+];
 
 export function AboutTemplate({
-  heroImage = 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1920&q=85',
-  heroTag = 'Curation House / Manifesto',
-  headline = 'About Vellum Form',
-  subheadline = 'Curating the Art of Intentional Living.',
-  manifestoStatement = 'We believe that a space is not merely filled—it is composed. Every silhouette, texture, and light source shapes how we feel and live.',
+  heroImage = "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1920&q=85",
+  heroTag = "Curation House / Manifesto",
+  headline = "About Vellum Form",
+  subheadline = "Curating the Art of Intentional Living.",
+  manifestoStatement = "We believe that a space is not merely filled—it is composed. Every silhouette, texture, and light source shapes how we feel and live.",
   philosophyParagraphs = defaultPhilosophy,
   processSteps = defaultSteps,
-  editorialEmail = 'vellumform@gmail.com',
-  pinterestUrl = 'https://www.pinterest.com/vellumform/',
-  instagramUrl = 'https://www.instagram.com/thevellumform/',
+  editorialEmail = "vellumform@gmail.com",
+  pinterestUrl = "https://www.pinterest.com/vellumform/",
+  instagramUrl = "https://www.instagram.com/thevellumform/",
 }: AboutTemplateProps) {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [copiedEmail, setCopiedEmail] = useState(false)
-  const [mounted, setMounted] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [copiedEmail, setCopiedEmail] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const frame = requestAnimationFrame(() => setMounted(true))
-    return () => cancelAnimationFrame(frame)
-  }, [])
+    const frame = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
+  // Keyboard shortcut Cmd+K or Ctrl+K
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setSearchOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(editorialEmail)
-    setCopiedEmail(true)
-    setTimeout(() => setCopiedEmail(false), 2500)
-  }
+    navigator.clipboard.writeText(editorialEmail);
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2500);
+  };
 
   const renderIcon = (icon: string) => {
     switch (icon) {
-      case 'search':
-        return <Search size={22} strokeWidth={1.25} className="text-[#8A7051]" />
-      case 'vetting':
-        return <CheckCircle2 size={22} strokeWidth={1.25} className="text-[#8A7051]" />
-      case 'edit':
-        return <PenTool size={22} strokeWidth={1.25} className="text-[#8A7051]" />
+      case "search":
+        return (
+          <Search size={22} strokeWidth={1.25} className="text-[#8A7051]" />
+        );
+      case "vetting":
+        return (
+          <CheckCircle2
+            size={22}
+            strokeWidth={1.25}
+            className="text-[#8A7051]"
+          />
+        );
+      case "edit":
+        return (
+          <PenTool size={22} strokeWidth={1.25} className="text-[#8A7051]" />
+        );
       default:
-        return <Compass size={22} strokeWidth={1.25} className="text-[#8A7051]" />
+        return (
+          <Compass size={22} strokeWidth={1.25} className="text-[#8A7051]" />
+        );
     }
-  }
+  };
 
   return (
     <main className="min-h-screen bg-[#FBF9F5] text-[#111111] selection:bg-[#8A7051]/20">
@@ -116,45 +142,85 @@ export function AboutTemplate({
             VELLUM FORM
           </Link>
           <nav className="hidden items-center gap-9 font-sans text-[11px] uppercase tracking-[0.16em] text-[#666666] lg:flex">
-            <Link href="/#objects" className="transition-colors hover:text-[#111111]">
+            <Link
+              href="/#objects"
+              className="transition-colors hover:text-[#111111]"
+            >
               Objects
             </Link>
-            <Link href="/category/living-spaces" className="transition-colors hover:text-[#111111]">
+            <Link
+              href="/category/living-spaces"
+              className="transition-colors hover:text-[#111111]"
+            >
               Living Spaces
             </Link>
-            <Link href="/#the-edit" className="transition-colors hover:text-[#111111]">
+            <Link
+              href="/category/daily-rituals"
+              className="transition-colors hover:text-[#111111]"
+            >
+              Daily Rituals
+            </Link>
+            <Link
+              href="/#the-edit"
+              className="transition-colors hover:text-[#111111]"
+            >
               The Edit
             </Link>
-            <Link href="/about" className="text-[#111111] font-medium border-b border-[#8A7051] pb-0.5">
+            <Link
+              href="/about"
+              className="text-[#111111] font-medium border-b border-[#8A7051] pb-0.5"
+            >
               About
             </Link>
           </nav>
-          <div className="flex items-center gap-5">
-            <Link
-              href="/#search"
-              aria-label="Search archive"
-              className="text-[#666666] transition-colors hover:text-[#111111]"
-            >
-              <Search size={17} strokeWidth={1.5} />
-            </Link>
+          <div className="flex items-center gap-4">
             <button
-              aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              type="button"
+              aria-label="Search articles"
+              onClick={() => setSearchOpen(true)}
+              className="flex items-center gap-2 rounded-full border border-[#E8E4DC] px-3 py-1.5 font-sans text-[10px] uppercase tracking-wider text-[#666666] transition-all duration-300 hover:border-[#111111] hover:text-[#111111]"
+            >
+              <Search size={13} strokeWidth={1.5} />
+              <span className="hidden sm:inline">Search</span>
+              <kbd className="hidden font-mono text-[9px] text-[#888888] sm:inline">
+                ⌘K
+              </kbd>
+            </button>
+            <button
+              aria-label={
+                menuOpen ? "Close navigation menu" : "Open navigation menu"
+              }
               className="text-[#111111] lg:hidden"
               onClick={() => setMenuOpen(!menuOpen)}
             >
-              {menuOpen ? <X size={20} strokeWidth={1.5} /> : <Menu size={20} strokeWidth={1.5} />}
+              {menuOpen ? (
+                <X size={20} strokeWidth={1.5} />
+              ) : (
+                <Menu size={20} strokeWidth={1.5} />
+              )}
             </button>
           </div>
         </div>
+
+        {/* Global Search Modal */}
+        <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
 
         {/* Mobile Navigation Drawer */}
         {menuOpen && (
           <nav className="border-t border-[#E8E4DC] bg-[#FBF9F5] px-6 py-8 lg:hidden">
             <div className="flex flex-col gap-6 font-sans text-xs uppercase tracking-[0.18em]">
-              <Link href="/" onClick={() => setMenuOpen(false)} className="hover:text-[#8A7051]">
+              <Link
+                href="/"
+                onClick={() => setMenuOpen(false)}
+                className="hover:text-[#8A7051]"
+              >
                 Home
               </Link>
-              <Link href="/#objects" onClick={() => setMenuOpen(false)} className="hover:text-[#8A7051]">
+              <Link
+                href="/#objects"
+                onClick={() => setMenuOpen(false)}
+                className="hover:text-[#8A7051]"
+              >
                 Objects
               </Link>
               <Link
@@ -164,7 +230,11 @@ export function AboutTemplate({
               >
                 Living Spaces
               </Link>
-              <Link href="/#the-edit" onClick={() => setMenuOpen(false)} className="hover:text-[#8A7051]">
+              <Link
+                href="/#the-edit"
+                onClick={() => setMenuOpen(false)}
+                className="hover:text-[#8A7051]"
+              >
                 The Edit
               </Link>
               <Link
@@ -208,7 +278,7 @@ export function AboutTemplate({
             className="relative aspect-video w-full overflow-hidden border border-[#E8E4DC] bg-[#E8E4DC] transition-[opacity,transform] duration-1000 ease-out"
             style={{
               opacity: mounted ? 1 : 0,
-              transform: mounted ? 'scale(1)' : 'scale(1.02)',
+              transform: mounted ? "scale(1)" : "scale(1.02)",
             }}
           >
             <Image
@@ -258,7 +328,9 @@ export function AboutTemplate({
               <Reveal delay={360}>
                 <div className="mt-4 flex items-center gap-4 pt-6 border-t border-[#E8E4DC]">
                   <div>
-                    <p className="font-serif text-lg text-[#111111]">The Editorial Desk</p>
+                    <p className="font-serif text-lg text-[#111111]">
+                      The Editorial Desk
+                    </p>
                     <p className="font-sans text-[10px] uppercase tracking-[0.18em] text-[#8A7051]">
                       Vellum Form House // London & Paris
                     </p>
@@ -282,7 +354,8 @@ export function AboutTemplate({
                 The Curation Process
               </h2>
               <p className="mt-4 font-sans text-sm text-[#555555]">
-                How we navigate thousands of global objects to curate only what is worthy of your home.
+                How we navigate thousands of global objects to curate only what
+                is worthy of your home.
               </p>
             </Reveal>
           </div>
@@ -298,7 +371,9 @@ export function AboutTemplate({
                   <div className="flex h-11 w-11 items-center justify-center border border-[#E8E4DC] bg-[#FBF9F5] transition-colors group-hover:border-[#8A7051]">
                     {renderIcon(step.icon)}
                   </div>
-                  <span className="font-serif text-xl italic text-[#8A7051]">{step.number}</span>
+                  <span className="font-serif text-xl italic text-[#8A7051]">
+                    {step.number}
+                  </span>
                 </div>
 
                 <h3 className="mt-8 font-serif text-2xl tracking-[-0.01em] text-[#111111]">
@@ -326,7 +401,9 @@ export function AboutTemplate({
                   Connect with the Editorial Desk
                 </h2>
                 <p className="mt-5 max-w-xl font-sans text-sm leading-relaxed text-[#555555] md:text-base">
-                  Whether you are an artisan studio seeking curation review, an architect proposing a feature, or a reader exploring intentional living, we welcome thoughtful conversation.
+                  Whether you are an artisan studio seeking curation review, an
+                  architect proposing a feature, or a reader exploring
+                  intentional living, we welcome thoughtful conversation.
                 </p>
 
                 <div className="mt-8 flex flex-wrap items-center gap-4">
@@ -335,7 +412,11 @@ export function AboutTemplate({
                     className="inline-flex items-center gap-2.5 bg-[#111111] px-6 py-3.5 font-sans text-[11px] uppercase tracking-[0.16em] text-[#FBF9F5] transition-all hover:bg-[#8A7051]"
                   >
                     <Mail size={14} strokeWidth={1.5} />
-                    <span>{copiedEmail ? 'Copied to Clipboard!' : 'Copy Editorial Email'}</span>
+                    <span>
+                      {copiedEmail
+                        ? "Copied to Clipboard!"
+                        : "Copy Editorial Email"}
+                    </span>
                   </button>
 
                   <a
@@ -370,8 +451,12 @@ export function AboutTemplate({
                       </svg>
                     </div>
                     <div>
-                      <p className="font-serif text-base text-[#111111]">Follow on Pinterest</p>
-                      <p className="font-sans text-[10px] text-[#666666]">@vellumform / Daily inspiration</p>
+                      <p className="font-serif text-base text-[#111111]">
+                        Follow on Pinterest
+                      </p>
+                      <p className="font-sans text-[10px] text-[#666666]">
+                        @vellumform / Daily inspiration
+                      </p>
                     </div>
                   </div>
                   <ArrowUpRight
@@ -398,8 +483,12 @@ export function AboutTemplate({
                       </svg>
                     </div>
                     <div>
-                      <p className="font-serif text-base text-[#111111]">Instagram Journal</p>
-                      <p className="font-sans text-[10px] text-[#666666]">@vellumform / Spatial diary</p>
+                      <p className="font-serif text-base text-[#111111]">
+                        Instagram Journal
+                      </p>
+                      <p className="font-sans text-[10px] text-[#666666]">
+                        @vellumform / Spatial diary
+                      </p>
                     </div>
                   </div>
                   <ArrowUpRight
@@ -431,13 +520,22 @@ export function AboutTemplate({
 
           <div className="flex flex-col gap-3.5 font-sans text-[10px] uppercase tracking-[0.16em] text-[#666666]">
             <span className="mb-2 font-medium text-[#8A7051]">Explore</span>
-            <Link href="/#objects" className="transition-colors hover:text-[#111111]">
+            <Link
+              href="/#objects"
+              className="transition-colors hover:text-[#111111]"
+            >
               Objects
             </Link>
-            <Link href="/category/living-spaces" className="transition-colors hover:text-[#111111]">
+            <Link
+              href="/category/living-spaces"
+              className="transition-colors hover:text-[#111111]"
+            >
               Living Spaces
             </Link>
-            <Link href="/#the-edit" className="transition-colors hover:text-[#111111]">
+            <Link
+              href="/#the-edit"
+              className="transition-colors hover:text-[#111111]"
+            >
               The Edit
             </Link>
           </div>
@@ -469,17 +567,20 @@ export function AboutTemplate({
         <div className="mx-auto flex max-w-[1440px] flex-col gap-4 border-t border-[#E8E4DC] px-6 py-8 font-sans text-[10px] leading-5 tracking-[0.04em] text-[#666666] md:flex-row md:items-center md:justify-between md:px-12">
           <span>© 2026 Vellum Form. All rights reserved.</span>
           <span>
-            Affiliate disclosure: We may earn a commission from select links, at no additional cost to you.
+            Affiliate disclosure: We may earn a commission from select links, at
+            no additional cost to you.
           </span>
           <div className="flex gap-4">
             <Link href="/about" className="hover:underline">
               About
             </Link>
             <span>/</span>
-            <span className="hover:underline cursor-pointer">Privacy & Terms</span>
+            <span className="hover:underline cursor-pointer">
+              Privacy & Terms
+            </span>
           </div>
         </div>
       </footer>
     </main>
-  )
+  );
 }

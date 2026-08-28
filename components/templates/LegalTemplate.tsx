@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Menu, X, Search, Mail, ShieldCheck } from 'lucide-react'
+import { SearchModal } from '@/components/SearchModal'
 
 export interface LegalTemplateProps {
   lastUpdated?: string
@@ -14,6 +15,19 @@ export function LegalTemplate({
   contactEmail = 'vellumform@gmail.com',
 }: LegalTemplateProps) {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
+
+  // Keyboard shortcut Cmd+K or Ctrl+K
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        setSearchOpen((prev) => !prev)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
 
   return (
     <main className="min-h-screen bg-[#FBF9F5] text-[#111111] selection:bg-[#8A7051]/20">
@@ -33,6 +47,9 @@ export function LegalTemplate({
             <Link href="/category/living-spaces" className="transition-colors hover:text-[#111111]">
               Living Spaces
             </Link>
+            <Link href="/category/daily-rituals" className="transition-colors hover:text-[#111111]">
+              Daily Rituals
+            </Link>
             <Link href="/#the-edit" className="transition-colors hover:text-[#111111]">
               The Edit
             </Link>
@@ -40,14 +57,17 @@ export function LegalTemplate({
               About
             </Link>
           </nav>
-          <div className="flex items-center gap-5">
-            <Link
-              href="/#search"
-              aria-label="Search archive"
-              className="text-[#666666] transition-colors hover:text-[#111111]"
+          <div className="flex items-center gap-4">
+            <button
+              type="button"
+              aria-label="Search articles"
+              onClick={() => setSearchOpen(true)}
+              className="flex items-center gap-2 rounded-full border border-[#E8E4DC] px-3 py-1.5 font-sans text-[10px] uppercase tracking-wider text-[#666666] transition-all duration-300 hover:border-[#111111] hover:text-[#111111]"
             >
-              <Search size={17} strokeWidth={1.5} />
-            </Link>
+              <Search size={13} strokeWidth={1.5} />
+              <span className="hidden sm:inline">Search</span>
+              <kbd className="hidden font-mono text-[9px] text-[#888888] sm:inline">⌘K</kbd>
+            </button>
             <button
               aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
               className="text-[#111111] lg:hidden"
@@ -57,6 +77,13 @@ export function LegalTemplate({
             </button>
           </div>
         </div>
+
+        {/* Global Search Modal */}
+        <SearchModal
+          isOpen={searchOpen}
+          onClose={() => setSearchOpen(false)}
+        />
+
 
         {/* Mobile Navigation Drawer */}
         {menuOpen && (
