@@ -28,3 +28,39 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+@keyframes heroProgress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.animate-hero-progress {
+  animation: heroProgress 4s linear forwards;
+}
+
+.animate-hero-progress-paused {
+  animation-play-state: paused;
+}
+
+@keyframes loopScroll {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-loop-scroll {
+  display: flex;
+  flex-shrink: 0;
+  min-width: 100%;
+  animation: loopScroll 35s linear infinite;
+}
+
+.animate-loop-scroll:hover {
+  animation-play-state: paused;
+}

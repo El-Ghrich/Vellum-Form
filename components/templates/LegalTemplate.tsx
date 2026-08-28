@@ -1,9 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { Menu, X, Search, Mail, ShieldCheck } from 'lucide-react'
-import { SearchModal } from '@/components/SearchModal'
+import { Mail, ShieldCheck } from 'lucide-react'
+import { Header } from '@/components/Header'
+import { Footer } from '@/components/Footer'
 
 export interface LegalTemplateProps {
   lastUpdated?: string
@@ -14,104 +13,10 @@ export function LegalTemplate({
   lastUpdated = 'August 2026',
   contactEmail = 'vellumform@gmail.com',
 }: LegalTemplateProps) {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [searchOpen, setSearchOpen] = useState(false)
-
-  // Keyboard shortcut Cmd+K or Ctrl+K
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault()
-        setSearchOpen((prev) => !prev)
-      }
-    }
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
-
   return (
     <main className="min-h-screen bg-[#FBF9F5] text-[#111111] selection:bg-[#8A7051]/20">
-      {/* Editorial Header */}
-      <header className="sticky top-0 z-40 border-b border-[#E8E4DC] bg-[#FBF9F5]/90 backdrop-blur-md">
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between px-6 py-5 md:px-12">
-          <Link
-            href="/"
-            className="font-sans text-[11px] font-semibold tracking-[0.28em] text-[#111111] transition-opacity hover:opacity-75"
-          >
-            VELLUM FORM
-          </Link>
-          <nav className="hidden items-center gap-9 font-sans text-[11px] uppercase tracking-[0.16em] text-[#666666] lg:flex">
-            <Link href="/#objects" className="transition-colors hover:text-[#111111]">
-              Objects
-            </Link>
-            <Link href="/category/living-spaces" className="transition-colors hover:text-[#111111]">
-              Living Spaces
-            </Link>
-            <Link href="/category/daily-rituals" className="transition-colors hover:text-[#111111]">
-              Daily Rituals
-            </Link>
-            <Link href="/#the-edit" className="transition-colors hover:text-[#111111]">
-              The Edit
-            </Link>
-            <Link href="/about" className="transition-colors hover:text-[#111111]">
-              About
-            </Link>
-          </nav>
-          <div className="flex items-center gap-4">
-            <button
-              type="button"
-              aria-label="Search articles"
-              onClick={() => setSearchOpen(true)}
-              className="flex items-center gap-2 rounded-full border border-[#E8E4DC] px-3 py-1.5 font-sans text-[10px] uppercase tracking-wider text-[#666666] transition-all duration-300 hover:border-[#111111] hover:text-[#111111]"
-            >
-              <Search size={13} strokeWidth={1.5} />
-              <span className="hidden sm:inline">Search</span>
-              <kbd className="hidden font-mono text-[9px] text-[#888888] sm:inline">⌘K</kbd>
-            </button>
-            <button
-              aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              className="text-[#111111] lg:hidden"
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
-              {menuOpen ? <X size={20} strokeWidth={1.5} /> : <Menu size={20} strokeWidth={1.5} />}
-            </button>
-          </div>
-        </div>
-
-        {/* Global Search Modal */}
-        <SearchModal
-          isOpen={searchOpen}
-          onClose={() => setSearchOpen(false)}
-        />
-
-
-        {/* Mobile Navigation Drawer */}
-        {menuOpen && (
-          <nav className="border-t border-[#E8E4DC] bg-[#FBF9F5] px-6 py-8 lg:hidden">
-            <div className="flex flex-col gap-6 font-sans text-xs uppercase tracking-[0.18em]">
-              <Link href="/" onClick={() => setMenuOpen(false)} className="hover:text-[#8A7051]">
-                Home
-              </Link>
-              <Link href="/#objects" onClick={() => setMenuOpen(false)} className="hover:text-[#8A7051]">
-                Objects
-              </Link>
-              <Link
-                href="/category/living-spaces"
-                onClick={() => setMenuOpen(false)}
-                className="hover:text-[#8A7051]"
-              >
-                Living Spaces
-              </Link>
-              <Link href="/#the-edit" onClick={() => setMenuOpen(false)} className="hover:text-[#8A7051]">
-                The Edit
-              </Link>
-              <Link href="/about" onClick={() => setMenuOpen(false)} className="hover:text-[#8A7051]">
-                About Us
-              </Link>
-            </div>
-          </nav>
-        )}
-      </header>
+      {/* Unified Header */}
+      <Header />
 
       {/* Main Legal Content Container */}
       <article className="mx-auto max-w-3xl px-6 py-16 md:py-24">
@@ -119,10 +24,10 @@ export function LegalTemplate({
         <header className="border-b border-[#E8E4DC] pb-10">
           <div className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] text-[#8A7051]">
             <ShieldCheck size={13} strokeWidth={1.5} />
-            <span>Editorial Transparency & Standards</span>
+            <span>Editorial Transparency &amp; Standards</span>
           </div>
           <h1 className="mt-4 font-serif text-3xl leading-[1.2] tracking-[-0.02em] text-[#111111] sm:text-4xl md:text-5xl">
-            Legal, Privacy & Affiliate Disclosures
+            Legal, Privacy &amp; Affiliate Disclosures
           </h1>
           <p className="mt-4 font-sans text-xs uppercase tracking-[0.14em] text-[#666666]">
             Last Updated: {lastUpdated}
@@ -136,67 +41,106 @@ export function LegalTemplate({
             <h2 className="font-serif text-2xl tracking-[-0.01em] text-[#111111] md:text-3xl">
               1. Amazon Affiliate Disclosure
             </h2>
-            <div className="mt-5 rounded border border-[#E8E4DC] bg-[#FAF8F3] p-5 italic text-[#111111]">
+            <div className="mt-4 space-y-4 text-sm leading-relaxed text-[#555555]">
               <p>
-                &ldquo;Vellum Form is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com.&rdquo;
+                <strong>Vellum Form</strong> participates in the Amazon Services LLC Associates
+                Program, an affiliate advertising program designed to provide a means for sites to
+                earn advertising fees by advertising and linking to Amazon.com and affiliated sites.
+              </p>
+              <p>
+                As an Amazon Associate, we earn from qualifying purchases. This means that if you
+                click an outbound link on our site and make a purchase, we may receive a small
+                commission at absolutely no additional cost to you.
+              </p>
+              <p>
+                Our editorial integrity is paramount. Affiliate partnerships do not influence our
+                editorial curation, object evaluations, or ratings. We only feature pieces that
+                align with our strict criteria of architectural form, longevity, and material
+                authenticity.
               </p>
             </div>
-            <p className="mt-5">
-              As an Amazon Associate, we earn from qualifying purchases. This means if you click on an affiliate link and make a purchase, we may receive a small commission at absolutely no additional cost to you.
-            </p>
           </section>
 
-          {/* Section 2: Editorial & General Affiliate Disclosure */}
+          {/* Section 2: General Affiliate & Commercial Links */}
           <section className="scroll-mt-24 border-b border-[#E8E4DC] pb-10">
             <h2 className="font-serif text-2xl tracking-[-0.01em] text-[#111111] md:text-3xl">
-              2. Editorial &amp; General Affiliate Disclosure
+              2. Outbound Links &amp; Commercial Relationships
             </h2>
-            <p className="mt-5">
-              Integrity is the foundation of our curation. While we may earn commissions from links on Vellum Form, our editorial selection is never dictated by affiliate partnerships. We only recommend objects, brands, and tools that meet our strict standards for quality, aesthetic, and longevity. Earning a commission allows us to keep the site running and the editorial content free for our readers.
-            </p>
-            <ul className="mt-5 list-disc space-y-2 pl-6 text-[#555555]">
-              <li>
-                <strong className="text-[#111111]">Independence:</strong> No brand can purchase guaranteed positive placement or editorial praise.
-              </li>
-              <li>
-                <strong className="text-[#111111]">Transparency:</strong> All sponsored inclusions or commission-generating links are clearly disclosed.
-              </li>
-              <li>
-                <strong className="text-[#111111]">Direct Curation:</strong> All evaluated products undergo rigorous material and functional scrutiny before being recommended.
-              </li>
-            </ul>
+            <div className="mt-4 space-y-4 text-sm leading-relaxed text-[#555555]">
+              <p>
+                In addition to Amazon, Vellum Form may contain links to artisan design studios,
+                independent retailers, and boutique homeware brands. Some of these links may be
+                tracked for affiliate or referral commission purposes.
+              </p>
+              <p>
+                We do not accept paid placements for positive product reviews. Any sponsored
+                editorial content or dedicated brand partnerships will always be explicitly labeled
+                as sponsored at the top of the publication.
+              </p>
+            </div>
           </section>
 
-          {/* Section 3: Privacy Policy & Cookies */}
+          {/* Section 3: Privacy Policy */}
           <section className="scroll-mt-24 border-b border-[#E8E4DC] pb-10">
             <h2 className="font-serif text-2xl tracking-[-0.01em] text-[#111111] md:text-3xl">
-              3. Privacy Policy &amp; Cookies
+              3. Privacy Policy &amp; Data Handling
             </h2>
-            <p className="mt-5">
-              Vellum Form respects your privacy. When you visit our website, certain information (such as IP addresses, browser types, and access times) may be logged through standard analytics tools to help us improve the reading experience.
-            </p>
-            <h3 className="mt-6 font-sans text-base font-semibold text-[#111111]">
-              Cookies &amp; Tracking Technologies
-            </h3>
-            <p className="mt-3">
-              We use cookies to enhance your experience. Furthermore, our third-party affiliate partners (including Amazon) may use cookies to track clicks and assign commissions securely. You can choose to disable cookies through your individual browser options.
-            </p>
+            <div className="mt-4 space-y-4 text-sm leading-relaxed text-[#555555]">
+              <p>
+                We value your privacy as much as we value quiet spaces. We do not sell, rent, or
+                distribute your personal information to third parties.
+              </p>
+              <h3 className="pt-2 font-serif text-lg text-[#111111]">Information We Collect:</h3>
+              <ul className="list-inside list-disc space-y-2 pl-2">
+                <li>
+                  <strong>Newsletter Subscriptions:</strong> If you voluntarily subscribe to{' '}
+                  <em>The Private Dispatch</em>, we store your email address solely for the purpose
+                  of sending our editorial dispatches. You may unsubscribe at any moment.
+                </li>
+                <li>
+                  <strong>Analytics &amp; Cookies:</strong> We utilize privacy-conscious, anonymized
+                  web analytics to understand reader traffic patterns and refine our publication.
+                  These tools set standard cookies on your browser.
+                </li>
+              </ul>
+            </div>
           </section>
 
-          {/* Section 4: Contact Us */}
+          {/* Section 4: Terms of Use */}
+          <section className="scroll-mt-24 border-b border-[#E8E4DC] pb-10">
+            <h2 className="font-serif text-2xl tracking-[-0.01em] text-[#111111] md:text-3xl">
+              4. Terms of Use &amp; Intellectual Property
+            </h2>
+            <div className="mt-4 space-y-4 text-sm leading-relaxed text-[#555555]">
+              <p>
+                All original written content, editorial structures, custom photography, and design
+                assets on Vellum Form are the intellectual property of Vellum Form unless otherwise
+                credited.
+              </p>
+              <p>
+                You may quote brief excerpts or link to our guides provided that clear, explicit
+                attribution and a direct hyperlink to the original Vellum Form article are
+                maintained. Reproduction of entire articles without written permission is strictly
+                prohibited.
+              </p>
+            </div>
+          </section>
+
+          {/* Section 5: Editorial Contact */}
           <section className="scroll-mt-24">
             <h2 className="font-serif text-2xl tracking-[-0.01em] text-[#111111] md:text-3xl">
-              4. Contact the Editorial Desk
+              5. Contacting the Legal &amp; Editorial Desk
             </h2>
-            <p className="mt-5">
-              If you have any questions regarding our policies, our curation process, or partnerships, please contact us at:
+            <p className="mt-4 text-sm leading-relaxed text-[#555555]">
+              For inquiries regarding copyright, commercial partnerships, or privacy requests,
+              please reach out directly to our desk:
             </p>
-            <div className="mt-5 flex items-center gap-3">
+            <div className="mt-6 inline-flex items-center gap-3 border border-[#E8E4DC] bg-white px-5 py-3.5">
+              <Mail size={16} className="text-[#8A7051]" />
               <a
                 href={`mailto:${contactEmail}`}
-                className="inline-flex items-center gap-2 border border-[#E8E4DC] bg-[#FAF8F3] px-5 py-3 font-sans text-sm font-medium text-[#111111] transition-colors hover:border-[#8A7051] hover:text-[#8A7051]"
+                className="font-sans text-xs uppercase tracking-[0.14em] text-[#111111] hover:underline"
               >
-                <Mail size={15} strokeWidth={1.5} className="text-[#8A7051]" />
                 <span>{contactEmail}</span>
               </a>
             </div>
@@ -204,74 +148,8 @@ export function LegalTemplate({
         </div>
       </article>
 
-      {/* Editorial Footer */}
-      <footer className="border-t border-[#E8E4DC] bg-[#FBF9F5]">
-        <div className="mx-auto grid max-w-[1440px] gap-12 px-6 py-14 md:grid-cols-[1.5fr_1fr_1fr] md:px-12 md:py-20">
-          <div>
-            <Link
-              href="/"
-              className="font-sans text-[11px] font-semibold tracking-[0.28em] text-[#111111]"
-            >
-              VELLUM FORM
-            </Link>
-            <p className="mt-5 max-w-xs font-serif text-xl leading-snug text-[#111111]">
-              A digital curation house for the considered life.
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-3.5 font-sans text-[10px] uppercase tracking-[0.16em] text-[#666666]">
-            <span className="mb-2 font-medium text-[#8A7051]">Explore</span>
-            <Link href="/#objects" className="transition-colors hover:text-[#111111]">
-              Objects
-            </Link>
-            <Link href="/category/living-spaces" className="transition-colors hover:text-[#111111]">
-              Living Spaces
-            </Link>
-            <Link href="/#the-edit" className="transition-colors hover:text-[#111111]">
-              The Edit
-            </Link>
-          </div>
-
-          <div className="flex flex-col gap-3.5 font-sans text-[10px] uppercase tracking-[0.16em] text-[#666666]">
-            <span className="mb-2 font-medium text-[#8A7051]">Elsewhere</span>
-            <a
-              href="https://www.pinterest.com/vellumform/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition-colors hover:text-[#111111]"
-            >
-              Pinterest
-            </a>
-            <a
-              href="https://www.instagram.com/thevellumform/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition-colors hover:text-[#111111]"
-            >
-              Instagram
-            </a>
-            <Link href="/about" className="transition-colors hover:text-[#111111]">
-              About Us
-            </Link>
-          </div>
-        </div>
-
-        <div className="mx-auto flex max-w-[1440px] flex-col gap-4 border-t border-[#E8E4DC] px-6 py-8 font-sans text-[10px] leading-5 tracking-[0.04em] text-[#666666] md:flex-row md:items-center md:justify-between md:px-12">
-          <span>2026 Vellum Form</span>
-          <span>
-            Affiliate disclosure: We may earn a commission from select links, at no additional cost to you.
-          </span>
-          <div className="flex gap-4">
-            <Link href="/about" className="hover:underline">
-              About
-            </Link>
-            <span>/</span>
-            <Link href="/legal" className="hover:underline text-[#111111] font-medium">
-              Privacy & Terms
-            </Link>
-          </div>
-        </div>
-      </footer>
+      {/* Unified Footer */}
+      <Footer />
     </main>
   )
 }

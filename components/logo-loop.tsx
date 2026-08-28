@@ -12,12 +12,10 @@ const names = [
 ]
 
 export function LogoLoop() {
-  const track = [...names, ...names]
-
   return (
     <section
       aria-hidden="true"
-      className="select-none border-b border-border bg-background py-8"
+      className="group relative flex overflow-hidden select-none border-b border-border bg-background py-8"
       style={{
         WebkitMaskImage:
           'linear-gradient(90deg, transparent 0%, black 12%, black 88%, transparent 100%)',
@@ -25,12 +23,24 @@ export function LogoLoop() {
           'linear-gradient(90deg, transparent 0%, black 12%, black 88%, transparent 100%)',
       }}
     >
-      <div className="flex w-max select-none items-center gap-16 whitespace-nowrap px-8 animate-loop-scroll">
-        {track.map((name, index) => (
+      <div className="flex shrink-0 items-center justify-around gap-16 whitespace-nowrap px-8 animate-loop-scroll">
+        {names.map((name, index) => (
           <span
-            key={`${name}-${index}`}
-            className="animate-fade-color font-sans text-xs uppercase tracking-[0.32em]"
-            style={{ animationDelay: `${(index % names.length) * 0.6}s` }}
+            key={`track1-${name}-${index}`}
+            className="font-sans text-xs uppercase tracking-[0.32em] text-muted-foreground transition-colors duration-300 hover:text-foreground"
+          >
+            {name}
+          </span>
+        ))}
+      </div>
+      <div
+        className="flex shrink-0 items-center justify-around gap-16 whitespace-nowrap px-8 animate-loop-scroll"
+        aria-hidden="true"
+      >
+        {names.map((name, index) => (
+          <span
+            key={`track2-${name}-${index}`}
+            className="font-sans text-xs uppercase tracking-[0.32em] text-muted-foreground transition-colors duration-300 hover:text-foreground"
           >
             {name}
           </span>

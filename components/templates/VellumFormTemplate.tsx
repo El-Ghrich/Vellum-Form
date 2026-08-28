@@ -1,12 +1,14 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowUpRight, Menu, Search, X } from 'lucide-react'
+import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Reveal } from '@/components/reveal'
 import { LogoLoop } from '@/components/logo-loop'
-import { SearchModal } from '@/components/SearchModal'
+import { Header } from '@/components/Header'
+import { Footer } from '@/components/Footer'
+import { CategoryOption } from '@/components/SearchModal'
 
 export interface Article {
   category: string
@@ -15,6 +17,9 @@ export interface Article {
   image: string
   slug?: string
   href?: string
+  excerpt?: string
+  issue?: string
+  readTime?: string
 }
 
 export interface ProductObject {
@@ -57,28 +62,80 @@ export function VellumFormTemplate({
   objects,
   categories = defaultCategories,
 }: VellumFormTemplateProps) {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [searchOpen, setSearchOpen] = useState(false)
   const [email, setEmail] = useState('')
   const [subscribed, setSubscribed] = useState(false)
   const [mounted, setMounted] = useState(false)
+
+  // Dynamic Hero Carousel State
+  const [activeHeroIndex, setActiveHeroIndex] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
+  const [isTransitioning, setIsTransitioning] = useState(false)
+  const timerRef = useRef<NodeJS.Timeout | null>(null)
+
+  const heroArticles: Article[] =
+    articles && articles.length > 0
+      ? articles
+      : [
+          {
+            category: 'Living Spaces',
+            title: heroTitle || 'The case for rooms that ask nothing of you',
+            excerpt:
+              heroDescription ||
+              'An exploration of considered spaces, the objects that inhabit them, and the rituals that make them ours.',
+            date: '14.08.26',
+            image: heroImage,
+            slug: 'sculptural-espresso-machines',
+            issue: heroIssue || 'Issue No. 04 / 2026',
+            readTime: '08 min read',
+          },
+        ]
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => setMounted(true))
     return () => cancelAnimationFrame(frame)
   }, [])
 
-  // Keyboard shortcut Cmd+K or Ctrl+K
+  // Auto-advance hero carousel every 4 seconds (4000ms)
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault()
-        setSearchOpen((prev) => !prev)
-      }
+    if (heroArticles.length <= 1 || isPaused) return
+
+    timerRef.current = setInterval(() => {
+      setIsTransitioning(true)
+      setTimeout(() => {
+        setActiveHeroIndex((prev) => (prev + 1) % heroArticles.length)
+        setIsTransitioning(false)
+      }, 350)
+    }, 4000)
+
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current)
     }
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
+  }, [heroArticles.length, isPaused, activeHeroIndex])
+
+  const handleSelectSlide = (idx: number) => {
+    if (idx === activeHeroIndex) return
+    setIsTransitioning(true)
+    setTimeout(() => {
+      setActiveHeroIndex(idx)
+      setIsTransitioning(false)
+    }, 250)
+  }
+
+  const handlePrevSlide = () => {
+    setIsTransitioning(true)
+    setTimeout(() => {
+      setActiveHeroIndex((prev) => (prev > 0 ? prev - 1 : heroArticles.length - 1))
+      setIsTransitioning(false)
+    }, 250)
+  }
+
+  const handleNextSlide = () => {
+    setIsTransitioning(true)
+    setTimeout(() => {
+      setActiveHeroIndex((prev) => (prev + 1) % heroArticles.length)
+      setIsTransitioning(false)
+    }, 250)
+  }
 
   function handleSubscribe(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -86,174 +143,168 @@ export function VellumFormTemplate({
   }
 
   const navCategories = categories.length > 0 ? categories : defaultCategories
+  const currentHero = heroArticles[activeHeroIndex] || heroArticles[0]
+  const currentLink =
+    currentHero.href ||
+    (currentHero.slug ? `/edit/${currentHero.slug}` : '/edit/featured-story')
 
   return (
     <main className="min-h-screen overflow-hidden bg-background text-foreground">
-      <header className="border-b border-border sticky top-0 z-40 bg-background/95 backdrop-blur-md">
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-5 md:px-10">
-          <Link href="/" className="font-sans text-[11px] font-semibold tracking-[0.28em]">
-            VELLUM FORM
-          </Link>
-          <nav className="hidden items-center gap-8 font-sans text-[11px] uppercase tracking-[0.14em] text-muted-foreground lg:flex">
-            <a href="#objects" className="transition-colors hover:text-foreground">
-              Objects
-            </a>
-            {navCategories.map((cat) => (
-              <Link
-                key={cat.slug}
-                href={`/category/${cat.slug}`}
-                className="transition-colors hover:text-foreground"
-              >
-                {cat.title}
-              </Link>
-            ))}
-            <Link href="/about" className="transition-colors hover:text-foreground">
-              About
-            </Link>
-          </nav>
-          <div className="flex items-center gap-4">
-            <button
-              type="button"
-              aria-label="Search articles"
-              onClick={() => setSearchOpen(true)}
-              className="flex items-center gap-2 rounded-full border border-border px-3 py-1.5 font-sans text-[10px] uppercase tracking-wider text-muted-foreground transition-all duration-300 hover:border-foreground hover:text-foreground"
-            >
-              <Search size={14} strokeWidth={1.5} />
-              <span className="hidden sm:inline">Search</span>
-              <kbd className="hidden font-mono text-[9px] text-muted-foreground/70 sm:inline">⌘K</kbd>
-            </button>
-            <button
-              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-              className="lg:hidden"
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
-              {menuOpen ? <X size={19} strokeWidth={1.5} /> : <Menu size={19} strokeWidth={1.5} />}
-            </button>
-          </div>
-        </div>
-        {menuOpen && (
-          <nav className="border-t border-border px-5 py-6 lg:hidden">
-            <div className="flex flex-col gap-5 font-sans text-xs uppercase tracking-[0.16em]">
-              <a href="#objects" onClick={() => setMenuOpen(false)}>
-                Objects
-              </a>
-              {navCategories.map((cat) => (
-                <Link
-                  key={cat.slug}
-                  href={`/category/${cat.slug}`}
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {cat.title}
-                </Link>
-              ))}
-              <a href="#the-edit" onClick={() => setMenuOpen(false)}>
-                The Edit
-              </a>
-              <Link href="/about" onClick={() => setMenuOpen(false)}>
-                About
-              </Link>
-            </div>
-          </nav>
-        )}
-      </header>
+      {/* Unified Header */}
+      <Header categories={navCategories} />
 
-      {/* Global Search Modal */}
-      <SearchModal
-        isOpen={searchOpen}
-        onClose={() => setSearchOpen(false)}
-        categories={navCategories}
-      />
-
+      {/* Dynamic Hero Section Carousel (4s transition) */}
       <section
         id="top"
-        className="mx-auto grid max-w-[1440px] border-b border-border md:grid-cols-[1.15fr_0.85fr]"
+        className="mx-auto grid max-w-[1440px] border-b border-border md:grid-cols-[1.15fr_0.85fr] relative"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
       >
-        <div
-          className="relative min-h-[500px] overflow-hidden border-b border-border transition-[opacity,transform] duration-[1400ms] ease-out md:min-h-[690px] md:border-b-0 md:border-r"
-          style={{
-            opacity: mounted ? 1 : 0,
-            transform: mounted ? 'scale(1)' : 'scale(1.05)',
-          }}
-        >
-          <Image
-            src={heroImage}
-            alt="Sculptural objects arranged in a sunlit interior"
-            fill
-            priority
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 58vw"
-          />
-          <div className="absolute inset-0 bg-foreground/10" />
-          <span className="absolute left-5 top-5 font-sans text-[10px] uppercase tracking-[0.22em] text-background md:left-10 md:top-8">
-            {heroIssue}
-          </span>
+        {/* Left: Stacked Smooth Transition Hero Images */}
+        <div className="relative min-h-[500px] overflow-hidden border-b border-border md:min-h-[690px] md:border-b-0 md:border-r bg-muted">
+          {heroArticles.map((art, idx) => {
+            const isActive = idx === activeHeroIndex
+            return (
+              <div
+                key={art.slug || idx}
+                className={`absolute inset-0 transition-all duration-1000 ease-out ${
+                  isActive
+                    ? 'opacity-100 scale-100 z-10'
+                    : 'opacity-0 scale-105 z-0 pointer-events-none'
+                }`}
+              >
+                <Image
+                  src={art.image}
+                  alt={art.title}
+                  fill
+                  priority={idx === 0}
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 58vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-black/30" />
+                <span className="absolute left-5 top-5 font-sans text-[10px] uppercase tracking-[0.22em] text-white md:left-10 md:top-8 bg-black/40 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 shadow-sm">
+                  {art.issue || `Issue No. 0${idx + 1} / 2026`}
+                </span>
+              </div>
+            )
+          })}
         </div>
-        <div className="flex flex-col justify-between px-5 py-10 md:px-12 md:py-14">
-          <div
-            className="flex justify-between font-sans text-[10px] uppercase tracking-[0.18em] text-muted-foreground transition-[opacity,transform] duration-700 ease-out"
-            style={{
-              opacity: mounted ? 1 : 0,
-              transform: mounted ? 'translateY(0)' : 'translateY(-10px)',
-            }}
-          >
-            <span>Featured Edition</span>
-            <span>08 min read</span>
+
+        {/* Right: Dynamic Narrative Content with Staged Fade Transitions */}
+        <div className="flex flex-col justify-between px-5 py-10 md:px-12 md:py-14 bg-background">
+          {/* Top Row: Meta info & Navigation Controls */}
+          <div className="flex items-center justify-between font-sans text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <span className="inline-block h-2 w-2 rounded-full bg-accent animate-pulse" />
+              <span>Featured Edition</span>
+              <span>•</span>
+              <span>{currentHero.readTime || '08 min read'}</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="font-mono text-[11px] text-foreground font-semibold">
+                {String(activeHeroIndex + 1).padStart(2, '0')} / {String(heroArticles.length).padStart(2, '0')}
+              </span>
+              <div className="flex items-center gap-1 border border-border rounded-full p-0.5">
+                <button
+                  type="button"
+                  onClick={handlePrevSlide}
+                  aria-label="Previous article"
+                  className="p-1 text-muted-foreground hover:text-foreground transition-colors rounded-full hover:bg-muted"
+                >
+                  <ChevronLeft size={15} strokeWidth={1.5} />
+                </button>
+                <button
+                  type="button"
+                  onClick={handleNextSlide}
+                  aria-label="Next article"
+                  className="p-1 text-muted-foreground hover:text-foreground transition-colors rounded-full hover:bg-muted"
+                >
+                  <ChevronRight size={15} strokeWidth={1.5} />
+                </button>
+              </div>
+            </div>
           </div>
-          <div className="pt-20 md:pt-0">
-            <p
-              className="mb-5 font-sans text-[10px] uppercase tracking-[0.2em] text-accent transition-[opacity,transform] duration-700 ease-out"
-              style={{
-                opacity: mounted ? 1 : 0,
-                transform: mounted ? 'translateY(0)' : 'translateY(16px)',
-                transitionDelay: '120ms',
-              }}
-            >
-              The quiet life
+
+          {/* Dynamic Article Headline and Excerpt */}
+          <div
+            key={activeHeroIndex}
+            className={`pt-12 md:pt-0 transition-all duration-500 ease-out ${
+              isTransitioning ? 'opacity-0 translate-y-3' : 'opacity-100 translate-y-0'
+            }`}
+          >
+            <p className="mb-4 font-sans text-[10px] uppercase tracking-[0.24em] text-accent">
+              {currentHero.category}
             </p>
-            <h1
-              className="max-w-xl font-serif text-5xl leading-[0.98] tracking-[-0.04em] transition-[opacity,transform] duration-[900ms] ease-out md:text-7xl"
-              style={{
-                opacity: mounted ? 1 : 0,
-                transform: mounted ? 'translateY(0)' : 'translateY(26px)',
-                transitionDelay: '220ms',
-              }}
-            >
-              {heroTitle}
+            <h1 className="max-w-xl font-serif text-4xl leading-[1.05] tracking-[-0.03em] md:text-6xl lg:text-7xl">
+              <Link href={currentLink} className="transition-opacity hover:opacity-85">
+                {currentHero.title}
+              </Link>
             </h1>
-            <p
-              className="mt-7 max-w-md font-sans text-sm leading-6 text-muted-foreground transition-[opacity,transform] duration-700 ease-out"
-              style={{
-                opacity: mounted ? 1 : 0,
-                transform: mounted ? 'translateY(0)' : 'translateY(18px)',
-                transitionDelay: '380ms',
-              }}
-            >
-              {heroDescription}
+            <p className="mt-6 max-w-md font-sans text-sm leading-relaxed text-muted-foreground">
+              {currentHero.excerpt || heroDescription}
             </p>
-            <a
-              href="#the-edit"
-              className="mt-9 inline-flex items-center gap-3 border border-foreground px-5 py-3 font-sans text-[10px] uppercase tracking-[0.16em] transition-colors duration-300 hover:bg-foreground hover:text-background"
-              style={{
-                opacity: mounted ? 1 : 0,
-                transform: mounted ? 'translateY(0)' : 'translateY(18px)',
-                transitionDelay: '480ms',
-                transitionDuration: '700ms',
-                transitionProperty:
-                  'opacity, transform, background-color, color',
-              }}
-            >
-              Explore the edit <ArrowUpRight size={14} strokeWidth={1.5} />
-            </a>
+            <div className="mt-9 flex items-center gap-4 flex-wrap">
+              <Link
+                href={currentLink}
+                className="inline-flex items-center gap-3 border border-foreground bg-foreground px-6 py-3.5 font-sans text-[10px] uppercase tracking-[0.16em] text-background transition-all duration-300 hover:bg-transparent hover:text-foreground shadow-sm"
+              >
+                Explore the edit <ArrowUpRight size={14} strokeWidth={1.5} />
+              </Link>
+              <Link
+                href={`/category/${currentHero.category?.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '') || 'living-spaces'}`}
+                className="inline-flex items-center gap-1.5 px-3 py-3 font-sans text-[10px] uppercase tracking-[0.14em] text-muted-foreground hover:text-foreground transition-colors"
+              >
+                In {currentHero.category} <ArrowUpRight size={12} strokeWidth={1.5} />
+              </Link>
+            </div>
           </div>
-          <div
-            className="mt-16 flex items-center gap-4 font-sans text-[10px] uppercase tracking-[0.14em] text-muted-foreground transition-opacity duration-700 ease-out"
-            style={{ opacity: mounted ? 1 : 0, transitionDelay: '600ms' }}
-          >
-            <span className="h-px w-12 bg-accent" /> Words by Eleanor Hart
+
+          {/* Bottom Progress Controls for 4-sec Cycle */}
+          <div className="mt-14 space-y-4">
+            <div className="flex gap-2.5">
+              {heroArticles.map((art, idx) => {
+                const isActive = idx === activeHeroIndex
+                return (
+                  <button
+                    key={art.slug || idx}
+                    type="button"
+                    onClick={() => handleSelectSlide(idx)}
+                    className="group flex-1 py-1.5 text-left transition-all"
+                    aria-label={`Switch to story: ${art.title}`}
+                  >
+                    <div className="h-[2.5px] w-full bg-border overflow-hidden rounded-full relative">
+                      {isActive && (
+                        <div
+                          key={`progress-${activeHeroIndex}-${isPaused ? 'paused' : 'running'}`}
+                          className={`h-full bg-foreground ${
+                            isPaused ? 'animate-hero-progress-paused w-full' : 'animate-hero-progress'
+                          }`}
+                        />
+                      )}
+                      {!isActive && (
+                        <div className="h-full w-0 bg-muted-foreground/40 group-hover:w-full transition-all duration-200" />
+                      )}
+                    </div>
+                    <div className="mt-2 flex items-center justify-between text-[9px] font-sans uppercase tracking-[0.14em] text-muted-foreground">
+                      <span className={isActive ? 'text-foreground font-semibold' : 'group-hover:text-foreground'}>
+                        {art.category}
+                      </span>
+                    </div>
+                  </button>
+                )
+              })}
+            </div>
+
+            <div className="flex items-center justify-between font-sans text-[10px] uppercase tracking-[0.14em] text-muted-foreground pt-1">
+              <span className="flex items-center gap-2">
+                <span className="h-px w-8 bg-accent" /> Words by Eleanor Hart • {currentHero.date}
+              </span>
+            </div>
           </div>
         </div>
       </section>
 
+      {/* Seamless Infinite Scrolling Marquee */}
       <LogoLoop />
 
       {/* Dynamic Curated Category Strip */}
@@ -277,7 +328,7 @@ export function VellumFormTemplate({
         </div>
       </section>
 
-      {/* Article Cards Grid -> Routes internally to /edit/[slug] */}
+      {/* Article Cards Grid */}
       <section
         id="the-edit"
         className="mx-auto max-w-[1440px] px-5 py-16 md:px-10 md:py-24"
@@ -336,7 +387,7 @@ export function VellumFormTemplate({
         </div>
       </section>
 
-      {/* Raw Products Grid -> Links directly to affiliateUrl with target="_blank" */}
+      {/* Raw Products Grid */}
       <section id="objects" className="border-y border-border bg-card">
         <div className="mx-auto max-w-[1440px] px-5 py-16 md:px-10 md:py-24">
           <Reveal className="mb-10 flex items-end justify-between">
@@ -452,71 +503,8 @@ export function VellumFormTemplate({
         </Reveal>
       </section>
 
-      <footer id="footer" className="border-t border-border">
-        <div className="mx-auto grid max-w-[1440px] gap-12 px-5 py-12 md:grid-cols-[1.5fr_1fr_1fr] md:px-10 md:py-16">
-          <div>
-            <Link
-              href="/"
-              className="font-sans text-[11px] font-semibold tracking-[0.28em]"
-            >
-              VELLUM FORM
-            </Link>
-            <p className="mt-5 max-w-xs font-serif text-xl leading-snug">
-              A digital curation house for the considered life.
-            </p>
-          </div>
-          <div className="flex flex-col gap-3 font-sans text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-            <span className="mb-2 text-accent">Categories</span>
-            {navCategories.map((cat) => (
-              <Link
-                key={cat.slug}
-                href={`/category/${cat.slug}`}
-                className="hover:text-foreground transition-colors"
-              >
-                {cat.title}
-              </Link>
-            ))}
-          </div>
-          <div className="flex flex-col gap-3 font-sans text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-            <span className="mb-2 text-accent">Elsewhere</span>
-            <a
-              href="https://www.instagram.com/thevellumform/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-foreground"
-            >
-              Instagram
-            </a>
-            <a
-              href="https://www.pinterest.com/vellumform/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-foreground"
-            >
-              Pinterest
-            </a>
-            <Link href="/about" className="hover:text-foreground">
-              About us
-            </Link>
-          </div>
-        </div>
-        <div className="mx-auto flex max-w-[1440px] flex-col gap-3 border-t border-border px-5 py-6 font-sans text-[9px] leading-5 tracking-[0.04em] text-muted-foreground md:flex-row md:items-center md:justify-between md:px-10">
-          <span>© 2026 Vellum Form. All rights reserved.</span>
-          <span>
-            Affiliate disclosure: We may earn a commission from select links, at
-            no additional cost to you.
-          </span>
-          <div className="flex items-center gap-3">
-            <Link href="/about" className="hover:underline">
-              About
-            </Link>
-            <span>/</span>
-            <Link href="/legal" className="hover:underline text-foreground">
-              Privacy &amp; Terms
-            </Link>
-          </div>
-        </div>
-      </footer>
+      {/* Unified Footer */}
+      <Footer categories={navCategories} />
     </main>
   )
 }

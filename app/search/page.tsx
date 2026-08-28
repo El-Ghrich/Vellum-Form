@@ -1,9 +1,11 @@
 import { Suspense } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowUpRight, Search, Tag, Sparkles } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import { getAllCategories, searchArticles, urlFor } from '@/lib/sanity'
 import { Reveal } from '@/components/reveal'
+import { Header } from '@/components/Header'
+import { Footer } from '@/components/Footer'
 import { SearchClientView } from './SearchClientView'
 
 export const revalidate = 30
@@ -53,28 +55,15 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      {/* Header */}
-      <header className="border-b border-border">
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-5 md:px-10">
-          <Link href="/" className="font-sans text-[11px] font-semibold tracking-[0.28em]">
-            VELLUM FORM
-          </Link>
-          <nav className="hidden items-center gap-8 font-sans text-[11px] uppercase tracking-[0.14em] text-muted-foreground lg:flex">
-            <Link href="/#objects" className="transition-colors hover:text-foreground">Objects</Link>
-            <Link href="/category/living-spaces" className="transition-colors hover:text-foreground">Living Spaces</Link>
-            <Link href="/category/daily-rituals" className="transition-colors hover:text-foreground">Daily Rituals</Link>
-            <Link href="/#the-edit" className="transition-colors hover:text-foreground">The Edit</Link>
-            <Link href="/about" className="transition-colors hover:text-foreground">About</Link>
-          </nav>
-        </div>
-      </header>
+      {/* Unified Header */}
+      <Header categories={categories} />
 
       {/* Hero & Interactive Search Header */}
       <section className="border-b border-border bg-[#FBF9F5]">
         <div className="mx-auto max-w-[1440px] px-5 py-14 md:px-10 md:py-20 text-center flex flex-col items-center">
           <Reveal>
             <p className="font-sans text-[10px] uppercase tracking-[0.24em] text-[#8A7051] mb-3">
-              Journal Archive & Curation
+              Journal Archive &amp; Curation
             </p>
           </Reveal>
           <Reveal delay={100}>
@@ -141,7 +130,6 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           </div>
         ) : (
           <div className="py-20 text-center">
-            <Sparkles size={32} strokeWidth={1.25} className="mx-auto text-muted-foreground/60 mb-4" />
             <h2 className="font-serif text-2xl text-foreground">No articles found</h2>
             <p className="mt-2 font-sans text-sm text-muted-foreground max-w-md mx-auto">
               We couldn&apos;t find any articles matching your search. Explore our curated collections or try searching for keywords like &ldquo;living&rdquo;, &ldquo;espresso&rdquo;, or &ldquo;lighting&rdquo;.
@@ -161,14 +149,8 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         )}
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-border bg-[#FBF9F5] py-12">
-        <div className="mx-auto max-w-[1440px] px-5 text-center md:px-10">
-          <p className="font-sans text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
-            © {new Date().getFullYear()} Vellum Form. All Rights Reserved.
-          </p>
-        </div>
-      </footer>
+      {/* Unified Footer */}
+      <Footer categories={categories} />
     </main>
   )
 }

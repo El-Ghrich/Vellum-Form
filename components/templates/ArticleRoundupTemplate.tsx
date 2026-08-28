@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
@@ -10,13 +10,13 @@ import {
   Link2,
   Mail,
   Minus,
-  Search,
   Share2,
   Star,
 } from 'lucide-react'
 import { Reveal } from '@/components/reveal'
 import { PortableText } from '@portabletext/react'
-import { SearchModal } from '@/components/SearchModal'
+import { Header } from '@/components/Header'
+import { Footer } from '@/components/Footer'
 
 export interface Product {
   _id?: string
@@ -84,19 +84,6 @@ export function ArticleRoundupTemplate({
   relatedArticles = [],
 }: ArticleRoundupTemplateProps) {
   const [copied, setCopied] = useState(false)
-  const [searchOpen, setSearchOpen] = useState(false)
-
-  // Keyboard shortcut Cmd+K or Ctrl+K
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault()
-        setSearchOpen((prev) => !prev)
-      }
-    }
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
 
   function handleCopyLink() {
     if (typeof window !== 'undefined' && navigator.clipboard) {
@@ -108,56 +95,8 @@ export function ArticleRoundupTemplate({
 
   return (
     <main className="min-h-screen bg-[#FBF9F5] text-[#111111] selection:bg-[#8A7051]/20">
-      {/* Top Editorial Header */}
-      <header className="sticky top-0 z-40 border-b border-[#E8E4DC] bg-[#FBF9F5]/90 backdrop-blur-md">
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between px-6 py-5 md:px-12">
-          <Link
-            href="/"
-            className="font-sans text-[11px] font-semibold tracking-[0.28em] text-[#111111] transition-opacity hover:opacity-75"
-          >
-            VELLUM FORM
-          </Link>
-          <nav className="hidden items-center gap-9 font-sans text-[11px] uppercase tracking-[0.16em] text-[#666666] lg:flex">
-            <Link href="/#objects" className="transition-colors hover:text-[#111111]">
-              Objects
-            </Link>
-            <Link href="/category/living-spaces" className="transition-colors hover:text-[#111111]">
-              Living Spaces
-            </Link>
-            <Link href="/category/daily-rituals" className="transition-colors hover:text-[#111111]">
-              Daily Rituals
-            </Link>
-            <Link href="/#the-edit" className="transition-colors hover:text-[#111111]">
-              The Edit
-            </Link>
-            <Link href="/about" className="transition-colors hover:text-[#111111]">
-              About
-            </Link>
-          </nav>
-          <div className="flex items-center gap-4">
-            <button
-              type="button"
-              aria-label="Search articles"
-              onClick={() => setSearchOpen(true)}
-              className="flex items-center gap-2 rounded-full border border-[#E8E4DC] px-3 py-1.5 font-sans text-[10px] uppercase tracking-wider text-[#666666] transition-all duration-300 hover:border-[#111111] hover:text-[#111111]"
-            >
-              <Search size={13} strokeWidth={1.5} />
-              <span className="hidden sm:inline">Search</span>
-              <kbd className="hidden font-mono text-[9px] text-[#888888] sm:inline">⌘K</kbd>
-            </button>
-            <Link href="/about" className="font-sans text-[10px] uppercase tracking-[0.18em] text-[#8A7051] hover:underline">
-              Curation House
-            </Link>
-          </div>
-        </div>
-      </header>
-
-      {/* Global Search Modal */}
-      <SearchModal
-        isOpen={searchOpen}
-        onClose={() => setSearchOpen(false)}
-      />
-
+      {/* Unified Header */}
+      <Header />
 
       {/* Breadcrumbs */}
       <div className="border-b border-[#E8E4DC]">
@@ -177,237 +116,121 @@ export function ArticleRoundupTemplate({
         </div>
       </div>
 
-      {/* Article Header */}
-      <header className="mx-auto max-w-[1000px] px-6 py-14 md:px-0 md:py-20">
-        <Reveal>
-          {issueLabel && (
-            <span className="inline-block border border-[#8A7051]/30 bg-[#8A7051]/10 px-3.5 py-1 font-sans text-[10px] uppercase tracking-[0.22em] text-[#8A7051]">
+      {/* Editorial Title & Hero Section */}
+      <header className="border-b border-[#E8E4DC]">
+        <div className="mx-auto max-w-[1000px] px-6 py-16 text-center md:px-0 md:py-24">
+          <Reveal>
+            <p className="font-sans text-[10px] uppercase tracking-[0.24em] text-[#8A7051]">
               {issueLabel}
-            </span>
+            </p>
+          </Reveal>
+          <Reveal delay={100}>
+            <h1 className="mt-5 font-serif text-4xl leading-[1.08] tracking-[-0.03em] sm:text-6xl md:text-7xl">
+              {title}
+            </h1>
+          </Reveal>
+          {subtitle && (
+            <Reveal delay={150}>
+              <p className="mt-3 font-sans text-xs uppercase tracking-[0.2em] text-[#666666]">
+                {subtitle}
+              </p>
+            </Reveal>
           )}
-          <h1 className="mt-6 max-w-3xl font-serif text-4xl leading-[1.08] tracking-[-0.03em] text-[#111111] md:text-6xl">
-            {title}
-            {subtitle && <span className="block text-[#666666] font-normal text-3xl md:text-4xl mt-2">({subtitle})</span>}
-          </h1>
           {excerpt && (
-            <p className="mt-6 max-w-2xl font-sans text-base leading-relaxed text-[#555555]">
-              {excerpt}
-            </p>
+            <Reveal delay={200}>
+              <p className="mx-auto mt-8 max-w-2xl font-sans text-base leading-relaxed text-[#555555] md:text-lg">
+                {excerpt}
+              </p>
+            </Reveal>
           )}
-          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 font-sans text-[11px] uppercase tracking-[0.14em] text-[#666666]">
-            <span>Editorial Review</span>
-            <span className="h-1 w-1 rounded-full bg-[#8A7051]" />
-            <span>Updated {updatedAt}</span>
-            <span className="h-1 w-1 rounded-full bg-[#8A7051]" />
-            <span>{readTime}</span>
-          </div>
-          <div className="mt-8 flex items-start gap-3.5 border border-[#E8E4DC] bg-[#FAF8F3] p-4 text-xs leading-relaxed text-[#555555]">
-            <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#8A7051]" />
-            <p>
-              We independently test and review products. When you buy through our links, we may earn an affiliate
-              commission, at no additional cost to you.
-            </p>
-          </div>
-        </Reveal>
+          <Reveal delay={300}>
+            <div className="mt-10 flex items-center justify-center gap-6 font-sans text-[10px] uppercase tracking-[0.16em] text-[#666666]">
+              <span>Updated {updatedAt}</span>
+              <span className="h-1 w-1 rounded-full bg-[#8A7051]" />
+              <span>{readTime}</span>
+              <span className="h-1 w-1 rounded-full bg-[#8A7051]" />
+              <span>By The Editorial Desk</span>
+            </div>
+          </Reveal>
+        </div>
       </header>
 
-      {/* At a Glance Table (Shortlist) */}
-      {products.length > 0 && (
-        <section className="border-y border-[#E8E4DC] bg-[#FAF8F3]">
-          <div className="mx-auto max-w-[1000px] px-6 py-14 md:px-0 md:py-20">
-            <Reveal>
-              <span className="font-sans text-[10px] uppercase tracking-[0.24em] text-[#8A7051]">The Shortlist</span>
-              <h2 className="mt-2 font-serif text-3xl tracking-[-0.02em] text-[#111111] md:text-4xl">At a Glance</h2>
-            </Reveal>
-
-            {/* Desktop table */}
-            <Reveal delay={100} className="mt-10 hidden overflow-hidden border border-[#E8E4DC] md:block">
-              <table className="w-full border-collapse bg-[#FBF9F5] text-left">
-                <thead>
-                  <tr className="border-b border-[#E8E4DC] font-sans text-[10px] uppercase tracking-[0.16em] text-[#666666]">
-                    <th className="px-5 py-4 font-normal">Award / Rank</th>
-                    <th className="px-5 py-4 font-normal">Object &amp; Maker</th>
-                    <th className="px-5 py-4 font-normal">Price Range</th>
-                    <th className="px-5 py-4 font-normal">Rating</th>
-                    <th className="px-5 py-4 font-normal text-right">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {products.map((product, idx) => {
-                    const rankNum = product.rank || idx + 1
-                    return (
-                      <tr key={product._id || product.name} className="border-b border-[#E8E4DC] last:border-b-0 hover:bg-[#FAF8F3]/60 transition-colors">
-                        <td className="px-5 py-5 align-middle">
-                          {product.badge ? (
-                            <span className="inline-block border border-[#8A7051]/30 bg-[#8A7051]/10 px-2.5 py-0.5 font-sans text-[9px] font-medium uppercase tracking-[0.14em] text-[#8A7051]">
-                              {product.badge}
-                            </span>
-                          ) : (
-                            <span className="font-serif text-sm italic text-[#8A7051]">#{rankNum}</span>
-                          )}
-                        </td>
-                        <td className="px-5 py-5 align-middle">
-                          <a href={`#rank-${rankNum}`} className="group flex items-center gap-4">
-                            <span className="relative h-14 w-14 shrink-0 overflow-hidden border border-[#E8E4DC] bg-[#E8E4DC]">
-                              <Image src={product.image} alt={product.name} fill className="object-cover" sizes="56px" />
-                            </span>
-                            <div>
-                              <span className="block font-sans text-[10px] uppercase tracking-[0.16em] text-[#8A7051]">{product.brand}</span>
-                              <span className="block font-serif text-base leading-tight text-[#111111] group-hover:underline">{product.name}</span>
-                            </div>
-                          </a>
-                        </td>
-                        <td className="px-5 py-5 align-middle font-sans text-xs text-[#555555]">{product.priceRange || 'Inquire'}</td>
-                        <td className="px-5 py-5 align-middle">
-                          <RatingDisplay rating={product.rating} />
-                        </td>
-                        <td className="px-5 py-5 align-middle text-right">
-                          <a
-                            href={product.affiliateUrl || '#'}
-                            target="_blank"
-                            rel="noopener noreferrer nofollow"
-                            className="inline-flex items-center gap-1.5 border border-[#111111] px-3.5 py-2 font-sans text-[10px] uppercase tracking-[0.14em] text-[#111111] transition-all duration-300 hover:bg-[#111111] hover:text-[#FBF9F5]"
-                          >
-                            <span>Check Availability</span>
-                            <ArrowUpRight size={11} strokeWidth={1.5} />
-                          </a>
-                        </td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-            </Reveal>
-
-            {/* Mobile cards */}
-            <div className="mt-10 flex flex-col gap-4 md:hidden">
-              {products.map((product, index) => {
-                const rankNum = product.rank || index + 1
-                return (
-                  <Reveal key={product._id || product.name} delay={index * 80} className="border border-[#E8E4DC] bg-[#FBF9F5] p-4">
-                    <div className="flex w-full items-center gap-4">
-                      <span className="relative h-16 w-16 shrink-0 overflow-hidden border border-[#E8E4DC] bg-[#E8E4DC]">
-                        <Image src={product.image} alt={product.name} fill className="object-cover" sizes="64px" />
-                      </span>
-                      <div className="min-w-0 flex-1">
-                        {product.badge && (
-                          <span className="block font-sans text-[9px] uppercase tracking-[0.14em] text-[#8A7051]">{product.badge}</span>
-                        )}
-                        <p className="font-sans text-[10px] uppercase tracking-[0.16em] text-[#8A7051]">{product.brand}</p>
-                        <a href={`#rank-${rankNum}`} className="mt-0.5 block font-serif text-lg leading-tight text-[#111111] hover:underline">
-                          {product.name}
-                        </a>
-                        <div className="mt-1.5 flex items-center justify-between font-sans text-[11px] text-[#666666]">
-                          <span>{product.priceRange}</span>
-                          {product.rating && <span className="text-[#8A7051] font-medium">{product.rating} ★</span>}
-                        </div>
-                        <a
-                          href={product.affiliateUrl || '#'}
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          className="mt-3 inline-flex items-center gap-1 font-sans text-[10px] uppercase tracking-[0.14em] text-[#111111] underline hover:text-[#8A7051]"
-                        >
-                          Check Availability <ArrowUpRight size={11} strokeWidth={1.5} />
-                        </a>
-                      </div>
-                    </div>
-                  </Reveal>
-                )
-              })}
-            </div>
+      {/* Structured Rich Text Content (if published in Sanity) */}
+      {content && (
+        <section className="border-b border-[#E8E4DC] py-12">
+          <div className="mx-auto max-w-[800px] px-6 md:px-0 prose prose-neutral">
+            <PortableText value={content} />
           </div>
         </section>
       )}
 
-      {/* Ranked Product Blocks — Quiet Luxury Editorial Layout */}
-      {products.length > 0 && (
-        <section className="mx-auto max-w-[1000px] px-6 py-16 md:px-0 md:py-28">
-          <div className="flex flex-col gap-24 md:gap-36">
-            {products.map((product, idx) => {
-              const rankNum = product.rank || idx + 1
-              return (
-                <article key={product._id || product.name} id={`rank-${rankNum}`} className="scroll-mt-24 border-b border-[#E8E4DC] pb-20 md:pb-28 last:border-b-0 last:pb-0">
-                  {/* Top of the card: Badge & Rank */}
-                  <Reveal>
-                    <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#E8E4DC] pb-6">
-                      <div className="flex items-center gap-3">
-                        <span className="font-serif text-3xl font-normal italic text-[#8A7051]">
-                          0{rankNum}
-                        </span>
-                        {product.badge && (
-                          <span className="inline-block border border-[#8A7051]/30 bg-[#8A7051]/10 px-3 py-1 font-sans text-[10px] font-medium uppercase tracking-[0.2em] text-[#8A7051]">
-                            {product.badge}
-                          </span>
-                        )}
-                      </div>
+      {/* Curated Product Cards Section */}
+      <section className="mx-auto max-w-[1000px] px-6 py-16 md:px-0 md:py-24">
+        <div className="mb-12 flex items-baseline justify-between border-b border-[#E8E4DC] pb-4">
+          <span className="font-sans text-[10px] uppercase tracking-[0.2em] text-[#8A7051]">
+            Curated Selections
+          </span>
+          <span className="font-sans text-[10px] uppercase tracking-[0.14em] text-[#666666]">
+            {products.length} {products.length === 1 ? 'Object' : 'Objects'} Reviewed
+          </span>
+        </div>
 
-                      {/* Rating & Price Range side-by-side */}
-                      <div className="flex items-center gap-5 font-sans text-xs text-[#666666]">
-                        {product.rating && <RatingDisplay rating={product.rating} />}
-                        {product.priceRange && (
-                          <>
-                            <span className="h-3 w-[1px] bg-[#E8E4DC]" />
-                            <span className="uppercase tracking-[0.14em] font-medium text-[#111111]">
-                              {product.priceRange}
-                            </span>
-                          </>
-                        )}
-                      </div>
+        <div className="space-y-24">
+          {products.map((product, index) => (
+            <Reveal key={product._id || product.name} as="article" delay={index * 80}>
+              <div className="grid gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-start md:gap-12">
+                {/* Product Imagery */}
+                <div className="group relative aspect-square overflow-hidden bg-[#E8E4DC]/40">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                  {product.badge && (
+                    <span className="absolute left-4 top-4 border border-[#111111] bg-[#FBF9F5] px-3 py-1 font-sans text-[9px] uppercase tracking-[0.16em] text-[#111111]">
+                      {product.badge}
+                    </span>
+                  )}
+                  {product.rank && (
+                    <span className="absolute right-4 top-4 font-serif text-2xl font-light text-[#8A7051]">
+                      #{product.rank}
+                    </span>
+                  )}
+                </div>
+
+                {/* Product Editorial Details */}
+                <div className="flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-[#8A7051]">
+                        {product.brand}
+                      </p>
+                      <RatingDisplay rating={product.rating} />
                     </div>
-                  </Reveal>
 
-                  {/* Header: Brand above Name */}
-                  <Reveal delay={80} className="mt-8">
-                    <p className="font-sans text-[11px] font-medium uppercase tracking-[0.24em] text-[#8A7051]">
-                      {product.brand}
-                    </p>
-                    <h2 className="mt-2 font-serif text-3xl leading-tight tracking-[-0.02em] text-[#111111] sm:text-4xl md:text-5xl">
+                    <h2 className="mt-3 font-serif text-2xl leading-tight tracking-[-0.01em] text-[#111111] md:text-3xl">
                       {product.name}
                     </h2>
-                  </Reveal>
 
-                  {/* Image Presentation */}
-                  <Reveal delay={160} className="relative mt-8 aspect-[16/9] w-full overflow-hidden border border-[#E8E4DC] bg-[#E8E4DC] md:aspect-[3/2]">
-                    <a
-                      href={product.affiliateUrl || '#'}
-                      target="_blank"
-                      rel="noopener noreferrer nofollow"
-                      className="group block h-full w-full"
-                    >
-                      <Image
-                        src={product.image}
-                        alt={`${product.name} by ${product.brand}`}
-                        fill
-                        className="object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
-                        sizes="(max-width: 768px) 100vw, 1000px"
-                      />
-                      <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/10" />
-                    </a>
-                  </Reveal>
+                    {product.desc && (
+                      <p className="mt-5 font-sans text-sm leading-relaxed text-[#555555]">
+                        {product.desc}
+                      </p>
+                    )}
 
-                  {/* Description Paragraph */}
-                  {product.desc && (
-                    <Reveal delay={220} className="mt-10">
-                      <div className="max-w-3xl">
-                        <p className="font-sans text-[15px] leading-[1.85] text-[#555555] md:text-base">
-                          {product.desc}
-                        </p>
-                      </div>
-                    </Reveal>
-                  )}
-
-                  {/* Pros & Cons Minimalist Grid */}
-                  {((product.pros && product.pros.length > 0) || (product.cons && product.cons.length > 0)) && (
-                    <Reveal delay={280} className="mt-10 grid gap-8 border border-[#E8E4DC] bg-[#FAF8F3] p-6 md:p-10 sm:grid-cols-2">
+                    {/* Pros and Cons Breakdown */}
+                    <div className="mt-8 grid gap-6 sm:grid-cols-2">
                       {product.pros && product.pros.length > 0 && (
-                        <div>
-                          <p className="mb-4 font-sans text-[10px] uppercase tracking-[0.22em] text-[#8A7051] font-semibold">
-                            Reasons to Appreciate
+                        <div className="space-y-3">
+                          <p className="font-sans text-[9px] uppercase tracking-[0.18em] text-[#111111]">
+                            The Strengths
                           </p>
-                          <ul className="flex flex-col gap-3.5">
+                          <ul className="space-y-2">
                             {product.pros.map((pro, pIdx) => (
-                              <li key={pIdx} className="flex items-start gap-3 font-sans text-sm leading-relaxed text-[#333333]">
-                                <Check size={15} strokeWidth={2} className="mt-0.5 shrink-0 text-[#8A7051]" />
+                              <li key={pIdx} className="flex items-start gap-2 text-xs text-[#555555]">
+                                <Check size={13} className="mt-0.5 shrink-0 text-[#8A7051]" />
                                 <span>{pro}</span>
                               </li>
                             ))}
@@ -416,82 +239,70 @@ export function ArticleRoundupTemplate({
                       )}
 
                       {product.cons && product.cons.length > 0 && (
-                        <div className="sm:border-l sm:border-[#E8E4DC] sm:pl-8">
-                          <p className="mb-4 font-sans text-[10px] uppercase tracking-[0.22em] text-[#666666] font-semibold">
-                            Considerations &amp; Trade-offs
+                        <div className="space-y-3">
+                          <p className="font-sans text-[9px] uppercase tracking-[0.18em] text-[#666666]">
+                            Considerations
                           </p>
-                          <ul className="flex flex-col gap-3.5">
+                          <ul className="space-y-2">
                             {product.cons.map((con, cIdx) => (
-                              <li key={cIdx} className="flex items-start gap-3 font-sans text-sm leading-relaxed text-[#666666]">
-                                <Minus size={15} strokeWidth={2} className="mt-0.5 shrink-0 text-[#666666]" />
+                              <li key={cIdx} className="flex items-start gap-2 text-xs text-[#666666]">
+                                <Minus size={13} className="mt-0.5 shrink-0 text-[#666666]" />
                                 <span>{con}</span>
                               </li>
                             ))}
                           </ul>
                         </div>
                       )}
-                    </Reveal>
-                  )}
-
-                  {/* CTA Action Bar */}
-                  <Reveal delay={340} className="mt-10 flex flex-col items-start justify-between gap-5 pt-4 sm:flex-row sm:items-center">
-                    <div className="font-sans text-xs text-[#666666]">
-                      {product.priceRange && (
-                        <p className="font-serif text-2xl text-[#111111]">{product.priceRange}</p>
-                      )}
-                      <p className="text-[10px] uppercase tracking-[0.14em] text-[#666666] mt-0.5">
-                        Verified Curated Availability
-                      </p>
                     </div>
+                  </div>
 
-                    <a
-                      href={product.affiliateUrl || '#'}
-                      target="_blank"
-                      rel="noopener noreferrer nofollow"
-                      className="inline-flex items-center gap-3 bg-[#111111] px-8 py-4 font-sans text-[11px] uppercase tracking-[0.18em] text-[#FBF9F5] transition-all duration-300 hover:bg-[#8A7051] hover:shadow-md"
-                    >
-                      <span>Check Availability</span>
-                      <ArrowUpRight size={14} strokeWidth={1.5} />
-                    </a>
-                  </Reveal>
-                </article>
-              )
-            })}
-          </div>
-        </section>
-      )}
-
-      {/* Rich Text Editorial Content (Sanity PortableText) */}
-      {content && (
-        <section className="mx-auto max-w-[1000px] px-6 py-12 md:px-0 md:py-16">
-          <div className="border-t border-[#E8E4DC] pt-12">
-            <h2 className="mb-8 font-serif text-3xl tracking-[-0.02em] text-[#111111]">
-              Editorial Notes &amp; Observations
-            </h2>
-            <div className="prose prose-neutral max-w-none font-sans text-base leading-relaxed text-[#555555] [&_h2]:font-serif [&_h2]:text-2xl [&_h2]:text-[#111111] [&_h3]:font-serif [&_h3]:text-xl [&_h3]:text-[#111111] [&_p]:mb-6 [&_a]:text-[#111111] [&_a]:underline hover:[&_a]:text-[#8A7051]">
-              <PortableText value={content} />
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Related / Alternative Grid */}
-      {relatedArticles.length > 0 && (
-        <section className="border-y border-[#E8E4DC] bg-[#FAF8F3]">
-          <div className="mx-auto max-w-[1000px] px-6 py-16 md:px-0 md:py-24">
-            <Reveal>
-              <span className="font-sans text-[10px] uppercase tracking-[0.24em] text-[#8A7051]">
-                Keep Reading
-              </span>
-              <h2 className="mt-2 font-serif text-3xl tracking-[-0.02em] text-[#111111] md:text-4xl">
-                You Might Also Appreciate
-              </h2>
+                  {/* Buy / Affiliate Action */}
+                  <div className="mt-10 flex items-center justify-between border-t border-[#E8E4DC] pt-6">
+                    <div>
+                      <span className="font-sans text-[9px] uppercase tracking-[0.14em] text-[#666666]">
+                        Price Range
+                      </span>
+                      <p className="font-serif text-lg text-[#111111]">{product.priceRange || 'Inquire'}</p>
+                    </div>
+                    {product.affiliateUrl && (
+                      <a
+                        href={product.affiliateUrl}
+                        target="_blank"
+                        rel="noopener noreferrer nofollow"
+                        className="inline-flex items-center gap-2 border border-[#111111] bg-[#111111] px-6 py-3 font-sans text-[10px] uppercase tracking-[0.16em] text-[#FBF9F5] transition-colors duration-300 hover:bg-transparent hover:text-[#111111]"
+                      >
+                        Check Availability <ArrowUpRight size={13} strokeWidth={1.5} />
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
             </Reveal>
-            <div className="mt-10 grid gap-10 sm:grid-cols-3 sm:gap-6">
-              {relatedArticles.map((article, index) => (
-                <Reveal key={article.title} delay={index * 110} className="group">
-                  <Link href={`/edit/${article.slug || ''}`} className="block">
-                    <div className="relative aspect-[3/2] overflow-hidden border border-[#E8E4DC] bg-[#E8E4DC]">
+          ))}
+        </div>
+      </section>
+
+      {/* Related Stories Section */}
+      {relatedArticles.length > 0 && (
+        <section className="border-t border-[#E8E4DC] bg-[#E8E4DC]/15 py-16 md:py-24">
+          <div className="mx-auto max-w-[1000px] px-6 md:px-0">
+            <div className="mb-10 flex items-baseline justify-between border-b border-[#E8E4DC] pb-4">
+              <span className="font-sans text-[10px] uppercase tracking-[0.2em] text-[#8A7051]">
+                Related Journal Editions
+              </span>
+              <Link
+                href="/#the-edit"
+                className="inline-flex items-center gap-1 font-sans text-[10px] uppercase tracking-[0.14em] text-[#666666] hover:text-[#111111]"
+              >
+                View Archive <ArrowUpRight size={12} strokeWidth={1.5} />
+              </Link>
+            </div>
+
+            <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
+              {relatedArticles.map((article, idx) => (
+                <Reveal key={article.slug || idx} delay={idx * 100}>
+                  <Link href={`/edit/${article.slug}`} className="group block">
+                    <div className="relative aspect-[3/2] overflow-hidden bg-[#E8E4DC]">
                       <Image
                         src={article.image}
                         alt={article.title}
@@ -516,14 +327,23 @@ export function ArticleRoundupTemplate({
         </section>
       )}
 
-      {/* Share Tray & Legal Footer (Author Completely Removed) */}
-      <section className="mx-auto max-w-[1000px] px-6 py-16 md:px-0 md:py-20">
+      {/* Share Tray */}
+      <section className="mx-auto max-w-[1000px] px-6 py-12 md:px-0 md:py-16">
         <Reveal className="flex flex-col gap-6 border border-[#E8E4DC] bg-[#FBF9F5] p-6 sm:flex-row sm:items-center sm:justify-between md:p-8">
-          <div>
-            <p className="font-serif text-xl text-[#111111]">The Editorial Desk</p>
-            <p className="font-sans text-[10px] uppercase tracking-[0.18em] text-[#8A7051] mt-1">
-              Curated for the considered life
-            </p>
+          <div className="flex items-center gap-3.5">
+            <Image
+              src="/round-logo.png"
+              alt="VF Seal"
+              width={64}
+              height={64}
+              className="h-10 w-10 object-contain rounded-full border border-[#E8E4DC] p-0.5 shrink-0"
+            />
+            <div>
+              <p className="font-serif text-xl text-[#111111]">The Editorial Desk</p>
+              <p className="font-sans text-[10px] uppercase tracking-[0.18em] text-[#8A7051] mt-0.5">
+                Curated for the considered life
+              </p>
+            </div>
           </div>
           <div className="flex items-center gap-3">
             <span className="font-sans text-[10px] uppercase tracking-[0.14em] text-[#666666]">
@@ -560,27 +380,10 @@ export function ArticleRoundupTemplate({
             )}
           </div>
         </Reveal>
-
-        <Reveal
-          delay={120}
-          className="mt-10 flex flex-col gap-3 border-t border-[#E8E4DC] pt-6 font-sans text-[9px] leading-5 tracking-[0.04em] text-[#666666] sm:flex-row sm:items-center sm:justify-between"
-        >
-          <span>© 2026 Vellum Form. All rights reserved.</span>
-          <span>
-            Affiliate disclosure: This post contains affiliate links. We may earn a commission from
-            qualifying purchases, at no additional cost to you.
-          </span>
-          <div className="flex items-center gap-3">
-            <Link href="/about" className="hover:underline">
-              About
-            </Link>
-            <span>/</span>
-            <Link href="/legal" className="hover:underline text-[#111111]">
-              Privacy &amp; Terms
-            </Link>
-          </div>
-        </Reveal>
       </section>
+
+      {/* Unified Footer */}
+      <Footer />
     </main>
   )
 }

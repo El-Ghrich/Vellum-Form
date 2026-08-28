@@ -1,11 +1,13 @@
 'use client'
 
-import { useMemo, useState, useEffect } from 'react'
+import { useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowUpRight, ChevronLeft, ChevronRight, Eye, Grid3x3, LayoutGrid, Search, Menu, X } from 'lucide-react'
+import { ArrowUpRight, Eye, Grid3x3, LayoutGrid } from 'lucide-react'
 import { Reveal } from '@/components/reveal'
-import { SearchModal, CategoryOption } from '@/components/SearchModal'
+import { Header } from '@/components/Header'
+import { Footer } from '@/components/Footer'
+import { CategoryOption } from '@/components/SearchModal'
 
 export interface CollectionItem {
   id: string
@@ -62,20 +64,6 @@ export function CategoryTemplate({
   const [sort, setSort] = useState<SortOption>("Curator's Pick")
   const [sortOpen, setSortOpen] = useState(false)
   const [view, setView] = useState<'grid' | 'editorial'>('grid')
-  const [searchOpen, setSearchOpen] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
-
-  // Keyboard shortcut Cmd+K or Ctrl+K
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault()
-        setSearchOpen((prev) => !prev)
-      }
-    }
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
 
   const filtered = useMemo(() => {
     const base = activeTab === 'All' ? items : items.filter((item) => item.category === activeTab)
@@ -93,88 +81,8 @@ export function CategoryTemplate({
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      {/* Header / Navigation */}
-      <header className="border-b border-border sticky top-0 z-40 bg-background/95 backdrop-blur-md">
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-5 md:px-10">
-          <Link href="/" className="font-sans text-[11px] font-semibold tracking-[0.28em]">
-            VELLUM FORM
-          </Link>
-          <nav className="hidden items-center gap-8 font-sans text-[11px] uppercase tracking-[0.14em] text-muted-foreground lg:flex">
-            <Link href="/#objects" className="transition-colors hover:text-foreground">
-              Objects
-            </Link>
-            {navCategories.map((cat) => (
-              <Link
-                key={cat.slug}
-                href={`/category/${cat.slug}`}
-                className={`transition-colors ${
-                  title.toLowerCase() === cat.title.toLowerCase()
-                    ? 'text-foreground font-semibold'
-                    : 'hover:text-foreground'
-                }`}
-              >
-                {cat.title}
-              </Link>
-            ))}
-            <Link href="/#the-edit" className="transition-colors hover:text-foreground">
-              The Edit
-            </Link>
-            <Link href="/about" className="transition-colors hover:text-foreground">
-              About
-            </Link>
-          </nav>
-          <div className="flex items-center gap-4">
-            <button
-              type="button"
-              aria-label="Search articles"
-              onClick={() => setSearchOpen(true)}
-              className="flex items-center gap-2 rounded-full border border-border px-3 py-1.5 font-sans text-[10px] uppercase tracking-wider text-muted-foreground transition-all duration-300 hover:border-foreground hover:text-foreground"
-            >
-              <Search size={14} strokeWidth={1.5} />
-              <span className="hidden sm:inline">Search</span>
-              <kbd className="hidden font-mono text-[9px] text-muted-foreground/70 sm:inline">⌘K</kbd>
-            </button>
-            <button
-              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-              className="lg:hidden"
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
-              {menuOpen ? <X size={19} strokeWidth={1.5} /> : <Menu size={19} strokeWidth={1.5} />}
-            </button>
-          </div>
-        </div>
-        {menuOpen && (
-          <nav className="border-t border-border px-5 py-6 lg:hidden">
-            <div className="flex flex-col gap-5 font-sans text-xs uppercase tracking-[0.16em]">
-              <Link href="/#objects" onClick={() => setMenuOpen(false)}>
-                Objects
-              </Link>
-              {navCategories.map((cat) => (
-                <Link
-                  key={cat.slug}
-                  href={`/category/${cat.slug}`}
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {cat.title}
-                </Link>
-              ))}
-              <Link href="/#the-edit" onClick={() => setMenuOpen(false)}>
-                The Edit
-              </Link>
-              <Link href="/about" onClick={() => setMenuOpen(false)}>
-                About
-              </Link>
-            </div>
-          </nav>
-        )}
-      </header>
-
-      {/* Global Search Modal */}
-      <SearchModal
-        isOpen={searchOpen}
-        onClose={() => setSearchOpen(false)}
-        categories={navCategories}
-      />
+      {/* Unified Header */}
+      <Header categories={navCategories} />
 
       {/* Hero / Header Section */}
       <section className="border-b border-border bg-[#FBF9F5]">
@@ -319,16 +227,8 @@ export function CategoryTemplate({
         )}
       </section>
 
-      <footer className="border-t border-border">
-        <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-between gap-3 px-5 py-8 text-center font-sans text-[9px] uppercase tracking-[0.14em] text-muted-foreground md:flex-row md:px-10">
-          <span>© 2026 Vellum Form. All rights reserved.</span>
-          <div className="flex items-center gap-4">
-            <Link href="/about" className="hover:text-foreground">About</Link>
-            <span>/</span>
-            <Link href="/legal" className="hover:text-foreground">Privacy &amp; Terms</Link>
-          </div>
-        </div>
-      </footer>
+      {/* Unified Footer */}
+      <Footer categories={navCategories} />
     </main>
   )
 }
