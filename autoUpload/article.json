@@ -1,0 +1,46 @@
+{
+  "_type": "article",
+  "title": "The Considered Desk: Five Refined Upgrades",
+  "slug": {
+    "_type": "slug",
+    "current": "the-considered-desk-five-refined-upgrades"
+  },
+  "excerpt": "A workspace is judged by its smallest details — a charging dock, a pen, a mat. These five objects treat function as a matter of design.",
+  "content": [
+    {
+      "_type": "block",
+      "_key": "block1",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_type": "span",
+          "_key": "span1",
+          "text": "Most desks are furnished by accident and refined by none. A charger arrives because a cable snapped, a mat because coffee was spilled once, a pen because it was free at a conference. Each object solves its own narrow problem, but together they rarely cohere into anything considered — the desk becomes a collection of fixes rather than a designed environment. The difference between a functional desk and a refined one is not effort; it is intention applied to objects most people never think to choose.",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_type": "block",
+      "_key": "block2",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_type": "span",
+          "_key": "span2",
+          "text": "What follows is a curation built on that distinction. Warm wood, matte metal, and materials that improve with use replace the plastic defaults of a standard office supply aisle. Charging, organizing, writing, and sitting at the desk each become deliberate acts rather than afterthoughts — five objects, chosen not for novelty but for how quietly well they do one job.",
+          "marks": []
+        }
+      ]
+    }
+  ],
+  "featuredProducts": [
+    { "_type": "reference", "_ref": "fCAHs6BVkQK6W5F4ZRiHgV", "_key": "ref1" },
+    { "_type": "reference", "_ref": "fCAHs6BVkQK6W5F4ZRiHlV", "_key": "ref2" },
+    { "_type": "reference", "_ref": "W3ZXxmqSHEBDdxSinWxrXr", "_key": "ref3" },
+    { "_type": "reference", "_ref": "W3ZXxmqSHEBDdxSinWxrqo", "_key": "ref4" },
+    { "_type": "reference", "_ref": "eJyqTisNa5YHd4Fraes3ut", "_key": "ref5" }
+  ]
+}
