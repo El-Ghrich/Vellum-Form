@@ -40,7 +40,6 @@ const defaultCategories: CategoryOption[] = [
   { title: 'Living Spaces', slug: 'living-spaces' },
   { title: 'Daily Rituals', slug: 'daily-rituals' },
   { title: 'Skin & Wellness', slug: 'skin-wellness' },
-  { title: 'The Edit', slug: 'the-edit' },
 ]
 
 const sortOptions = ["Curator's Pick", 'Newest Editions', 'Price: Ascending', 'Price: Descending'] as const
@@ -236,7 +235,7 @@ export function CategoryTemplate({
 function CollectionCard({ item, index, large }: { item: CollectionItem; index: number; large: boolean }) {
   const isProduct = item.type === 'product'
   const destinationUrl = isProduct
-    ? item.affiliateUrl || item.href || '#'
+    ? (item.affiliateUrl && item.affiliateUrl !== '#' ? item.affiliateUrl : `https://www.amazon.com/s?k=${encodeURIComponent(item.brand + ' ' + item.title)}`)
     : item.href || (item.slug ? `/edit/${item.slug}` : '/edit/featured-story')
 
   return (
@@ -262,8 +261,8 @@ function CollectionCard({ item, index, large }: { item: CollectionItem; index: n
           </div>
         </div>
         <p className="mt-4 font-sans text-[9px] tracking-[0.16em] text-accent">{item.brand}</p>
-        <h3 className={`mt-2 font-serif leading-tight group-hover:underline ${large ? 'text-2xl' : 'text-lg'}`}>{item.title}</h3>
-        <div className="mt-3 flex items-center justify-between font-sans text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+        <h3 className={`mt-2 font-serif leading-tight group-hover:underline line-clamp-2 ${large ? 'text-2xl' : 'text-base sm:text-lg'}`}>{item.title}</h3>
+        <div className="mt-3 flex items-center justify-between font-sans text-[9px] sm:text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
           <span>{item.price}</span>
           <span className="inline-flex items-center gap-1 text-foreground transition-opacity duration-300 group-hover:opacity-70">
             {isProduct ? 'Check Availability' : 'Read'} <ArrowUpRight size={12} strokeWidth={1.5} />

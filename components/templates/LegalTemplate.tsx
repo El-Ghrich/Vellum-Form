@@ -43,9 +43,9 @@ export function LegalTemplate({
             </h2>
             <div className="mt-4 space-y-4 text-sm leading-relaxed text-[#555555]">
               <p>
-                <strong>Vellum Form</strong> participates in the Amazon Services LLC Associates
+                <strong>Vellum Form</strong> is a participant in the Amazon Services LLC Associates
                 Program, an affiliate advertising program designed to provide a means for sites to
-                earn advertising fees by advertising and linking to Amazon.com and affiliated sites.
+                earn advertising fees by advertising and linking to Amazon.com.
               </p>
               <p>
                 As an Amazon Associate, we earn from qualifying purchases. This means that if you

@@ -40,7 +40,6 @@ const defaultCategories: CategoryOption[] = [
   { title: "Living Spaces", slug: "living-spaces" },
   { title: "Daily Rituals", slug: "daily-rituals" },
   { title: "Skin & Wellness", slug: "skin-wellness" },
-  { title: "The Edit", slug: "the-edit" },
 ];
 
 export function SearchModal({

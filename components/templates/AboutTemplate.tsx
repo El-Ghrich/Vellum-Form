@@ -54,13 +54,7 @@ const defaultSteps: NonNullable<AboutTemplateProps['processSteps']> = [
       'We analyze materials, longevity, craftsmanship, and aesthetic value to ensure only enduring pieces make the cut.',
     icon: 'vetting',
   },
-  {
-    number: '03',
-    title: 'The Edit',
-    description:
-      'We publish unbiased, highly curated guides to help you build a space that feels intentional, harmonious, and refined.',
-    icon: 'edit',
-  },
+  
 ]
 
 export function AboutTemplate({

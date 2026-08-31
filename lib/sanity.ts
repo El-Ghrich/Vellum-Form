@@ -152,3 +152,18 @@ export async function searchArticles(searchTerm: string, categorySlug?: string) 
   return client.fetch(query, params, { next: { revalidate: 30 } })
 }
 
+export async function getCuratedProducts() {
+  const query = `*[_type == "product"] | order(_createdAt desc)[0...4] {
+    _id,
+    name,
+    brand,
+    priceRange,
+    affiliateUrl,
+    image,
+    rating,
+    badge
+  }`
+  return client.fetch(query, {}, { next: { revalidate: 60 } })
+}
+
+

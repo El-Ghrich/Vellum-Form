@@ -10,7 +10,6 @@ const defaultCategories: CategoryOption[] = [
   { title: 'Living Spaces', slug: 'living-spaces' },
   { title: 'Daily Rituals', slug: 'daily-rituals' },
   { title: 'Skin & Wellness', slug: 'skin-wellness' },
-  { title: 'The Edit', slug: 'the-edit' },
 ]
 
 export function Footer({ categories = defaultCategories }: FooterProps) {
@@ -103,8 +102,8 @@ export function Footer({ categories = defaultCategories }: FooterProps) {
           <Link href="/about" className="transition-colors hover:text-foreground">
             About Us
           </Link>
-          <Link href="/legal" className="transition-colors hover:text-foreground">
-            Privacy &amp; Terms
+          <Link href="/privacy" className="transition-colors hover:text-foreground">
+            Privacy Policy &amp; Disclosures
           </Link>
         </div>
       </div>
@@ -121,8 +120,8 @@ export function Footer({ categories = defaultCategories }: FooterProps) {
               About
             </Link>
             <span>/</span>
-            <Link href="/legal" className="hover:underline text-foreground">
-              Privacy &amp; Terms
+            <Link href="/privacy" className="hover:underline text-foreground">
+              Privacy Policy &amp; Disclosures
             </Link>
           </div>
         </div>

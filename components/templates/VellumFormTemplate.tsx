@@ -50,7 +50,6 @@ const defaultCategories: CategoryItem[] = [
   { title: 'Living Spaces', slug: 'living-spaces' },
   { title: 'Daily Rituals', slug: 'daily-rituals' },
   { title: 'Skin & Wellness', slug: 'skin-wellness' },
-  { title: 'The Edit', slug: 'the-edit' },
 ]
 
 export function VellumFormTemplate({
@@ -235,18 +234,18 @@ export function VellumFormTemplate({
             <p className="mb-4 font-sans text-[10px] uppercase tracking-[0.24em] text-accent">
               {currentHero.category}
             </p>
-            <h1 className="max-w-xl font-serif text-4xl leading-[1.05] tracking-[-0.03em] md:text-6xl lg:text-7xl">
+            <h1 className="max-w-xl font-serif text-3xl sm:text-4xl leading-[1.08] tracking-[-0.03em] md:text-6xl lg:text-7xl">
               <Link href={currentLink} className="transition-opacity hover:opacity-85">
                 {currentHero.title}
               </Link>
             </h1>
-            <p className="mt-6 max-w-md font-sans text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-4 sm:mt-6 max-w-md font-sans text-xs sm:text-sm leading-relaxed text-muted-foreground">
               {currentHero.excerpt || heroDescription}
             </p>
-            <div className="mt-9 flex items-center gap-4 flex-wrap">
+            <div className="mt-8 flex items-center gap-3 sm:gap-4 flex-wrap">
               <Link
                 href={currentLink}
-                className="inline-flex items-center gap-3 border border-foreground bg-foreground px-6 py-3.5 font-sans text-[10px] uppercase tracking-[0.16em] text-background transition-all duration-300 hover:bg-transparent hover:text-foreground shadow-sm"
+                className="inline-flex items-center gap-2.5 border border-foreground bg-foreground px-5 py-3 sm:px-6 sm:py-3.5 font-sans text-[10px] uppercase tracking-[0.16em] text-background transition-all duration-300 hover:bg-transparent hover:text-foreground shadow-xs active:scale-[0.99]"
               >
                 Explore the edit <ArrowUpRight size={14} strokeWidth={1.5} />
               </Link>
@@ -403,9 +402,12 @@ export function VellumFormTemplate({
               Selected / 04
             </span>
           </Reveal>
-          <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-4 md:gap-6">
+          <div className="grid grid-cols-2 gap-x-3 gap-y-8 sm:gap-x-4 sm:gap-y-10 md:grid-cols-4 md:gap-6">
             {objects.map((object, index) => {
-              const affiliateLink = object.affiliateUrl || '#'
+              const affiliateLink =
+                object.affiliateUrl && object.affiliateUrl !== '#'
+                  ? object.affiliateUrl
+                  : `https://www.amazon.com/s?k=${encodeURIComponent(object.brand + ' ' + object.title)}`
               return (
                 <Reveal
                   key={object.title}
@@ -432,10 +434,10 @@ export function VellumFormTemplate({
                   <p className="mt-4 font-sans text-[9px] tracking-[0.16em] text-accent">
                     {object.brand}
                   </p>
-                  <h3 className="mt-2 font-serif text-xl leading-tight">
+                  <h3 className="mt-2 font-serif text-base sm:text-xl leading-tight line-clamp-2">
                     {object.title}
                   </h3>
-                  <div className="mt-3 flex items-center justify-between font-sans text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+                  <div className="mt-3 flex items-center justify-between font-sans text-[9px] sm:text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
                     <span>{object.price}</span>
                     <a
                       href={affiliateLink}

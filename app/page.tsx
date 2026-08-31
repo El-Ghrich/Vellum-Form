@@ -1,5 +1,5 @@
 import { VellumFormTemplate, Article, ProductObject, CategoryItem } from '@/components/templates/VellumFormTemplate'
-import { getFeaturedArticles, getAllCategories, urlFor } from '@/lib/sanity'
+import { getFeaturedArticles, getAllCategories, getCuratedProducts, urlFor } from '@/lib/sanity'
 
 export const revalidate = 60
 
@@ -7,7 +7,6 @@ const fallbackCategories: CategoryItem[] = [
   { title: 'Living Spaces', slug: 'living-spaces' },
   { title: 'Daily Rituals', slug: 'daily-rituals' },
   { title: 'Skin & Wellness', slug: 'skin-wellness' },
-  { title: 'The Edit', slug: 'the-edit' },
 ]
 
 const fallbackArticles: Article[] = [
@@ -22,7 +21,7 @@ const fallbackArticles: Article[] = [
     readTime: '08 min read',
   },
   {
-    category: 'Objects',
+    category: 'Daily Rituals',
     title: 'A quieter kind of brilliance: the new bronze age',
     excerpt: 'Examining the tactile beauty of living metals, hand-cast patinas, and architectural objects engineered to age with grace.',
     date: '07.08.26',
@@ -31,57 +30,50 @@ const fallbackArticles: Article[] = [
     issue: 'Issue No. 03 / 2026',
     readTime: '06 min read',
   },
-  {
-    category: 'Daily Rituals',
-    title: 'On the pleasure of making one perfect cup',
-    excerpt: 'The meditative cadence of morning coffee: precision brewing tools, tactile stoneware, and intentional slow mornings.',
-    date: '31.07.26',
-    image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1600&q=85',
-    slug: 'sculptural-espresso-machines',
-    issue: 'Issue No. 02 / 2026',
-    readTime: '05 min read',
-  },
+  
 ]
 
-const curatedObjects: ProductObject[] = [
+const realCuratedObjects: ProductObject[] = [
   {
-    brand: 'SALTER HOUSE',
-    title: 'The No. 2 Table Lamp',
-    price: '$420',
+    brand: 'BELKIN',
+    title: 'UltraCharge Pro 3-in-1 Charging Dock',
+    price: '$140',
     image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=85',
-    affiliateUrl: 'https://salterhouse.com',
+    affiliateUrl: 'https://www.amazon.com/dp/B0FMB4ZY6F',
   },
   {
-    brand: 'ATELIER NORD',
-    title: 'Hand-thrown Stoneware',
-    price: '$95',
+    brand: 'ROCDEER',
+    title: 'Bamboo Monitor Stand with Drawer',
+    price: '$55',
     image: 'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=1200&q=85',
-    affiliateUrl: 'https://ateliernord.com',
+    affiliateUrl: 'https://www.amazon.com/dp/B0F8VN5T7K',
   },
   {
-    brand: 'FORME / 01',
-    title: 'Linen Throw, Natural',
-    price: '$180',
-    image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85',
-    affiliateUrl: 'https://forme.studio',
+    brand: 'LAMY',
+    title: '2000 Matte Black Fountain Pen',
+    price: '$280',
+    image: 'https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=1200&q=85',
+    affiliateUrl: 'https://www.amazon.com/dp/B000UUIZNY',
   },
   {
-    brand: 'MORNING OBJECTS',
-    title: 'Brass Pour-over Set',
-    price: '$240',
-    image: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1200&q=85',
-    affiliateUrl: 'https://morningobjects.com',
+    brand: 'DAWNTREES',
+    title: 'Dense Felt Desk Mat',
+    price: '$20',
+    image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=85',
+    affiliateUrl: 'https://www.amazon.com/dp/B09MVT9Y98',
   },
 ]
 
 export default async function Home() {
   let articles: Article[] = fallbackArticles
   let categories: CategoryItem[] = fallbackCategories
+  let objects: ProductObject[] = realCuratedObjects
 
   try {
-    const [sanityArticles, sanityCategories] = await Promise.all([
+    const [sanityArticles, sanityCategories, sanityProducts] = await Promise.all([
       getFeaturedArticles(),
       getAllCategories(),
+      getCuratedProducts(),
     ])
 
     if (sanityCategories && sanityCategories.length > 0) {
@@ -112,6 +104,18 @@ export default async function Home() {
         readTime: '08 min read',
       }))
     }
+
+    if (sanityProducts && sanityProducts.length > 0) {
+      objects = sanityProducts.map((p: any) => ({
+        brand: p.brand || 'CURATED',
+        title: p.name,
+        price: p.priceRange || 'Inquire',
+        image: p.image
+          ? urlFor(p.image).width(1200).quality(85).url()
+          : 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=85',
+        affiliateUrl: p.affiliateUrl || 'https://www.amazon.com',
+      }))
+    }
   } catch (error) {
     console.error('Error fetching data from Sanity:', error)
   }
@@ -125,7 +129,7 @@ export default async function Home() {
       heroTitle="A room is a feeling before it is a place."
       heroDescription="An exploration of considered spaces, the objects that inhabit them, and the rituals that make them ours."
       articles={articles}
-      objects={curatedObjects}
+      objects={objects}
       categories={categories}
     />
   )
