@@ -1,7 +1,18 @@
+import type { Metadata } from 'next'
 import { VellumFormTemplate, Article, ProductObject, CategoryItem } from '@/components/templates/VellumFormTemplate'
 import { getFeaturedArticles, getAllCategories, getCuratedProducts, urlFor } from '@/lib/sanity'
+import { getBaseUrl, JsonLd } from '@/lib/seo'
 
 export const revalidate = 60
+
+export const metadata: Metadata = {
+  title: 'Vellum Form | Considered Design & Architecture',
+  description:
+    'A digital curation house for the considered life. Curated design, architectural guides, and daily rituals.',
+  alternates: {
+    canonical: '/',
+  },
+}
 
 const fallbackCategories: CategoryItem[] = [
   { title: 'Living Spaces', slug: 'living-spaces' },
@@ -121,16 +132,34 @@ export default async function Home() {
   }
 
   const heroImage = articles[0]?.image || 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=85'
+  const baseUrl = getBaseUrl()
+
+  const featuredArticlesSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Featured Editorial Edits',
+    numberOfItems: articles.length,
+    itemListElement: articles.map((art, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      url: `${baseUrl}/edit/${art.slug}`,
+      name: art.title,
+      description: art.excerpt,
+    })),
+  }
 
   return (
-    <VellumFormTemplate
-      heroImage={heroImage}
-      heroIssue="Issue No. 04 / 2026"
-      heroTitle="A room is a feeling before it is a place."
-      heroDescription="An exploration of considered spaces, the objects that inhabit them, and the rituals that make them ours."
-      articles={articles}
-      objects={objects}
-      categories={categories}
-    />
+    <>
+      <JsonLd data={featuredArticlesSchema} />
+      <VellumFormTemplate
+        heroImage={heroImage}
+        heroIssue="Issue No. 04 / 2026"
+        heroTitle="A room is a feeling before it is a place."
+        heroDescription="An exploration of considered spaces, the objects that inhabit them, and the rituals that make them ours."
+        articles={articles}
+        objects={objects}
+        categories={categories}
+      />
+    </>
   )
 }

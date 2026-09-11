@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -9,6 +10,15 @@ import { Footer } from '@/components/Footer'
 import { SearchClientView } from './SearchClientView'
 
 export const revalidate = 30
+
+export const metadata: Metadata = {
+  title: 'Search the Edit',
+  description: 'Search the Vellum Form journal archive and curated editions.',
+  robots: {
+    index: false,
+    follow: true,
+  },
+}
 
 interface SearchPageProps {
   searchParams: Promise<{ q?: string; category?: string }>

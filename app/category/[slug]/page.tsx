@@ -1,5 +1,18 @@
+import type { Metadata } from 'next'
 import { CategoryTemplate, CollectionItem } from '@/components/templates/CategoryTemplate'
-import { getArticlesByCategory, getCategoryBySlug, getAllCategories, urlFor } from '@/lib/sanity'
+import {
+  getArticlesByCategory,
+  getCategoryBySlug,
+  getAllCategories,
+  getAllCategorySlugs,
+  urlFor,
+} from '@/lib/sanity'
+import {
+  getBaseUrl,
+  JsonLd,
+  generateCollectionPageSchema,
+  generateBreadcrumbSchema,
+} from '@/lib/seo'
 
 export const revalidate = 60
 
@@ -7,10 +20,77 @@ interface PageProps {
   params: Promise<{ slug: string }>
 }
 
+export async function generateStaticParams() {
+  const categories = await getAllCategorySlugs()
+  const slugs = new Set<string>(['living-spaces', 'daily-rituals', 'skin-wellness', 'lighting', 'ceramics'])
+  categories.forEach((c) => {
+    if (c.slug) slugs.add(c.slug)
+  })
+  return Array.from(slugs).map((slug) => ({ slug }))
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params
+  const baseUrl = getBaseUrl()
+  let category: any = null
+
+  try {
+    category = await getCategoryBySlug(slug)
+  } catch (e) {
+    console.error('Error fetching category metadata:', e)
+  }
+
+  const categoryName = category?.title || slug.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())
+  const title = category?.seo?.metaTitle || `${categoryName} Archive`
+  const description =
+    category?.seo?.metaDescription ||
+    category?.description ||
+    `Explore curated architectural objects, design edits, and functional essentials in ${categoryName}.`
+  const canonical = category?.seo?.canonicalUrl || `${baseUrl}/category/${slug}`
+
+  let imageUrl = `${baseUrl}/opengraph-image`
+  if (category?.seo?.shareImage) {
+    imageUrl = urlFor(category.seo.shareImage).width(1200).height(630).quality(85).url()
+  }
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical,
+    },
+    robots: category?.seo?.noIndex
+      ? { index: false, follow: false }
+      : { index: true, follow: true },
+    openGraph: {
+      type: 'website',
+      url: canonical,
+      title,
+      description,
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [imageUrl],
+    },
+  }
+}
+
 export default async function CategoryDynamicPage({ params }: PageProps) {
   const { slug } = await params
+  const baseUrl = getBaseUrl()
 
-  let categoryTitle = slug ? slug.replace(/-/g, ' ').toUpperCase() : 'COLLECTION ARCHIVE'
+  let rawCategoryTitle = slug ? slug.replace(/-/g, ' ').toUpperCase() : 'COLLECTION ARCHIVE'
+  let categoryTitle = rawCategoryTitle
   let categoryDesc = 'An intentional collection of sculptural objects, tactile textiles, and refined interior decor.'
   let items: CollectionItem[] = []
   let categories: { title: string; slug: string }[] = []
@@ -100,19 +180,37 @@ export default async function CategoryDynamicPage({ params }: PageProps) {
 
   const tabs = ['All', ...Array.from(new Set(items.map((i) => i.category).filter(Boolean)))]
 
+  // Schema.org Structured Data
+  const collectionSchema = generateCollectionPageSchema({
+    name: `${categoryTitle} Archive`,
+    description: categoryDesc,
+    url: `/category/${slug}`,
+    itemCount: items.length,
+  })
+
+  const breadcrumbsSchema = generateBreadcrumbSchema([
+    { name: 'Home', item: '/' },
+    { name: 'Collections', item: '/category' },
+    { name: categoryTitle, item: `/category/${slug}` },
+  ])
+
   return (
-    <CategoryTemplate
-      categoryBadge="The Collection Archive"
-      title={categoryTitle}
-      description={categoryDesc}
-      entriesCountText={`Showing ${items.length} Curated Entries`}
-      tabs={tabs}
-      items={items}
-      categories={categories}
-      curatorsNote={{
-        badge: "Curator's Note",
-        quote: "We believe objects in the home should age with grace, celebrating form as much as function.",
-      }}
-    />
+    <>
+      <JsonLd data={collectionSchema} />
+      <JsonLd data={breadcrumbsSchema} />
+      <CategoryTemplate
+        categoryBadge="The Collection Archive"
+        title={categoryTitle}
+        description={categoryDesc}
+        entriesCountText={`Showing ${items.length} Curated Entries`}
+        tabs={tabs}
+        items={items}
+        categories={categories}
+        curatorsNote={{
+          badge: "Curator's Note",
+          quote: "We believe objects in the home should age with grace, celebrating form as much as function.",
+        }}
+      />
+    </>
   )
 }

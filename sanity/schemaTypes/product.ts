@@ -33,6 +33,14 @@ export const product = defineType({
       title: 'Product Image',
       type: 'image',
       options: { hotspot: true },
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Image Alt Text',
+          type: 'string',
+          description: 'Descriptive alt text for Google Image Search',
+        }),
+      ],
       validation: (rule) => rule.required(),
     }),
     defineField({

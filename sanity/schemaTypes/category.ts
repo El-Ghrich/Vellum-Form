@@ -24,5 +24,11 @@ export const category = defineType({
       type: 'text',
       rows: 3,
     }),
+    defineField({
+      name: 'seo',
+      title: 'Search Engine Optimization (SEO)',
+      type: 'seo',
+      description: 'Override meta tags and social preview for this category archive.',
+    }),
   ],
 });

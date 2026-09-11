@@ -1,7 +1,29 @@
+import type { Metadata } from 'next'
 import { CategoryTemplate, CollectionItem } from '@/components/templates/CategoryTemplate'
 import { getAllCategories, getFeaturedArticles, urlFor } from '@/lib/sanity'
+import {
+  getBaseUrl,
+  JsonLd,
+  generateCollectionPageSchema,
+  generateBreadcrumbSchema,
+} from '@/lib/seo'
 
 export const revalidate = 60
+
+export const metadata: Metadata = {
+  title: 'All Collections & Disciplines',
+  description:
+    'Explore the complete Vellum Form archive: living spaces, daily rituals, tactile ceramics, lighting, and wellness.',
+  alternates: {
+    canonical: '/category',
+  },
+  openGraph: {
+    title: 'All Collections & Disciplines | Vellum Form',
+    description:
+      'Explore the complete Vellum Form archive: living spaces, daily rituals, tactile ceramics, lighting, and wellness.',
+    url: `${getBaseUrl()}/category`,
+  },
+}
 
 export default async function CategoryIndexPage() {
   let categories: { title: string; slug: string }[] = []
@@ -40,19 +62,36 @@ export default async function CategoryIndexPage() {
 
   const tabs = ['All', ...Array.from(new Set(items.map((i) => i.category).filter(Boolean)))]
 
+  const collectionSchema = generateCollectionPageSchema({
+    name: 'All Collections & Disciplines',
+    description:
+      'An intentional collection of sculptural objects, tactile textiles, and curated stories across all our disciplines.',
+    url: '/category',
+    itemCount: items.length,
+  })
+
+  const breadcrumbsSchema = generateBreadcrumbSchema([
+    { name: 'Home', item: '/' },
+    { name: 'Collections', item: '/category' },
+  ])
+
   return (
-    <CategoryTemplate
-      categoryBadge="The Complete Collection"
-      title="ALL CATEGORIES"
-      description="An intentional collection of sculptural objects, tactile textiles, and curated stories across all our disciplines."
-      entriesCountText={`Showing ${items.length} Curated Stories`}
-      tabs={tabs}
-      items={items}
-      categories={categories}
-      curatorsNote={{
-        badge: "Curator's Note",
-        quote: "We believe objects and stories in the home should age with grace, celebrating form as much as function.",
-      }}
-    />
+    <>
+      <JsonLd data={collectionSchema} />
+      <JsonLd data={breadcrumbsSchema} />
+      <CategoryTemplate
+        categoryBadge="The Complete Collection"
+        title="ALL CATEGORIES"
+        description="An intentional collection of sculptural objects, tactile textiles, and curated stories across all our disciplines."
+        entriesCountText={`Showing ${items.length} Curated Stories`}
+        tabs={tabs}
+        items={items}
+        categories={categories}
+        curatorsNote={{
+          badge: "Curator's Note",
+          quote: "We believe objects and stories in the home should age with grace, celebrating form as much as function.",
+        }}
+      />
+    </>
   )
 }

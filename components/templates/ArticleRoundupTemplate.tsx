@@ -6,6 +6,7 @@ import Link from "next/link";
 import {
   ArrowUpRight,
   Check,
+  ChevronDown,
   ChevronRight,
   Link2,
   Mail,
@@ -17,6 +18,18 @@ import { Reveal } from "@/components/reveal";
 import { PortableText } from "@portabletext/react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+export interface Author {
+  name: string;
+  role?: string;
+  bio?: string;
+  image?: any;
+}
 
 export interface Product {
   _id?: string;
@@ -50,6 +63,8 @@ export interface ArticleRoundupTemplateProps {
   excerpt?: string;
   products: Product[];
   content?: any;
+  faqs?: FAQItem[];
+  author?: Author;
   relatedArticles?: RelatedArticle[];
 }
 
@@ -88,9 +103,18 @@ export function ArticleRoundupTemplate({
   excerpt,
   products = [],
   content,
+  faqs = [],
+  author,
   relatedArticles = [],
 }: ArticleRoundupTemplateProps) {
   const [copied, setCopied] = useState(false);
+  const [openFaqIndices, setOpenFaqIndices] = useState<number[]>([0]);
+
+  const toggleFaq = (index: number) => {
+    setOpenFaqIndices((prev) =>
+      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
+    );
+  };
 
   function handleCopyLink() {
     if (typeof window !== "undefined" && navigator.clipboard) {
@@ -165,7 +189,7 @@ export function ArticleRoundupTemplate({
               <span className="h-1 w-1 rounded-full bg-[#8A7051]" />
               <span>{readTime}</span>
               <span className="h-1 w-1 rounded-full bg-[#8A7051]" />
-              <span>By The Editorial Desk</span>
+              <span>By {author?.name || "The Editorial Desk"}</span>
             </div>
           </Reveal>
 
@@ -340,6 +364,61 @@ export function ArticleRoundupTemplate({
         </section>
       )}
 
+      {/* Frequently Asked Questions (Structured for Readers & AI/SEO) */}
+      {faqs && faqs.length > 0 && (
+        <section className="border-t border-[#E8E4DC] bg-[#FBF9F5] py-16 md:py-24">
+          <div className="mx-auto max-w-[800px] px-6 md:px-0">
+            <div className="mb-10 text-center">
+              <span className="font-sans text-[10px] uppercase tracking-[0.24em] text-[#8A7051]">
+                Editorial Inquiry
+              </span>
+              <h2 className="mt-3 font-serif text-3xl tracking-[-0.02em] text-[#111111] md:text-4xl">
+                Frequently Asked Questions
+              </h2>
+              <p className="mt-2 font-sans text-xs uppercase tracking-[0.16em] text-[#666666]">
+                Selection Criteria &amp; Considered Details
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              {faqs.map((faq, index) => {
+                const isOpen = openFaqIndices.includes(index);
+                return (
+                  <div
+                    key={index}
+                    className="border border-[#E8E4DC] bg-[#FBF9F5] transition-colors duration-200"
+                  >
+                    <button
+                      type="button"
+                      onClick={() => toggleFaq(index)}
+                      aria-expanded={isOpen}
+                      className="flex w-full items-center justify-between p-6 text-left"
+                    >
+                      <span className="font-serif text-lg text-[#111111] pr-4">
+                        {faq.question}
+                      </span>
+                      <ChevronDown
+                        size={16}
+                        className={`shrink-0 text-[#8A7051] transition-transform duration-300 ${
+                          isOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+                    {isOpen && (
+                      <div className="border-t border-[#E8E4DC] px-6 pb-6 pt-4">
+                        <p className="font-sans text-sm leading-relaxed text-[#555555]">
+                          {faq.answer}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Related Stories Section */}
       {relatedArticles.length > 0 && (
         <section className="border-t border-[#E8E4DC] bg-[#E8E4DC]/15 py-16 md:py-24">
@@ -398,11 +477,16 @@ export function ArticleRoundupTemplate({
             />
             <div>
               <p className="font-serif text-xl text-[#111111]">
-                The Editorial Desk
+                {author?.name || "The Editorial Desk"}
               </p>
               <p className="font-sans text-[10px] uppercase tracking-[0.18em] text-[#8A7051] mt-0.5">
-                Curated for the considered life
+                {author?.role || "Curated for the considered life"}
               </p>
+              {author?.bio && (
+                <p className="mt-1 font-sans text-xs text-[#666666] max-w-sm">
+                  {author.bio}
+                </p>
+              )}
             </div>
           </div>
           <div className="flex items-center gap-3">

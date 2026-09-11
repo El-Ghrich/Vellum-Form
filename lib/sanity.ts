@@ -59,12 +59,19 @@ export async function getCategoryBySlug(slug: string) {
     _id,
     title,
     "slug": slug.current,
-    description
+    description,
+    seo {
+      metaTitle,
+      metaDescription,
+      shareImage,
+      noIndex,
+      canonicalUrl
+    }
   }`
   return client.fetch(query, { slug }, { next: { revalidate: 60 } })
 }
 
-// 3. Fetch single article by slug with category and resolved featuredProducts
+// 3. Fetch single article by slug with category, resolved author, faqs, seo, and resolved featuredProducts
 export async function getArticleBySlug(slug: string) {
   const query = `*[_type == "article" && slug.current == $slug][0] {
     _id,
@@ -74,6 +81,23 @@ export async function getArticleBySlug(slug: string) {
     heroImage,
     publishedAt,
     content,
+    seo {
+      metaTitle,
+      metaDescription,
+      shareImage,
+      noIndex,
+      canonicalUrl
+    },
+    author->{
+      name,
+      role,
+      bio,
+      image
+    },
+    faqs[] {
+      question,
+      answer
+    },
     category->{
       title,
       "slug": slug.current
@@ -118,6 +142,32 @@ export async function getAllCategories() {
     description
   }`
   return client.fetch(query, {}, { next: { revalidate: 60 } })
+}
+
+// Slugs for SSG / generateStaticParams / Sitemap
+export async function getAllArticleSlugs(): Promise<{ slug: string; publishedAt?: string }[]> {
+  try {
+    const query = `*[_type == "article" && defined(slug.current)] {
+      "slug": slug.current,
+      publishedAt
+    }`
+    return await client.fetch(query, {}, { next: { revalidate: 60 } })
+  } catch (err) {
+    console.error('Error fetching article slugs from Sanity:', err)
+    return []
+  }
+}
+
+export async function getAllCategorySlugs(): Promise<{ slug: string }[]> {
+  try {
+    const query = `*[_type == "category" && defined(slug.current)] {
+      "slug": slug.current
+    }`
+    return await client.fetch(query, {}, { next: { revalidate: 60 } })
+  } catch (err) {
+    console.error('Error fetching category slugs from Sanity:', err)
+    return []
+  }
 }
 
 export async function searchArticles(searchTerm: string, categorySlug?: string) {
@@ -165,5 +215,3 @@ export async function getCuratedProducts() {
   }`
   return client.fetch(query, {}, { next: { revalidate: 60 } })
 }
-
-

@@ -26,10 +26,25 @@ export const article = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'author',
+      title: 'Author / Curator',
+      type: 'reference',
+      to: [{ type: 'author' }],
+      description: 'The curator credited with this edition (for E-E-A-T credentials)',
+    }),
+    defineField({
       name: 'heroImage',
       title: 'Hero Cover Image',
       type: 'image',
       options: { hotspot: true },
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Alternative Text (Crucial for SEO & Accessibility)',
+          type: 'string',
+          description: 'Describe the image for search engines and screen readers.',
+        }),
+      ],
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -50,6 +65,19 @@ export const article = defineType({
       title: 'Editorial Content',
       type: 'array',
       of: [{ type: 'block' }], // Enables Rich Text editing
+    }),
+    defineField({
+      name: 'faqs',
+      title: 'Frequently Asked Questions (Structured for AI / Schema.org)',
+      type: 'array',
+      of: [{ type: 'faq' }],
+      description: 'Add structured questions and answers to win Google FAQ rich snippets and direct AI answers.',
+    }),
+    defineField({
+      name: 'seo',
+      title: 'Search Engine Optimization (SEO)',
+      type: 'seo',
+      description: 'Override meta tags, canonical URL, and social preview settings for this article.',
     }),
     defineField({
       name: 'publishedAt',
