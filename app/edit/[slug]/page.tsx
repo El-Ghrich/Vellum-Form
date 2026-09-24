@@ -1,6 +1,13 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { ArticleRoundupTemplate, Product, RelatedArticle, FAQItem } from '@/components/templates/ArticleRoundupTemplate'
+import {
+  ArticleRoundupTemplate,
+  Product,
+  RelatedArticle,
+  FAQItem,
+  AtAGlanceItem,
+  FinalVerdict,
+} from '@/components/templates/ArticleRoundupTemplate'
 import { getArticleBySlug, getRecentArticles, getAllArticleSlugs, urlFor } from '@/lib/sanity'
 import {
   getBaseUrl,
@@ -20,7 +27,7 @@ interface PageProps {
 const fallbackProducts: Product[] = [
   {
     rank: 1,
-    badge: 'Best for Speed',
+    badge: "Editor's Choice",
     name: 'UltraCharge Pro 3-in-1 Wireless Charging Dock',
     brand: 'Belkin',
     image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=85',
@@ -79,6 +86,46 @@ const fallbackProducts: Product[] = [
     ],
     desc: 'The 2000 uses a fiberglass-reinforced barrel and a platinum-coated gold nib, filled by piston from a bottle rather than a cartridge. Its form, unchanged since the 1960s, remains on permanent display at MoMA.',
   },
+  {
+    rank: 4,
+    badge: 'Best for Concealment',
+    name: 'Cable Management Box',
+    brand: 'D-Line',
+    image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1200&q=85',
+    priceRange: 'Under $25',
+    rating: 4.5,
+    affiliateUrl: 'https://www.amazon.com/dp/B00846E7JW',
+    pros: [
+      'ABS plastic construction is electrically safe and heat-resistant',
+      'Rear entry slots route cables neatly without exposed wiring',
+      'Compact 12.75-inch footprint fits behind desks or units',
+    ],
+    cons: [
+      'Fits power strips no longer than 10.5 inches',
+      'Click-lock lid can be stiff to open on first use',
+    ],
+    desc: 'A power strip left exposed undermines an otherwise clean desk. This box encloses it behind curved, neutral-toned ABS plastic, with three rear slots routing cables without spilling them into view.',
+  },
+  {
+    rank: 5,
+    badge: 'Best Everyday Layer',
+    name: 'Felt Desk Mat',
+    brand: 'DAWNTREES',
+    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=85',
+    priceRange: 'Under $20',
+    rating: 4.4,
+    affiliateUrl: 'https://www.amazon.com/dp/B09MVT9Y98',
+    pros: [
+      'Dense felt shields the desk from scratches, spills, and wear',
+      'Rubberized base keeps the mat fixed during daily use',
+      'Felt layer dampens keyboard and mouse click noise',
+    ],
+    cons: [
+      'Raw felt can feel slightly textured during rapid wrist movement',
+      'Spills should be blotted immediately',
+    ],
+    desc: 'A bare desk surface picks up scratches and the hard clatter of typing over time. This mat layers dense felt over a rubberized, non-slip base, quietening the workspace with architectural warmth.',
+  },
 ]
 
 const defaultEditorialFaqs: FAQItem[] = [
@@ -93,6 +140,25 @@ const defaultEditorialFaqs: FAQItem[] = [
       'Yes. Vellum Form participates in curated affiliate partnerships. If you make an acquisition through our links, we may receive a commission at no additional cost to you.',
   },
 ]
+
+function formatProduct(p: any, idx: number = 0): Product {
+  return {
+    _id: p._id,
+    rank: idx + 1,
+    name: p.name,
+    brand: p.brand,
+    priceRange: p.priceRange || 'Inquire',
+    rating: typeof p.rating === 'number' ? p.rating : undefined,
+    badge: p.badge || undefined,
+    image: p.image
+      ? urlFor(p.image).width(1200).quality(85).url()
+      : 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85',
+    affiliateUrl: p.affiliateUrl || '#',
+    pros: Array.isArray(p.pros) ? p.pros : [],
+    cons: Array.isArray(p.cons) ? p.cons : [],
+    desc: p.desc || undefined,
+  }
+}
 
 export async function generateStaticParams() {
   const articles = await getAllArticleSlugs()
@@ -198,25 +264,65 @@ export default async function ArticlePage({ params }: PageProps) {
   const categoryTitle = articleData?.category?.title || 'Living Spaces'
   const categorySlug = articleData?.category?.slug || 'living-spaces'
 
+  // Hero Cover Image
+  const heroImage = articleData?.heroImage
+    ? urlFor(articleData.heroImage).width(1600).quality(90).url()
+    : 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1600&q=85'
+  const heroImageAlt = articleData?.heroImage?.alt || title
+
   // Map Sanity products with full schema fidelity
   let products: Product[] = fallbackProducts
   if (articleData?.featuredProducts && articleData.featuredProducts.length > 0) {
-    products = articleData.featuredProducts.map((p: any, idx: number) => ({
-      _id: p._id,
-      rank: idx + 1,
-      name: p.name,
-      brand: p.brand,
-      priceRange: p.priceRange || 'Inquire',
-      rating: typeof p.rating === 'number' ? p.rating : undefined,
-      badge: p.badge || undefined,
-      image: p.image
-        ? urlFor(p.image).width(1200).quality(85).url()
-        : 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85',
-      affiliateUrl: p.affiliateUrl || '#',
-      pros: Array.isArray(p.pros) ? p.pros : [],
-      cons: Array.isArray(p.cons) ? p.cons : [],
-      desc: p.desc || undefined,
-    }))
+    products = articleData.featuredProducts.map((p: any, idx: number) => formatProduct(p, idx))
+  }
+
+  // At a glance recommendations
+  let atAGlance: AtAGlanceItem[] | undefined = undefined
+  if (articleData?.atAGlance) {
+    const items: AtAGlanceItem[] = []
+    if (articleData.atAGlance.editorsChoice) {
+      items.push({
+        award: "Editor's Choice",
+        product: formatProduct(articleData.atAGlance.editorsChoice, 0),
+        summary: articleData.atAGlance.editorsChoice.desc,
+      })
+    }
+    if (articleData.atAGlance.bestValue) {
+      items.push({
+        award: 'Best Value',
+        product: formatProduct(articleData.atAGlance.bestValue, 1),
+        summary: articleData.atAGlance.bestValue.desc,
+      })
+    }
+    if (articleData.atAGlance.bestDesign) {
+      items.push({
+        award: 'Best Design Object',
+        product: formatProduct(articleData.atAGlance.bestDesign, 2),
+        summary: articleData.atAGlance.bestDesign.desc,
+      })
+    }
+    if (items.length > 0) {
+      atAGlance = items
+    }
+  }
+
+  // Final Verdict
+  let finalVerdict: FinalVerdict | undefined = undefined
+  if (articleData?.finalVerdict) {
+    finalVerdict = {
+      headline: articleData.finalVerdict.headline || 'The Final Verdict',
+      summary: articleData.finalVerdict.summary,
+      product: articleData.finalVerdict.recommendedProduct
+        ? formatProduct(articleData.finalVerdict.recommendedProduct)
+        : products[0],
+    }
+  } else {
+    finalVerdict = {
+      headline: 'The Final Verdict',
+      summary:
+        'A workspace is judged by its smallest details — a charging dock, a pen, a mat. If you make only one acquisition to immediately improve your daily ritual, the UltraCharge Pro removes cables and clutter with architectural elegance. For permanent craftsmanship, the LAMY 2000 remains unmatched in history and hand-feel.',
+      product: products[0],
+    }
   }
 
   // FAQs
@@ -257,9 +363,7 @@ export default async function ArticlePage({ params }: PageProps) {
     title,
     description: excerpt,
     url: `/edit/${slug}`,
-    imageUrl: articleData?.heroImage
-      ? urlFor(articleData.heroImage).width(1200).url()
-      : undefined,
+    imageUrl: heroImage,
     datePublished: articleData?.publishedAt,
     authorName: articleData?.author?.name || 'The Editorial Desk',
     authorRole: articleData?.author?.role || 'Editor & Curator',
@@ -293,6 +397,8 @@ export default async function ArticlePage({ params }: PageProps) {
           { label: title },
         ]}
         issueLabel="Curated Edit // Vol. 01"
+        heroImage={heroImage}
+        heroImageAlt={heroImageAlt}
         title={title}
         subtitle="2026 Edition"
         updatedAt={
@@ -306,9 +412,11 @@ export default async function ArticlePage({ params }: PageProps) {
         }
         readTime="8 min read"
         excerpt={excerpt}
+        atAGlance={atAGlance}
         products={products}
         content={articleData?.content}
         faqs={faqs}
+        finalVerdict={finalVerdict}
         author={articleData?.author}
         relatedArticles={relatedArticles}
       />

@@ -94,6 +94,64 @@ export async function getArticleBySlug(slug: string) {
       bio,
       image
     },
+    atAGlance {
+      editorsChoice->{
+        _id,
+        name,
+        brand,
+        priceRange,
+        affiliateUrl,
+        image,
+        rating,
+        badge,
+        pros,
+        cons,
+        desc
+      },
+      bestValue->{
+        _id,
+        name,
+        brand,
+        priceRange,
+        affiliateUrl,
+        image,
+        rating,
+        badge,
+        pros,
+        cons,
+        desc
+      },
+      bestDesign->{
+        _id,
+        name,
+        brand,
+        priceRange,
+        affiliateUrl,
+        image,
+        rating,
+        badge,
+        pros,
+        cons,
+        desc
+      }
+    },
+    finalVerdict {
+      headline,
+      summary,
+      recommendedProduct->{
+        _id,
+        name,
+        brand,
+        priceRange,
+        affiliateUrl,
+        image,
+        rating,
+        badge,
+        pros,
+        cons,
+        desc
+      }
+    },
     faqs[] {
       question,
       answer

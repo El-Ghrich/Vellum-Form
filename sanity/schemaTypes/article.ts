@@ -61,6 +61,32 @@ export const article = defineType({
       of: [{ type: 'reference', to: [{ type: 'product' }] }],
     }),
     defineField({
+      name: 'atAGlance',
+      title: 'At a Glance Picks (Top 3 Recommendations)',
+      type: 'object',
+      description: 'Highlight the top 3 picks at the top of the article. If unselected, will automatically detect from the curated products.',
+      fields: [
+        defineField({
+          name: 'editorsChoice',
+          title: "Editor's Choice",
+          type: 'reference',
+          to: [{ type: 'product' }],
+        }),
+        defineField({
+          name: 'bestValue',
+          title: 'Best Value',
+          type: 'reference',
+          to: [{ type: 'product' }],
+        }),
+        defineField({
+          name: 'bestDesign',
+          title: 'Best Design Object',
+          type: 'reference',
+          to: [{ type: 'product' }],
+        }),
+      ],
+    }),
+    defineField({
       name: 'content',
       title: 'Editorial Content',
       type: 'array',
@@ -72,6 +98,33 @@ export const article = defineType({
       type: 'array',
       of: [{ type: 'faq' }],
       description: 'Add structured questions and answers to win Google FAQ rich snippets and direct AI answers.',
+    }),
+    defineField({
+      name: 'finalVerdict',
+      title: 'Final Verdict / Recommendation',
+      type: 'object',
+      description: 'Closing editorial conclusion displayed after the FAQ and before related articles.',
+      fields: [
+        defineField({
+          name: 'headline',
+          title: 'Verdict Headline',
+          type: 'string',
+          initialValue: 'The Final Verdict',
+        }),
+        defineField({
+          name: 'summary',
+          title: 'Editorial Summary',
+          type: 'text',
+          rows: 4,
+          description: 'A thoughtful conclusion summarizing which piece makes the greatest impact.',
+        }),
+        defineField({
+          name: 'recommendedProduct',
+          title: 'Standout Recommendation (Optional)',
+          type: 'reference',
+          to: [{ type: 'product' }],
+        }),
+      ],
     }),
     defineField({
       name: 'seo',
