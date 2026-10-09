@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import { getBaseUrl, JsonLd, generateOrganizationSchema, generateWebSiteSchema } from '@/lib/seo'
 
@@ -65,8 +66,14 @@ export const metadata: Metadata = {
     images: [`${baseUrl}/opengraph-image`],
   },
   icons: {
-    icon: '/round-logo.png',
-    apple: '/round-logo.png',
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/icon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/round-logo.png', sizes: '1080x1080', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
   },
   robots: {
     index: true,
@@ -100,7 +107,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <JsonLd data={organizationSchema} />
         <JsonLd data={webSiteSchema} />
       </head>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <Analytics />
+      </body>
     </html>
   )
 }

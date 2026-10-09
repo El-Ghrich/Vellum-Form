@@ -1,11 +1,37 @@
 {
   "_type": "article",
-  "title": "The Considered Desk: Five Refined Upgrades",
+  "title": "The Quiet Bedroom: Six Essentials for Considered Sleep",
   "slug": {
     "_type": "slug",
-    "current": "the-considered-desk-five-refined-upgrades"
+    "current": "the-quiet-bedroom"
   },
-  "excerpt": "A workspace is judged by its smallest details — a charging dock, a pen, a mat. These five objects treat function as a matter of design.",
+  "category": {
+    "_type": "reference",
+    "_ref": "category-living-spaces"
+  },
+  "excerpt": "Most bedroom refreshes sell throw pillows and string lights. This curation treats sleep itself as the product being designed for — fabric, light, and scent chosen for what they do to the body, not just the room.",
+  "featuredProducts": [
+    { "_type": "reference", "_ref": "Xcr13SSS5uRWeUbfAmSnDq", "_key": "ref1" },
+    { "_type": "reference", "_ref": "em73tt90wAdHShY3hhwYCA", "_key": "ref2" },
+    { "_type": "reference", "_ref": "em73tt90wAdHShY3hhwYIo", "_key": "ref3" },
+    { "_type": "reference", "_ref": "2Ya14Jk61m7TrRoCkxKW4x", "_key": "ref4" },
+    { "_type": "reference", "_ref": "Xcr13SSS5uRWeUbfAmSnIY", "_key": "ref5" },
+    { "_type": "reference", "_ref": "2Ya14Jk61m7TrRoCkxKWFL", "_key": "ref6" }
+  ],
+  "atAGlance": {
+    "editorsChoice": {
+      "_type": "reference",
+      "_ref": "Xcr13SSS5uRWeUbfAmSnDq"
+    },
+    "bestValue": {
+      "_type": "reference",
+      "_ref": "2Ya14Jk61m7TrRoCkxKWFL"
+    },
+    "bestDesign": {
+      "_type": "reference",
+      "_ref": "2Ya14Jk61m7TrRoCkxKW4x"
+    }
+  },
   "content": [
     {
       "_type": "block",
@@ -16,7 +42,7 @@
         {
           "_type": "span",
           "_key": "span1",
-          "text": "Most desks are furnished by accident and refined by none. A charger arrives because a cable snapped, a mat because coffee was spilled once, a pen because it was free at a conference. Each object solves its own narrow problem, but together they rarely cohere into anything considered — the desk becomes a collection of fixes rather than a designed environment. The difference between a functional desk and a refined one is not effort; it is intention applied to objects most people never think to choose.",
+          "text": "Most bedroom advice treats the room as a decorating problem — a headboard here, a gallery wall there — while ignoring the one thing the room actually exists to do. Sleep is a physical process, shaped by fabric that traps or releases heat, light that either supports or fights the body's wind-down, and a nightstand cluttered with a phone charger instead of a glass of water. A bedroom can look finished in photographs and still work against the person sleeping in it. The gap between the two is rarely decor. It is material.",
           "marks": []
         }
       ]
@@ -30,17 +56,51 @@
         {
           "_type": "span",
           "_key": "span2",
-          "text": "What follows is a curation built on that distinction. Warm wood, matte metal, and materials that improve with use replace the plastic defaults of a standard office supply aisle. Charging, organizing, writing, and sitting at the desk each become deliberate acts rather than afterthoughts — five objects, chosen not for novelty but for how quietly well they do one job.",
+          "text": "What follows is a system built around that gap: linen that regulates temperature instead of trapping it, a floating nightstand that keeps the floor clear, warm dimmable light in place of a harsh overhead bulb, and a bedside ritual built on water and scent rather than screens. Nothing here is seasonal or decorative for its own sake. Each object earns its place in the room by doing something measurable to how well the person in the bed actually sleeps.",
           "marks": []
         }
       ]
     }
   ],
-  "featuredProducts": [
-    { "_type": "reference", "_ref": "fCAHs6BVkQK6W5F4ZRiHgV", "_key": "ref1" },
-    { "_type": "reference", "_ref": "fCAHs6BVkQK6W5F4ZRiHlV", "_key": "ref2" },
-    { "_type": "reference", "_ref": "W3ZXxmqSHEBDdxSinWxrXr", "_key": "ref3" },
-    { "_type": "reference", "_ref": "W3ZXxmqSHEBDdxSinWxrqo", "_key": "ref4" },
-    { "_type": "reference", "_ref": "eJyqTisNa5YHd4Fraes3ut", "_key": "ref5" }
-  ]
+  "faqs": [
+    {
+      "_type": "faq",
+      "_key": "faq1",
+      "question": "Is linen bedding actually better for sleep than cotton?",
+      "answer": "For hot sleepers, generally yes. Linen's hollow fiber structure wicks moisture and releases heat more efficiently than standard cotton, which is why it performs better on warm nights. It also softens with every wash rather than wearing thin, so the comfort improves over years of use instead of degrading."
+    },
+    {
+      "_type": "faq",
+      "_key": "faq2",
+      "question": "What color temperature is best for a bedside lamp?",
+      "answer": "Look for warm light in the 2700K range, ideally dimmable. Cooler, bluer light suppresses melatonin production and can work against the body's natural wind-down, while warm dimmable light lets brightness drop gradually as bedtime approaches."
+    },
+    {
+      "_type": "faq",
+      "_key": "faq3",
+      "question": "How do I keep a small bedroom from feeling cluttered with a nightstand?",
+      "answer": "A wall-mounted floating nightstand clears visible floor space, which does more for a small room's sense of scale than almost any other single change. Pair it with a closed drawer rather than open shelving to keep daily items out of sight."
+    },
+    {
+      "_type": "faq",
+      "_key": "faq4",
+      "question": "Are reed diffusers safer than candles for the bedroom?",
+      "answer": "Yes, functionally. Reed diffusers release fragrance with no flame and no risk of being left burning overnight, which makes them a lower-maintenance and lower-risk option for a room used for sleep specifically."
+    }
+  ],
+  "finalVerdict": {
+    "headline": "The final verdict",
+    "summary": "If the budget only allows one change, start with the linen — temperature regulation affects sleep quality more directly than any other object in this list, and it is the piece that touches the body for eight hours a night. The lamp comes next: swapping harsh overhead light for a warm, dimmable source is a small change with an outsized effect on how the room actually feels to wind down in. The rest — the nightstand, the carafe, the throw, the diffuser — round out the system, but the linen and the light are where a quiet bedroom actually begins.",
+    "recommendedProduct": {
+      "_type": "reference",
+      "_ref": "Xcr13SSS5uRWeUbfAmSnDq"
+    }
+  },
+  "seo": {
+    "_type": "seo",
+    "metaTitle": "The Quiet Bedroom: 6 Minimalist Sleep Essentials",
+    "metaDescription": "A curated system for better sleep — French linen, warm ceramic lighting, and a bedside ritual built on material, not decor. Considered, not cluttered.",
+    "noIndex": false
+  },
+  "publishedAt": "2026-09-26T00:00:00.000Z"
 }

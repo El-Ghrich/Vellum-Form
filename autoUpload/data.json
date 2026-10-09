@@ -1,101 +1,139 @@
 [
   {
     "_type": "product",
-    "name": "UltraCharge Pro 3-in-1 Wireless Charging Dock",
-    "brand": "Belkin",
-    "priceRange": "Under $140",
+    "name": "100% French Linen Duvet Cover Set",
+    "brand": "DAPU",
+    "priceRange": "$100 to $220",
     "rating": 4.5,
-    "badge": "Best for Speed",
-    "affiliateUrl": "https://www.amazon.com/Belkin-Compatible-Charging-Magnetic-Wireless/dp/B0FMB4ZY6F/ref=sr_1_4?crid=36RHK0ZV680MI&dib=eyJ2IjoiMSJ9.9dkVbnz_EnK5ZPUdeCzNOKhqm4Wvvy3JYSUQYvNiKkBDWnFjItBAfCzxgQFtsZka_G-dMmRHat23Hfv8dr1rvp35lxwGvRa4ZpPyezzp6QNXl15BhPMC6umxU_FKIJVpnZBlObgxirBAPmbBYpyBlPvqL8aRFnBkpvqgcO0lNxb-5b246yPQAd5IMQRl6g0sTV6_hcLdB4ci2Sjr6hIUmWLI6hyaBz85RSIpV9pyQ40.5goRuh24zrp8RT_SxYSdHqvD3C2As5PmymQs-0j0FYM&dib_tag=se&keywords=courant%2Bwireless%2Bcharger&qid=1787753558&sprefix=Courant%2BCatch%3A3%2BWireless%2BCharger%2Caps%2C383&sr=8-4&th=1",
+    "badge": "Best for Hot Sleepers",
+    "affiliateUrl": "https://amzn.to/46MsncP",
+    "image": {
+      "alt": "Undyed French linen duvet cover and pillowcases on a queen bed"
+    },
     "pros": [
-      "25W Qi2 charging brings an iPhone to 50% in about 25 minutes",
-      "Charges phone, watch, and earbuds together with magnetic alignment",
-      "ChillBoost cooling keeps the dock cooler during fast charging"
+      "Hollow linen fiber wicks moisture and regulates temperature overnight",
+      "170GSM French flax softens with every wash rather than wearing thin",
+      "OEKO-TEX certified, safe for sensitive skin"
     ],
     "cons": [
-      "Smart fan produces a faint hum in quiet rooms",
-      "Soft-touch silicone finish shows dust and dirt easily",
-      "Full 25W speed requires the latest iOS software version"
+      "Feels crisp out of the package until it's been washed a few times",
+      "Needs gentle wash cycles and low-heat drying to maintain",
+      "Wrinkles naturally and won't hold a pressed look"
     ],
-    "desc": "Charging three devices usually means three separate cables and a cluttered nightstand. This dock consolidates a phone, watch, and earbuds onto one weighted base, delivering 25W Qi2 charging with magnetic alignment for the phone. Active cooling manages heat during fast charging, and a 65-degree tilt keeps StandBy mode visible from any angle."
+    "desc": "Synthetic blends trap heat and rarely improve with age. This duvet cover uses 100% French flax linen at 170GSM, woven with a hollow fiber structure that pulls moisture away from the body through the night. It arrives with a crisp hand and softens permanently with each wash, aging into the set rather than wearing out."
   },
   {
     "_type": "product",
-    "name": "Bamboo Monitor Stand with Drawer",
-    "brand": "ROCDEER",
-    "priceRange": "Under $55",
+    "name": "Kato Wood Floating Nightstand with Drawer",
+    "brand": "Kate and Laurel",
+    "priceRange": "$50 to $120",
+    "rating": 4.8,
+    "badge": "Best Space-Saving",
+    "affiliateUrl": "https://amzn.to/4yPOcUI",
+    "image": {
+      "alt": "Walnut floating nightstand with drawer mounted above a bedroom floor"
+    },
+    "pros": [
+      "Wall-mounted design clears floor space in small bedrooms",
+      "Solid mango wood construction with a unique natural grain",
+      "Hidden drawer keeps small essentials out of sight"
+    ],
+    "cons": [
+      "Z-bracket mounting can be tricky to level during install",
+      "Rated for roughly 15 pounds, not heavy objects",
+      "Slim 10-inch depth leaves little room for a lamp and a glass together"
+    ],
+    "desc": "A floor-standing nightstand interrupts the clean line of a bed frame. This one mounts directly to the wall instead, using solid mango wood and a soft curved edge to hold a lamp, a book, or a glass of water. A hidden drawer keeps smaller essentials out of view, so the surface stays visually clear even when it isn't."
+  },
+  {
+    "_type": "product",
+    "name": "Geometric Water Carafe and Tumbler Set",
+    "brand": "American Atelier",
+    "priceRange": "Under $40",
+    "rating": 4.5,
+    "badge": "Best Bedside Ritual",
+    "affiliateUrl": "https://amzn.to/4ykyTUm",
+    "image": {
+      "alt": "Glass water carafe with matching tumbler lid on a nightstand"
+    },
+    "pros": [
+      "37oz capacity reduces the need for overnight refills",
+      "Tumbler doubles as a dust-cover lid, saving nightstand space",
+      "Rustproof glass holds its finish with daily use"
+    ],
+    "cons": [
+      "Glass construction can crack or shatter if dropped",
+      "No insulation, so water won't stay cold overnight",
+      "Tumbler lid isn't sealed and can slide off if bumped"
+    ],
+    "desc": "A plastic water bottle on the nightstand undercuts an otherwise considered bedroom. This carafe holds 37 ounces in rustproof glass, with a matching tumbler that rests on top as both a lid and a ready glass. Gold accent detailing and a geometric silhouette keep it closer to tabletop object than bedside afterthought."
+  },
+  {
+    "_type": "product",
+    "name": "Calypso Ceramic Table Lamp",
+    "brand": "RONDURE",
+    "priceRange": "$50 to $100",
     "rating": 4.7,
-    "badge": "Best Value",
-    "affiliateUrl": "https://www.amazon.com/ROCDEER-Ergonomic-Computer-Management-Organizer/dp/B0F8VN5T7K/ref=sr_1_16?dib=eyJ2IjoiMSJ9.l3-PTPu4h5-NxKszRdjZ_b_LzzH1ngB4_ce6eHkyMP4X_V4jlZzAlJDQjBide-7T_XfEpaWvdqWN2Gn1Pp3oUnlkfdfU-tODR7wcP_2v8e24mjGHRgt33JgR8lVmU74nY9apdKvrWinNmafaaUNzvOrQlAUeLCboidMFXe5uKUDZxzpXaLSe5_HcxSaVW0EQigF3rYsZJthmUJ9gmSNOvX2neF6qn9vje0nPlZS_l-g.m3pxBas_F7XXlH86BsqKAK7rs4RNaCI7jMDLpH0Inh0&dib_tag=se&keywords=Grovemade%2BWood%2BMonitor%2BStand&qid=1787753664&sr=8-16&th=1",
+    "badge": "Best Warm Light",
+    "affiliateUrl": "https://amzn.to/4yYYm5t",
+    "image": {
+      "alt": "Handcrafted ceramic table lamp with ribbed texture on a nightstand"
+    },
     "pros": [
-      "Raises the screen to eye level, easing neck and shoulder strain",
-      "Built-in drawer keeps pens and small items out of sight",
-      "FSC-certified bamboo brings a warm, natural material to the desk"
+      "Rotary dimmer adjusts from a soft glow to full brightness",
+      "Kiln-fired above 1,300°C for a durable, artisanal finish",
+      "Translucent ceramic shade diffuses light evenly, avoiding harsh shadows"
     ],
     "cons": [
-      "Heavy or multi-monitor setups may exceed its weight tolerance",
-      "Bamboo finish can be damaged by spills or high humidity"
+      "Better suited to ambient light than close reading",
+      "Handmade texture varies slightly from piece to piece",
+      "Corded design requires a nearby outlet"
     ],
-    "desc": "A monitor set too low forces the neck into a constant downward tilt. This stand raises the screen by 4.4 inches using FSC-certified bamboo, while a lower shelf and drawer organize a keyboard, mouse, and small accessories underneath. A rear cable slot keeps cords routed out of view."
+    "desc": "Overhead lighting rarely helps a bedroom wind down. This lamp swaps it for a kiln-fired ceramic base with a ribbed, hand-shaped texture and a dimmable warm bulb, diffusing light evenly rather than casting a single hard source. A simple rotary knob adjusts brightness from a low glow to a fuller light without leaving the bed."
   },
   {
     "_type": "product",
-    "name": "2000 Matte Black Fountain Pen",
-    "brand": "LAMY",
-    "priceRange": "Under $280",
+    "name": "Heirloom Merino Wool Throw Blanket",
+    "brand": "OakRidge",
+    "priceRange": "$60 to $120",
     "rating": 4.4,
-    "badge": "Best Design Object",
-    "affiliateUrl": "https://www.amazon.com/LAMY-2000-Matte-Black-Fountain/dp/B000UUIZNY/ref=sr_1_1?dib=eyJ2IjoiMSJ9.AqJSto-6omB_XwEoBvuF5czPrvWuR5bp40Nd1olAl5aKBWUM-Vr44toBcgNSxa3_PD2vYjQaAxvXooop6H6YNmfacb4qZVn0wxECwlsWYDO63_zikkicaaKazzahGnJAH5vF-2yCm6todFFtWe_kRw4Qd5Ha2jaAI4XsjDVjClZn8gJBpAeYV3LhMDwoo2qDnqPhbgNBF4aUgzquW1rH9JArgnfhOfM152YXQcBnAcL7JjvGGi8Ve1PwlVVDNbzsrtawxujkKrftt84ai-V09DNAJQRdmeLH3ZjfW63bCcA.qqMkpNYvAZKnsfVOVxIC5M-uCzmtCe_cznVcJDFG_rE&dib_tag=se&keywords=Lamy+2000&qid=1787753887&sr=8-1",
+    "badge": "Best Texture Layer",
+    "affiliateUrl": "https://amzn.to/4xPzYTc",
+    "image": {
+      "alt": "Merino wool throw blanket folded at the foot of a bed"
+    },
     "pros": [
-      "Bauhaus-era design has held a place in permanent museum collections",
-      "14k gold nib, platinum-coated, writes smoothly across paper",
-      "Piston-fill mechanism holds a large ink reserve from the bottle"
+      "380GSM Australian Merino wool regulates temperature year-round",
+      "Naturally resists odor and wicks moisture without feeling scratchy",
+      "Includes a storage bag that doubles as a travel tote"
     ],
     "cons": [
-      "Fine nib writes closer to a medium width than expected",
-      "Hooded nib demands a consistent angle or it may skip",
-      "Round barrel can roll off a flat desk without a clip"
+      "Requires gentle cold wash and line drying, no high heat",
+      "Satin edging needs extra care during washing"
     ],
-    "desc": "Most pens are disposable, plastic, and forgotten within a year. The 2000 uses a fiberglass-reinforced barrel and a platinum-coated gold nib, filled by piston from a bottle rather than a cartridge. Its form, unchanged since the 1960s, remains on permanent display at the Museum of Modern Art."
+    "desc": "A flat duvet with no texture layered on top reads unfinished. This throw adds it in 380GSM Australian Merino wool, dense enough for warmth in winter but breathable enough to avoid overheating in summer. Satin edging finishes the piece without introducing pattern or color to a tonal bedroom palette."
   },
   {
     "_type": "product",
-    "name": "Cable Management Box",
-    "brand": "D-Line",
-    "priceRange": "Under $25",
-    "rating": 4.5,
-    "badge": "Best for Concealment",
-    "affiliateUrl": "https://www.amazon.com/D-Line-Management-Electrical-Computers-Electrically/dp/B00846E7JW/ref=sr_1_7?crid=3FA806MMUQ112&dib=eyJ2IjoiMSJ9.XF8Ww49pszn9pHaWIgth-a0THc1UIso-wlqLn2ibx-of0ZNam-6He3EinPOPahjsPuLPNhrGVlRYbNeNSQHASHOF-0uRst9DJyBERsKv3736ySNtGQWUvVIYJZQUUUXPlX8AWmzr70E-iPKM-V8epN55mQq_-2kknebVIVtbtqEIa_2t5_4gxOxou-fs4LnGHD97zOvQDc9XTaqdDYd-hUGstXpsysHTaUCwXkdanhU.pYLAUInXg9SPvkAKfiDust3rSltrOGR8Ky4S6RUYzNk&dib_tag=se&keywords=Yamazaki%2BHome%2BWeb%2BCable%2BBox&qid=1787754021&sprefix=lamy%2B2000%2Caps%2C324&sr=8-7&th=1",
-    "pros": [
-      "ABS plastic construction is electrically safe and heat-resistant",
-      "Rear entry slots route cables neatly without exposed wiring",
-      "Compact 12.75-inch footprint fits behind desks or entertainment units"
-    ],
-    "cons": [
-      "Fits power strips no longer than 10.5 inches",
-      "Click-lock lid can be stiff to open on first use",
-      "Heat can build up if the box is overfilled"
-    ],
-    "desc": "A power strip left exposed undermines an otherwise clean desk. This box encloses it behind curved, neutral-toned ABS plastic, with three rear slots routing cables without spilling them into view. The click-lock lid keeps the strip accessible while resolving the visual clutter around it."
-  },
-  {
-    "_type": "product",
-    "name": "Felt Desk Mat",
-    "brand": "DAWNTREES",
-    "priceRange": "Under $20",
+    "name": "Clean Linen Reed Diffuser Set",
+    "brand": "COCORRÍNA",
+    "priceRange": "Under $30",
     "rating": 4.4,
-    "badge": "Best Everyday Layer",
-    "affiliateUrl": "https://www.amazon.com/DAWNTREES-Extra-Keyboard-Computer-Office/dp/B09MVT9Y98/ref=sr_1_7?crid=3JU8F2V7F7DS7&dib=eyJ2IjoiMSJ9.m_8j5f7dI5XSNlvdeHjyRIU71jrnMU4oOt1j93-i8PCnxultasu-1aHsa8NLvzWJqq3fUHJhgfVcgJvBmAKgvB8onZ1CVzS6snBn1bvl7JnusmclQ91y57407CNIGcLfui0rzS95c4jULv8R_S5d81vv6IZLLGLJ-dB4QnMxaOMuh1zWHHKik5pRTlfcG3OgtRjklYOBq08XIT3PlcWuhhYp1ufJqfsvnKknIzXgCR9R8WZ_7FM08b7-Yfwe-XdFCGYLvX8-oTL7ovbGF8alr0LQfElhch92RCc6yV3ZiEU.vVWKjYSzugVSr3ybLsionsHglvSuB2T6kS143l50WKI&dib_tag=se&keywords=Oakywood%2BFelt%2BDesk%2BMat&qid=1787754109&sprefix=yamazaki%2Bhome%2Bweb%2Bcable%2Bbox%2Caps%2C373&sr=8-7&th=1",
+    "badge": "Best Scent Layer",
+    "affiliateUrl": "https://amzn.to/4AD7kHy",
+    "image": {
+      "alt": "Glass reed diffuser bottle with cotton sticks on a shelf"
+    },
     "pros": [
-      "Dense felt shields the desk from scratches, spills, and wear",
-      "Rubberized base keeps the mat fixed during daily use",
-      "Felt layer dampens keyboard and mouse click noise"
+      "Flame-free and safe to leave unattended near kids or pets",
+      "6.7oz bottle diffuses scent for up to 90 days",
+      "Reed count adjusts fragrance strength up or down"
     ],
     "cons": [
-      "Raw felt can feel rough during fast hand or arm movement",
-      "Spills and dust are harder to fully clean from the fibers",
-      "36-inch width leaves little room for a laptop alongside gear"
+      "Scent throw is subtle, best suited to smaller rooms",
+      "Reeds need periodic flipping to maintain diffusion",
+      "Open bottle risks spilling oil if tipped"
     ],
-    "desc": "A bare desk surface picks up scratches, spills, and the hard clatter of typing over time. This mat layers dense felt over a rubberized, non-slip base, sized at 36 by 12 inches to hold a keyboard and mouse. The felt also absorbs sound, quieting the workspace without altering how the mouse tracks."
+    "desc": "A scented candle adds fire risk and upkeep a bedroom doesn't need before sleep. This diffuser handles scent instead, releasing a clean linen fragrance through cotton reeds in a glass vessel that reads as shelf decor on its own. No flame, no monitoring, just a steady, adjustable presence in the room."
   }
 ]
